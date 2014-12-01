@@ -40,8 +40,14 @@ Or install it yourself as:
 * [1. Usage](#1-usage)
 * [2. Interface](#2-interface)
   * [2.1 convert](#21-convert)
-  * [2.1 can?](#22-can)
+  * [2.2 from](#22-from)
+  * [2.3 to](#23-to)
+  * [2.4 can?](#24-can)
 * [3. Converters](#3-converters)
+  * [3.1 Custom](#31-custom)
+    * [3.1.1 Using an Object](#311-using-an-object)
+    * [3.1.2 Using a Proc](#312-using-a-proc)
+  * [3.2 Array](#32-array)
 
 ## 1. Usage
 
@@ -51,7 +57,7 @@ Or install it yourself as:
 converter = Necromancer.new
 ```
 
-Once initialize **Necromancer** knows how to handle numerous conversions.
+Once initialized **Necromancer** knows how to handle numerous conversions and also add your custom type [converters](#3-converters).
 
 For example, to convert a string to a range type:
 
@@ -79,9 +85,35 @@ converter.convert(['1', '2.3', '3.0']).from(:array).to(:numeric) # => [1, 2.3, 3
 
 ## 2. Interaface
 
+**Necromancer** will perform conversions on the supplied object through use of `convert`, `from` and `to` methods.
+
 ### 2.1 convert
 
-### 2.2 can?
+```ruby
+converter.convert('1,10').to(:range)  #  => 1..10
+```
+
+### 2.2 from
+
+### 2.3 to
+
+To convert objects between types, **Necromancer** provides several target types. The `to` method allows you to pass target as an argument to perform actual conversion:
+
+```ruby
+converter.convert('yes').to(:boolean)   # => true
+```
+
+The target parameters are:
+
+* :array
+* :boolean
+* :float
+* :integer
+* :numeric
+* :range
+* :string
+
+### 2.4 can?
 
 To verify that a a given conversion can be handled by **Necormancer** call `can?` with the `source` and `target` of the desired conversion.
 
@@ -93,7 +125,60 @@ converter.can?(:unknown, :integer)  # => false
 
 ## 3. Converters
 
+**Necromancer** flexibility means you can register your own converters or use the already defined types.
+
 ### 3.1 Custom
+
+#### 3.1.1 Using an Object
+
+Firstly, you need to create a converter that at minimum requires to specify `call` method that will be invoked during conversion:
+
+```ruby
+UpcaseConverter = Struct.new(:source, :target) do
+  def call(value)
+    value.upcase
+  end
+end
+```
+
+Then you need to specify what type conversions this converter will support. For example, `UpcaseConverter` will allow a string object to be converted to a new string object with content upper cased. This can be done:
+
+```ruby
+upcase_converter = UpcaseConverter.new(:string, :upcase)
+```
+
+**Necromancer** provides the `register` method to add converter:
+
+```ruby
+converter = Necromancer.new
+converter.register(upcase_converter)   # => true if successfully registered
+```
+
+Finally, by invoking `convert` method and specifying `:upcase` as the target for the conversion we achieve the result:
+
+```ruby
+converter.convert('magic').to(:upcase)   # => 'MAGIC'
+```
+
+#### 3.1.2 Using a Proc
+
+Using a Proc object you can create and immediately register a converter. You need to pass `source` and `target` of the conversion that will be used later on to match the conversion. The `convert` allows you to specify the actual conversion in block form. For example:
+
+```ruby
+converter = Necromancer.new
+
+converter.register do |c|
+  c.source= :string
+  c.target= :upcase
+  c.convert = proc { |value| value.upcase }
+end
+```
+
+Then by invoking the `convert` method and passing the `:upcase` conversion type you can transform the string like so:
+
+```ruby
+converter.convert('magic').to(:upcase)   # => 'MAGIC'
+```
 
 ### 3.2 Array
 
@@ -119,9 +204,14 @@ converter.convert(['1', '2.3', false]).from(:array).to(:numeric)
 # => [1, 2.3, false]
 ```
 
-### 3.3 Range
+### 3.3 Boolean
 
-### 3.4 Hash
+### 3.4 Range
+
+```ruby
+```
+
+### 3.5 Hash
 
 ```ruby
 converter.convert({ x: '27.5', y: '4', z: '11'}).to(:numeric)
