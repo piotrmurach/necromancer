@@ -5,6 +5,10 @@ module Necromancer
   #
   # @api public
   class Context
+    extend Forwardable
+
+    def_delegators :"@conversions", :register
+
     # Create a context
     #
     # @api private
