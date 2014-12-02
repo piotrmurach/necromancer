@@ -28,6 +28,16 @@ RSpec.describe Necromancer, '.convert' do
         converter.convert('1a').to(:integer, strict: true)
       }.to raise_error(Necromancer::ConversionTypeError)
     end
+
+    it "doesn't raise error when in non-strict mode" do
+      expect(converter.convert('1').to(:integer, strict: false)).to eq(1)
+    end
+  end
+
+  context 'when float' do
+    it "converts string to float" do
+      expect(converter.convert('1.0').to(:float)).to eq(1.0)
+    end
   end
 
   context 'when boolean' do

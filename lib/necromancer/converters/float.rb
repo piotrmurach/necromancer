@@ -23,6 +23,8 @@ module Necromancer
     end
 
     def self.load(conversions)
+      conversions.register StringToFloatConverter.new(:string, :float)
+      conversions.register NullConverter.new(:float, :float)
     end
   end # Conversion
 end # Necromancer
