@@ -135,7 +135,7 @@ Firstly, you need to create a converter that at minimum requires to specify `cal
 
 ```ruby
 UpcaseConverter = Struct.new(:source, :target) do
-  def call(value)
+  def call(value, options)
     value.upcase
   end
 end
@@ -170,7 +170,7 @@ converter = Necromancer.new
 converter.register do |c|
   c.source= :string
   c.target= :upcase
-  c.convert = proc { |value| value.upcase }
+  c.convert = proc { |value, options| value.upcase }
 end
 ```
 
@@ -193,14 +193,14 @@ converter.convert(['1', '2.3', '3.0']).from(:array).to(:numeric)
 Raises error when in strict mode
 
 ```ruby
-converter.convert(['1', '2.3', false]).from(:array).to(:numeric)
-# => Necromancer::ConversionError: false cannot be converter to numeric value
+converter.convert(['1', '2.3', false], strict: true).from(:array).to(:numeric)
+# => Necromancer::ConversionTypeError: false cannot be converter to numeric value
 ```
 
 Returns value when in non strict mode
 
 ```ruby
-converter.convert(['1', '2.3', false]).from(:array).to(:numeric)
+converter.convert(['1', '2.3', false], strict: false).from(:array).to(:numeric)
 # => [1, 2.3, false]
 ```
 
