@@ -48,6 +48,8 @@ Or install it yourself as:
     * [3.1.1 Using an Object](#311-using-an-object)
     * [3.1.2 Using a Proc](#312-using-a-proc)
   * [3.2 Boolean](#32-boolean)
+  * [3.3 Range](#33-range)
+  * [3.4 Array](#34-array)
 
 ## 1. Usage
 
@@ -206,24 +208,40 @@ converter.convert(0).to(:boolean)  # => false
 ```ruby
 ```
 
-### 3.2 Array
+### 3.4 Array
+
+The **Necromancer** allows you to transform string into an array object:
 
 ```ruby
-converter.convert(['1', '2.3', '3.0']).to(:numeric)
+converter.call('a, b, c')  # => ['a', 'b', 'c']
 ```
+
+If the string is a list of separated numbers, they will be converted to their respective numeric types:
+
+```ruby
+converter.call('1 - 2 - 3')  # => [1, 2, 3]
+```
+
+You can also convert array containing string objects to array containing numeric values:
 
 ```ruby
 converter.convert(['1', '2.3', '3.0']).from(:array).to(:numeric)
 ```
 
-Raises error when in strict mode
+or simply:
+
+```ruby
+converter.convert(['1', '2.3', '3.0']).to(:numeric)
+```
+
+When in strict mode the conversion will raise a `Necromancer::ConversionTypeError` error like so:
 
 ```ruby
 converter.convert(['1', '2.3', false], strict: true).from(:array).to(:numeric)
-# => Necromancer::ConversionTypeError: false cannot be converter to numeric value
+# => Necromancer::ConversionTypeError: false cannot be converted from `array` to `numeric`
 ```
 
-Returns value when in non strict mode
+However, in strict mode the value will be simply returned unchanged:
 
 ```ruby
 converter.convert(['1', '2.3', false], strict: false).from(:array).to(:numeric)
