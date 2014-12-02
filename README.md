@@ -47,7 +47,7 @@ Or install it yourself as:
   * [3.1 Custom](#31-custom)
     * [3.1.1 Using an Object](#311-using-an-object)
     * [3.1.2 Using a Proc](#312-using-a-proc)
-  * [3.2 Array](#32-array)
+  * [3.2 Boolean](#32-boolean)
 
 ## 1. Usage
 
@@ -180,6 +180,32 @@ Then by invoking the `convert` method and passing the `:upcase` conversion type 
 converter.convert('magic').to(:upcase)   # => 'MAGIC'
 ```
 
+### 3.2 Boolean
+
+The **Necromancer** allows you to convert a string object to boolean object. The `1`, `'1'`, `'t'`, `'T'`, `'true'`, `'TRUE'`, `'y'`, `'Y'`, `'yes'`, `'Yes'`, `'on'`, `'ON'` values are converted to `TrueClass`.
+
+```ruby
+converter.convert('yes').to(:boolean)  # => true
+```
+
+Similarly, the `0`, `'0'`, `'f'`, `'F'`, `'false'`, `'FALSE'`, `'n'`, `'N'`, `'no'`, `'No'`, `'off'`, `'OFF'` values are converted to `FalseClass`.
+
+```ruby
+converter.convert('no').to(:boolean) # => false
+```
+
+You can also convert an integer object to boolean:
+
+```ruby
+converter.convert(1).to(:boolean)  # => true
+converter.convert(0).to(:boolean)  # => false
+```
+
+### 3.3 Range
+
+```ruby
+```
+
 ### 3.2 Array
 
 ```ruby
@@ -202,13 +228,6 @@ Returns value when in non strict mode
 ```ruby
 converter.convert(['1', '2.3', false], strict: false).from(:array).to(:numeric)
 # => [1, 2.3, false]
-```
-
-### 3.3 Boolean
-
-### 3.4 Range
-
-```ruby
 ```
 
 ### 3.5 Hash
