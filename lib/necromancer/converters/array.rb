@@ -23,32 +23,33 @@ module Necromancer
           value.to_s.split($4)
         else
           if strict
-            fail ConversionTypeError, "#{value} could not be converted " \
-                                      "from #{source} into `#{target}`"
+            fail_conversion_type(value)
           else
-            Array(value.to_s)
+            Array(value)
           end
         end
       end
     end
 
+    # An object that converts an Array to a numeric
     class ArrayToNumericConverter < Converter
+      # Convert an array to a numeric value
+      #
+      # @example
+      #   converter.call(['1', '2.3', '3.0])  # => [1, 2.3, 3.0]
+      #
+      # @param [Object] value
+      #   the value to convert
+      #
+      # @api public
       def call(value, options = {})
         strict = options.fetch(:strict, false)
         value.reduce([]) do |acc, el|
           acc << case el.to_s
-          when /^\d+\.\d+$/
-            el.to_f
-          when /^\d+$/
-            el.to_i
-          else
-            if strict
-              raise ConversionTypeError, "#{value} could not be converted " \
-                                        " from `#{source}` into `#{target}`"
-            else
-              el
-            end
-          end
+                 when /^\d+\.\d+$/ then el.to_f
+                 when /^\d+$/ then el.to_i
+                 else strict ?  fail_conversion_type(value) : el
+                 end
         end
       end
     end
