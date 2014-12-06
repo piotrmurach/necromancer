@@ -42,4 +42,12 @@ RSpec.configure do |config|
   config.order = :random
 
   Kernel.srand config.seed
+
+  config.before :each do
+    [:UpcaseConverter].each do |class_name|
+      if Object.const_defined?(class_name)
+        Object.send(:remove_const, class_name)
+      end
+    end
+  end
 end
