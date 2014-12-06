@@ -36,6 +36,15 @@ module Necromancer
 
     # An object that converts an Integer to a Boolean
     class IntegerToBooleanConverter < Converter
+      # Convert integer to boolean
+      #
+      # @example
+      #   converter.call(1)  # => true
+      #
+      # @example
+      #   converter.call(0)  # => false
+      #
+      # @api public
       def call(value, options = {})
         strict = options.fetch(:strict, false)
         begin
@@ -48,6 +57,15 @@ module Necromancer
 
     # An object that converts a Boolean to an Integer
     class BooleanToIntegerConverter < Converter
+      # Convert boolean to integer
+      #
+      # @example
+      #   converter.call(true)   # => 1
+      #
+      # @example
+      #   converter.call(false)  # => 0
+      #
+      # @api public
       def call(value, options = {})
         value ? 1 : 0
       end
