@@ -234,17 +234,17 @@ or simply:
 converter.convert(['1', '2.3', '3.0']).to(:numeric)
 ```
 
-When in strict mode the conversion will raise a `Necromancer::ConversionTypeError` error like so:
+When in `strict` mode the conversion will raise a `Necromancer::ConversionTypeError` error like so:
 
 ```ruby
-converter.convert(['1', '2.3', false], strict: true).from(:array).to(:numeric)
+converter.convert(['1', '2.3', false]).to(:numeric, strict: true)
 # => Necromancer::ConversionTypeError: false cannot be converted from `array` to `numeric`
 ```
 
-However, in strict mode the value will be simply returned unchanged:
+However, in `non-strict` mode the value will be simply returned unchanged:
 
 ```ruby
-converter.convert(['1', '2.3', false], strict: false).from(:array).to(:numeric)
+converter.convert(['1', '2.3', false]).to(:numeric, strict: false)
 # => [1, 2.3, false]
 ```
 
