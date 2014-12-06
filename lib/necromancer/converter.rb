@@ -28,6 +28,17 @@ module Necromancer
       end.new
     end
 
+    # Fail with conversion type error
+    #
+    # @param [Object] value
+    #   the value that cannot be converted
+    #
+    # @api private
+    def fail_conversion_type(value)
+      fail ConversionTypeError, "#{value} could not be converted " \
+                                "from `#{source}` into `#{target}`"
+    end
+
     attr_accessor :source
 
     attr_accessor :target
