@@ -4,7 +4,6 @@ module Necromancer
   module BooleanConverters
     # An object that converts a String to a Boolean
     class StringToBooleanConverter < Converter
-
       # Convert value to boolean type including range of strings
       #
       # @param [Object] value
@@ -23,13 +22,14 @@ module Necromancer
       #
       # @api public
       def call(value, options = {})
+        strict = options.fetch(:strict, false)
         case value.to_s
         when /^(yes|y|on|t(rue)?|1)$/i
           return true
         when /^(no|n|off|f(alse)?|0)$/i
           return false
         else
-          fail ArgumentError, "Expected boolean type, got #{value}"
+          strict ? fail_conversion_type(value) : value
         end
       end
     end
@@ -37,7 +37,12 @@ module Necromancer
     # An object that converts an Integer to a Boolean
     class IntegerToBooleanConverter < Converter
       def call(value, options = {})
-        !value.zero?
+        strict = options.fetch(:strict, false)
+        begin
+          !value.zero?
+        rescue
+          strict ?  fail_conversion_type(value) : value
+        end
       end
     end
 

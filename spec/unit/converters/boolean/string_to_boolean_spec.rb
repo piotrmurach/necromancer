@@ -4,10 +4,12 @@ require 'spec_helper'
 
 RSpec.describe Necromancer::BooleanConverters::StringToBooleanConverter, '.call' do
 
-  subject(:converter) { described_class.new }
+  subject(:converter) { described_class.new(:string, :boolean) }
 
-  it "raises error for empty string" do
-    expect { converter.call('') }.to raise_error(ArgumentError)
+  it "raises error for empty string strict mode" do
+    expect {
+      converter.call('', strict: true)
+    }.to raise_error(Necromancer::ConversionTypeError)
   end
 
   it "passes through boolean value" do
@@ -91,6 +93,8 @@ RSpec.describe Necromancer::BooleanConverters::StringToBooleanConverter, '.call'
   end
 
   it "fails to convert unkonwn value FOO" do
-    expect { converter.call('FOO') }.to raise_error(ArgumentError)
+    expect {
+      converter.call('FOO', strict: true)
+    }.to raise_error(Necromancer::ConversionTypeError)
   end
 end

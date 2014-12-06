@@ -13,4 +13,10 @@ RSpec.describe Necromancer::BooleanConverters::IntegerToBooleanConverter, '.call
   it "converts 0 to false value" do
     expect(converter.call(0)).to eq(false)
   end
+
+  it "fails to convert in strict mode" do
+    expect  {
+      converter.call('1', strict: true)
+    }.to raise_error(Necromancer::ConversionTypeError)
+  end
 end
