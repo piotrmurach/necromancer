@@ -1,5 +1,6 @@
 # coding: utf-8
 
+require 'forwardable'
 require 'necromancer/conversions'
 require 'necromancer/context'
 require 'necromancer/converter'
@@ -19,6 +20,14 @@ module Necromancer
   # Raised when conversion type is not available
   NoTypeConversionAvailableError = Class.new(StandardError)
 
+  # Create a conversion instance
+  #
+  # @example
+  #   converter = Necromancer.new
+  #
+  # @return [Context]
+  #
+  # @api private
   def new
     Context.new
   end
