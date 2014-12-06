@@ -35,8 +35,8 @@ module Necromancer
     #
     # @api private
     def fail_conversion_type(value)
-      fail ConversionTypeError, "#{value} could not be converted " \
-                                "from `#{source}` into `#{target}`"
+      fail ConversionTypeError, "'#{value}' could not be converted " \
+                                "from `#{source}` into `#{target}` "
     end
 
     attr_accessor :source
