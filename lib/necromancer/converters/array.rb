@@ -43,13 +43,9 @@ module Necromancer
       #
       # @api public
       def call(value, options = {})
-        strict = options.fetch(:strict, false)
+        numeric_converter = NumericConverters::StringToNumericConverter.new(:string, :numeric)
         value.reduce([]) do |acc, el|
-          acc << case el.to_s
-                 when /^\d+\.\d+$/ then el.to_f
-                 when /^\d+$/ then el.to_i
-                 else strict ?  fail_conversion_type(value) : el
-                 end
+          acc << numeric_converter.call(el, options)
         end
       end
     end
