@@ -8,19 +8,14 @@ module Necromancer
       # Convert string value to integer
       #
       # @example
-      #   converter.call('1abc') # => 1
+      #   converter.call('1abc')  # => 1
       #
       # @api public
       def call(value, options = {})
         strict = options.fetch(:strict, false)
         Integer(value.to_s)
       rescue
-        if strict
-          raise ConversionTypeError, "#{value} could not be converted from " \
-                                     "`#{source}` into `#{target}`"
-        else
-          value.to_i
-        end
+        strict ? fail_conversion_type(value) : value.to_i
       end
     end
 
@@ -40,9 +35,7 @@ module Necromancer
     def self.load(conversions)
       conversions.register StringToIntegerConverter.new(:string, :integer)
       conversions.register IntegerToStringConverter.new(:integer, :string)
-      conversions.register IntegerToStringConverter.new(:fixnum, :string)
       conversions.register NullConverter.new(:integer, :integer)
-      conversions.register NullConverter.new(:fixnum, :integer)
     end
   end # IntegerConverters
 end # Necromancer
