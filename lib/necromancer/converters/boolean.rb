@@ -1,7 +1,12 @@
 # coding: utf-8
 
 module Necromancer
+  # Container for Boolean converter classes
   module BooleanConverters
+    TRUE_MATCHER = /^(yes|y|on|t(rue)?|1)$/i.freeze
+
+    FALSE_MATCHER = /^(no|n|off|f(alse)?|0)$/i.freeze
+
     # An object that converts a String to a Boolean
     class StringToBooleanConverter < Converter
       # Convert value to boolean type including range of strings
@@ -24,12 +29,9 @@ module Necromancer
       def call(value, options = {})
         strict = options.fetch(:strict, false)
         case value.to_s
-        when /^(yes|y|on|t(rue)?|1)$/i
-          return true
-        when /^(no|n|off|f(alse)?|0)$/i
-          return false
-        else
-          strict ? fail_conversion_type(value) : value
+        when TRUE_MATCHER then true
+        when FALSE_MATCHER then false
+        else strict ? fail_conversion_type(value) : value
         end
       end
     end
@@ -67,7 +69,12 @@ module Necromancer
       #
       # @api public
       def call(value, options = {})
-        value ? 1 : 0
+        strict = options.fetch(:strict, false)
+        if ['TrueClass', 'FalseClass'].include?(value.class.name)
+          value ? 1 : 0
+        else
+          strict ? fail_conversion_type(value) : value
+        end
       end
     end
 
