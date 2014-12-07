@@ -12,89 +12,25 @@ RSpec.describe Necromancer::BooleanConverters::StringToBooleanConverter, '.call'
     }.to raise_error(Necromancer::ConversionTypeError)
   end
 
-  it "passes through boolean value" do
-    expect(converter.call(true)).to eq(true)
-  end
-
-  it "converts 'true' to true value" do
-    expect(converter.call('true')).to eq(true)
-  end
-
-  it "converts 'TRUE' to true value" do
-    expect(converter.call('TRUE')).to eq(true)
-  end
-
-  it "converts TRUE to true value" do
-    expect(converter.call(TRUE)).to eq(true)
-  end
-
-  it "converts 't' to true value" do
-    expect(converter.call('t')).to eq(true)
-  end
-
-  it "converts 'T' to true value" do
-    expect(converter.call('T')).to eq(true)
-  end
-
-  it "converts 1 to true value" do
-    expect(converter.call(1)).to eq(true)
-  end
-
-  it "converts '1' to true value" do
-    expect(converter.call('1')).to eq(true)
-  end
-
-  it "converts 'y' to true value" do
-    expect(converter.call('y')).to eq(true)
-  end
-
-  it "converts 'yes' to true value" do
-    expect(converter.call('yes')).to eq(true)
-  end
-
-  it "converts 'on' to true value" do
-    expect(converter.call('on')).to eq(true)
-  end
-
-  it "converts 'false' to false value" do
-    expect(converter.call('false')).to eq(false)
-  end
-
-  it "converts FALSE to false value" do
-    expect(converter.call(FALSE)).to eq(false)
-  end
-
-  it "converts 'FALSE' to false value" do
-    expect(converter.call('FALSE')).to eq(false)
-  end
-
-  it "converts 'f' to false value" do
-    expect(converter.call('f')).to eq(false)
-  end
-
-  it "converts 'F' to false value" do
-    expect(converter.call('F')).to eq(false)
-  end
-
-  it "converts '0' to false value" do
-    expect(converter.call('0')).to eq(false)
-  end
-
-  it "converts 'n' to false value" do
-    expect(converter.call('n')).to eq(false)
-  end
-
-  it "converts 'no' to false value" do
-    expect(converter.call('no')).to eq(false)
-  end
-
-  it "converts 'off' to false value" do
-    expect(converter.call('off')).to eq(false)
-  end
-
   it "fails to convert unkonwn value FOO" do
     expect {
       converter.call('FOO', strict: true)
     }.to raise_error(Necromancer::ConversionTypeError)
+  end
+
+  it "passes through boolean value" do
+    expect(converter.call(true)).to eq(true)
+  end
+
+  %w[true TRUE t T 1 y Y YES yes on ON].each do |value|
+    it "converts '#{value}' to true value" do
+      expect(converter.call(value)).to eq(true)
+    end
+  end
+
+  %w[false FALSE f F 0 n N NO No no off OFF].each do |value|
+    it "converts '#{value}' to false value" do
+      expect(converter.call(value)).to eq(false)
+    end
   end
 end
