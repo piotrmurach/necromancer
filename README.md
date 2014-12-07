@@ -79,7 +79,7 @@ converter.convert('t').to(:boolean)   # => true
 To convert string to [numeric](#34-numeric) value:
 
 ```ruby
-converter.convert('10e1')  # => 100
+converter.convert('10e1').to(:numeric)  # => 100
 ```
 
 or get [array](#31-array) elements into numeric type:
@@ -100,11 +100,37 @@ converter.convert(['1', '2.3', '3.0']).from(:array).to(:numeric) # => [1, 2.3, 3
 
 ### 2.1 convert
 
+For the purpose of divination, **Necromancer** uses `convert` method to turn source type into target type. For example, in order to convert a string into a range type do:
+
 ```ruby
 converter.convert('1,10').to(:range)  #  => 1..10
 ```
 
+Alternatively, you can use block:
+
+```ruby
+converter.convert { '1,10' }.to(:range) # => 1..10
+```
+
 ### 2.2 from
+
+To specify conversion source type use `from` method:
+
+```ruby
+converter.convert('1.0').from(:string).to(:numeric)
+```
+
+In majority of cases you do not need to specify `from` as the type will be inferred from the `convert` method argument and then appropriate conversion will be applied to result in `target` type such as `:numeric`. However, if you do not control the input to `convert` and want to ensure consistent behaviour please use `from`.
+
+The source parameters are:
+
+* :array
+* :boolean
+* :float
+* :integer
+* :numeric
+* :range
+* :string
 
 ### 2.3 to
 
@@ -112,6 +138,13 @@ To convert objects between types, **Necromancer** provides several target types.
 
 ```ruby
 converter.convert('yes').to(:boolean)   # => true
+```
+
+By default, when target conversion fails the orignal value is returned. However, you can pass `strict` as an additional argument to ensure failure when conversion cannot be performed:
+
+```ruby
+converter.convert('1a').to(:integer, strict: true)
+# => raises Necromancer::ConversionTypeError
 ```
 
 The target parameters are:
@@ -236,7 +269,7 @@ converter.convert('1e1').to(:numeric)   # => 10
 
 ### 3.5 Range
 
-**Necromancer** is no strange to figuring out ranges from strings. You can pass `,`, `-`, `..`, `...` characters to denote ranges:
+**Necromancer** is no stranger to figuring out ranges from strings. You can pass `,`, `-`, `..`, `...` characters to denote ranges:
 
 ```ruby
 converter.convert('1,10').to(:range)  # => 1..10
