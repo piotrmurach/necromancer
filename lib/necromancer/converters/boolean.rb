@@ -18,7 +18,7 @@ module Necromancer
       #   converter.call("False") # => false
       #
       #  other values coerced to false are:
-      #    0, f, F, FALSE, false, False, n, N, NO,  no,  No, on, ON
+      #    0, f, F, FALSE, false, False, n, N, NO,  no,  No, off, OFF
       #
       # @api public
       def call(value, options = {})
