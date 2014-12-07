@@ -2,9 +2,21 @@
 
 require 'spec_helper'
 
-RSpec.describe Necromancer::IntegerConverters::StringToIntegerConverter, '.call' do
+RSpec.describe Necromancer::NumericConverters::StringToIntegerConverter, '.call' do
 
   subject(:converter) { described_class.new(:string, :integer) }
+
+  {
+    '1'   => 1,
+    '+1'  => 1,
+    '-1'  => -1,
+    '1.2' => 1,
+    '.1'  => 0
+  }.each do |actual, expected|
+    it "converts '#{actual}' to float value" do
+      expect(converter.call(actual)).to eq(expected)
+    end
+  end
 
   it "raises error for empty string in strict mode" do
     expect {

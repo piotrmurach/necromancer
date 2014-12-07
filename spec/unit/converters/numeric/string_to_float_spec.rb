@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe Necromancer::FloatConverters::StringToFloatConverter, '.call' do
+RSpec.describe Necromancer::NumericConverters::StringToFloatConverter, '.call' do
 
   subject(:converter) { described_class.new(:string, :float) }
 
@@ -12,12 +12,16 @@ RSpec.describe Necromancer::FloatConverters::StringToFloatConverter, '.call' do
     }.to raise_error(Necromancer::ConversionTypeError)
   end
 
-  it "converts '1' to float value" do
-    expect(converter.call('1')).to eq(1.0)
-  end
-
-  it "converts '1.2a' to float value in non-strict mode" do
-    expect(converter.call('1.2')).to eq(1.2)
+  {
+    '1'   => 1.0,
+    '+1'  => 1.0,
+    '-1'  => -1.0,
+    '1.2' => 1.2,
+    '.1'  => 0.1
+  }.each do |actual, expected|
+    it "converts '#{actual}' to float value" do
+      expect(converter.call(actual)).to eq(expected)
+    end
   end
 
   it "failse to convert '1.2a' in strict mode" do

@@ -31,8 +31,7 @@ module Necromancer
       ArrayConverters.load(self)
       BooleanConverters.load(self)
       DateTimeConverters.load(self)
-      FloatConverters.load(self)
-      IntegerConverters.load(self)
+      NumericConverters.load(self)
       RangeConverters.load(self)
     end
 
