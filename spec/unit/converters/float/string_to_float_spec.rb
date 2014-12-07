@@ -4,7 +4,7 @@ require 'spec_helper'
 
 RSpec.describe Necromancer::FloatConverters::StringToFloatConverter, '.call' do
 
-  subject(:converter) { described_class.new }
+  subject(:converter) { described_class.new(:string, :float) }
 
   it "raises error for empty string in strict mode" do
     expect {

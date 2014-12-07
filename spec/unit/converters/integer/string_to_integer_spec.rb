@@ -4,7 +4,7 @@ require 'spec_helper'
 
 RSpec.describe Necromancer::IntegerConverters::StringToIntegerConverter, '.call' do
 
-  subject(:converter) { described_class.new }
+  subject(:converter) { described_class.new(:string, :integer) }
 
   it "raises error for empty string in strict mode" do
     expect {
