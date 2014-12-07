@@ -6,47 +6,30 @@ RSpec.describe Necromancer::RangeConverters::StringToRangeConverter, '.call' do
 
   subject(:converter) { described_class.new }
 
-  it "raises error for empty string" do
-    expect { converter.call('') }.to raise_error(Necromancer::ConversionTypeError)
+  it "raises error for empty string in strict mode" do
+    expect {
+      converter.call('', strict: true)
+    }.to raise_error(Necromancer::ConversionTypeError)
   end
 
-  it "converts '1' to range" do
-    expect(converter.call('1')).to eq(1..1)
+  it "returns value in non-strict mode" do
+    expect(converter.call('', strict: false)).to eq('')
   end
 
-  it "converts '1..10' to range value" do
-    expect(converter.call('1..10')).to eq(1..10)
-  end
-
-  it "converts '1-10' to range value" do
-    expect(converter.call('1-10')).to eq(1..10)
-  end
-
-  it "converts '1,10' to range value" do
-    expect(converter.call('1,10')).to eq(1..10)
-  end
-
-  it "converts '1...10' to range value" do
-    expect(converter.call('1...10')).to eq(1...10)
-  end
-
-  it "converts '-1..10' to range value" do
-    expect(converter.call('-1..10')).to eq(-1..10)
-  end
-
-  it "converts '1..-10' to range value" do
-    expect(converter.call('1..-10')).to eq(1..-10)
-  end
-
-  it "converts 'a..z' to range value" do
-    expect(converter.call('a..z')).to eq('a'..'z')
-  end
-
-  it "converts 'a-z' to range value" do
-    expect(converter.call('a-z')).to eq('a'..'z')
-  end
-
-  it "converts 'A-Z' to range value" do
-    expect(converter.call('A-Z')).to eq('A'..'Z')
+  {
+    '1'     => 1..1,
+    '1..10' => 1..10,
+    '1-10'  => 1..10,
+    '1,10'  => 1..10,
+    '1...10' => 1...10,
+    '-1..10' => -1..10,
+    '1..-10' => 1..-10,
+    'a..z' => 'a'..'z',
+    'a-z' => 'a'..'z',
+    'A-Z' => 'A'..'Z'
+  }.each do |actual, expected|
+    it "converts '#{actual}' to range type" do
+      expect(converter.call(actual)).to eql(expected)
+    end
   end
 end
