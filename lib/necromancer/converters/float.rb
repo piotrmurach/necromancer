@@ -2,6 +2,7 @@
 
 module Necromancer
   module FloatConverters
+    # An object that converts a String to a Float
     class StringToFloatConverter < Converter
       # Convert string to float value
       #
@@ -13,12 +14,7 @@ module Necromancer
         strict = options.fetch(:strict, false)
         Float(value.to_s)
       rescue
-        if strict
-          raise ConversionTypeError, "#{value} could not be converted from " \
-                                     "`#{source}` into `#{target}`"
-        else
-          value.to_f
-        end
+        strict ? fail_conversion_type(value) : value.to_f
       end
     end
 
