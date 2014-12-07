@@ -17,7 +17,7 @@ module Necromancer
       # @api public
       def call(value, options = {})
         strict = options.fetch(:strict, false)
-        Integer(value.to_s)
+        Integer(value)
       rescue
         strict ? fail_conversion_type(value) : value.to_i
       end
@@ -46,7 +46,7 @@ module Necromancer
       # @api public
       def call(value, options = {})
         strict = options.fetch(:strict, false)
-        Float(value.to_s)
+        Float(value)
       rescue
         strict ? fail_conversion_type(value) : value.to_f
       end

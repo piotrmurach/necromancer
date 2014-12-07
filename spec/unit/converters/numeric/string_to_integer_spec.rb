@@ -7,14 +7,26 @@ RSpec.describe Necromancer::NumericConverters::StringToIntegerConverter, '.call'
   subject(:converter) { described_class.new(:string, :integer) }
 
   {
-    '1'   => 1,
-    '+1'  => 1,
-    '-1'  => -1,
-    '1.2' => 1,
-    '.1'  => 0
+    '1'       => 1,
+    '+1'      => 1,
+    '-1'      => -1,
+    '1e+1'    => 1,
+    '+1e-1'   => 1,
+    '-1e1'    => -1,
+    '-1e-1'   => -1,
+    '1.0'     => 1,
+    '1.0e+1'  => 1,
+    '1.0e-1'  => 1,
+    '-1.0e+1' => -1,
+    '-1.0e-1' => -1,
+     '.1'     => 0,
+    '.1e+1'   => 0,
+    '.1e-1'   => 0,
+     '-.1e+1' => 0,
+    '-.1e-1'  => 0
   }.each do |actual, expected|
     it "converts '#{actual}' to float value" do
-      expect(converter.call(actual)).to eq(expected)
+      expect(converter.call(actual)).to eql(expected)
     end
   end
 
@@ -30,7 +42,7 @@ RSpec.describe Necromancer::NumericConverters::StringToIntegerConverter, '.call'
 
   it "raises error for float in strict mode" do
     expect {
-      converter.call(1.2, strict: true)
+      converter.call('1.2', strict: true)
     }.to raise_error(Necromancer::ConversionTypeError)
   end
 

@@ -10,9 +10,9 @@ RSpec.describe Necromancer::NumericConverters::StringToNumericConverter, '.call'
     '1'       => 1,
     '+1'      => 1,
     '-1'      => -1,
-    '1e1'     => 10,
+    '1e1'     => 10.0,
     '1e-1'    => 0.1,
-    '-1e1'    => -10,
+    '-1e1'    => -10.0,
     '-1e-1'   => -0.1,
     '1.0'     => 1.0,
     '1.0e+1'  => 10.0,
@@ -26,7 +26,7 @@ RSpec.describe Necromancer::NumericConverters::StringToNumericConverter, '.call'
     '-.1e-1'  => -0.01
   }.each do |actual, expected|
     it "converts '#{actual}' to '#{expected}'" do
-      expect(converter.call(actual)).to eq(expected)
+      expect(converter.call(actual)).to eql(expected)
     end
   end
 end

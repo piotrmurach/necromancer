@@ -13,14 +13,26 @@ RSpec.describe Necromancer::NumericConverters::StringToFloatConverter, '.call' d
   end
 
   {
-    '1'   => 1.0,
-    '+1'  => 1.0,
-    '-1'  => -1.0,
-    '1.2' => 1.2,
-    '.1'  => 0.1
+    '1'       => 1.0,
+    '+1'      => 1.0,
+    '-1'      => -1.0,
+    '1e1'     => 10.0,
+    '1e-1'    => 0.1,
+    '-1e1'    => -10.0,
+    '-1e-1'   => -0.1,
+    '1.0'     => 1.0,
+    '1.0e+1'  => 10.0,
+    '1.0e-1'  => 0.1,
+    '-1.0e+1' => -10.0,
+    '-1.0e-1' => -0.1,
+    '.1'      => 0.1,
+    '.1e+1'   => 1.0,
+    '.1e-1'   => 0.01,
+    '-.1e+1'  => -1.0,
+    '-.1e-1'  => -0.01
   }.each do |actual, expected|
     it "converts '#{actual}' to float value" do
-      expect(converter.call(actual)).to eq(expected)
+      expect(converter.call(actual)).to eql(expected)
     end
   end
 
