@@ -1,12 +1,15 @@
 # coding: utf-8
 
 require 'forwardable'
+require 'date'
+
 require 'necromancer/conversions'
 require 'necromancer/context'
 require 'necromancer/converter'
 require 'necromancer/null_converter'
 require 'necromancer/converters/array'
 require 'necromancer/converters/boolean'
+require 'necromancer/converters/date_time'
 require 'necromancer/converters/float'
 require 'necromancer/converters/integer'
 require 'necromancer/converters/range'
