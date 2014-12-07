@@ -25,4 +25,8 @@ RSpec.describe Necromancer::FloatConverters::StringToFloatConverter, '.call' do
       converter.call('1.2a', strict: true)
     }.to raise_error(Necromancer::ConversionTypeError)
   end
+
+  it "converts '1.2a' in non-strict mode" do
+    expect(converter.call('1.2a', strict: false)).to eq(1.2)
+  end
 end
