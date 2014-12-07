@@ -79,4 +79,16 @@ RSpec.describe Necromancer, '.convert' do
       }.to raise_error(Necromancer::ConversionTypeError)
     end
   end
+
+  context 'when datetime' do
+    it "converts string to date" do
+      expect(converter.convert('2014-12-07').to(:date)).
+        to eq(Date.parse('2014-12-07'))
+    end
+
+    it "converts string to datetime" do
+      expect(converter.convert('2014-12-07 17:35:44').to(:datetime)).
+        to eq(DateTime.parse('2014-12-07 17:35:44'))
+    end
+  end
 end
