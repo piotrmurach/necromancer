@@ -1,7 +1,12 @@
 # coding: utf-8
 
 module Necromancer
+  # Container for Numeric converter classes
   module NumericConverters
+    INTEGER_MATCHER = /^[-+]?(\d+)$/.freeze
+
+    FLOAT_MATCHER = /^[-+]?(\d*)(\.\d+)?([eE]?[-+]?\d+)?$/.freeze
+
     # An object that converts a String to an Integer
     class StringToIntegerConverter < Converter
       # Convert string value to integer
@@ -44,6 +49,30 @@ module Necromancer
         Float(value.to_s)
       rescue
         strict ? fail_conversion_type(value) : value.to_f
+      end
+    end
+
+    # An object that converts a String to a Numeric
+    class StringToNumericConverter < Converter
+      # Convert string to numeric value
+      #
+      # @example
+      #   converter.call('1.0')  # => 1.0
+      #
+      # @example
+      #   converter.call('1')   # => 1
+      #
+      # @api public
+      def call(value, options = {})
+        strict = options.fetch(:strict, false)
+        case value
+        when INTEGER_MATCHER
+          StringToIntegerConverter.new(:string, :integer).call(value, options)
+        when FLOAT_MATCHER
+          StringToFloatConverter.new(:string, :float).call(value, options)
+        else
+          strict ? fail_conversion_type(value) : value
+        end
       end
     end
 
