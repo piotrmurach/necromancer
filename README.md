@@ -17,6 +17,7 @@
 
 * Simple and expressive API
 * Ability to specify own converters
+* Ability to compose conversions out of simpler ones
 * Support conversion of custom defined types
 
 ## Installation
@@ -73,6 +74,12 @@ In order to handle [boolean](#32-boolean) conversions:
 
 ```ruby
 converter.convert('t').to(:boolean)   # => true
+```
+
+To convert string to [numeric](#34-numeric) value:
+
+```ruby
+converter.convert('10e1')  # => 100
 ```
 
 or get [array](#31-array) elements into numeric type:
@@ -221,11 +228,25 @@ To convert a string to an integer do:
 converter.convert('1a').to(:integer)  #  => 1
 ```
 
-### 3.5 Range
+However, if you want to convert string to an appropriate matching numeric type do:
 
 ```ruby
+converter.convert('1e1').to(:numeric)   # => 10
 ```
 
+### 3.5 Range
+
+**Necromancer** is no strange to figuring out ranges from strings. You can pass `,`, `-`, `..`, `...` characters to denote ranges:
+
+```ruby
+converter.convert('1,10').to(:range)  # => 1..10
+```
+
+or to create a range of letters:
+
+```ruby
+converter.convert('a-z').to(:range)   # => 'a'..'z'
+```
 
 ### 3.5 Custom
 
