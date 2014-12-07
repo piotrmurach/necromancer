@@ -47,10 +47,11 @@ Or install it yourself as:
   * [3.1 Array](#31-array)
   * [3.2 Boolean](#32-boolean)
   * [3.3 Hash](#33-hash)
-  * [3.4 Range](#34-range)
-  * [3.5 Custom](#35-custom)
-    * [3.5.1 Using an Object](#351-using-an-object)
-    * [3.5.2 Using a Proc](#352-using-a-proc)
+  * [3.4 Numeric](#34-numeric)
+  * [3.5 Range](#35-range)
+  * [3.6 Custom](#36-custom)
+    * [3.6.1 Using an Object](#361-using-an-object)
+    * [3.6.2 Using a Proc](#362-using-a-proc)
 
 ## 1. Usage
 
@@ -198,7 +199,29 @@ converter.convert({ x: '27.5', y: '4', z: '11'}).to(:numeric)
 # => { x: 27.5, y: 4, z: 11}
 ```
 
-### 3.4 Range
+### 3.4 Numeric
+
+**Necromancer** comes ready to convert all the primitive numeric values.
+
+To convert a string to a float do:
+
+```ruby
+converter.convert('1.2a').to(:float)  #  => 1.2
+```
+
+Conversion to numeric in strict mode raises `Necromancer::ConversionTypeError`:
+
+```ruby
+converter.convert('1.2a').to(:float, strict: true) # => raises error
+```
+
+To convert a string to an integer do:
+
+```ruby
+converter.convert('1a').to(:integer)  #  => 1
+```
+
+### 3.5 Range
 
 ```ruby
 ```
