@@ -82,6 +82,7 @@ module Necromancer
       conversions.register NullConverter.new(:integer, :integer)
       conversions.register StringToFloatConverter.new(:string, :float)
       conversions.register NullConverter.new(:float, :float)
+      conversions.register StringToNumericConverter.new(:string, :numeric)
     end
   end # Conversion
 end # Necromancer

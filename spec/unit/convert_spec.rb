@@ -6,7 +6,7 @@ RSpec.describe Necromancer, '.convert' do
 
   subject(:converter) { described_class.new }
 
-  context 'when integer' do
+  context 'when numeric' do
     it "converts string to integer" do
       expect(converter.convert('1').to(:integer)).to eq(1)
     end
@@ -30,13 +30,15 @@ RSpec.describe Necromancer, '.convert' do
     end
 
     it "doesn't raise error when in non-strict mode" do
-      expect(converter.convert('1').to(:integer, strict: false)).to eq(1)
+      expect(converter.convert('1').to(:integer, strict: false)).to eql(1)
     end
-  end
 
-  context 'when float' do
     it "converts string to float" do
-      expect(converter.convert('1.0').to(:float)).to eq(1.0)
+      expect(converter.convert('1.0').to(:float)).to eql(1.0)
+    end
+
+    it "converts string to numeric" do
+      expect(converter.convert('1.0').to(:numeric)).to eql(1.0)
     end
   end
 
