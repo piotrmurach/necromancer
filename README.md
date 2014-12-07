@@ -13,6 +13,10 @@
 
 **Necromancer** provides independent type conversion component for [TTY](https://github.com/peter-murach/tty) toolkit.
 
+## Motivation
+
+Conversion between Ruby core types frequently comes up in projects but is solved by half-baked solutions. This library aims to provide an independent and extensible API to support a robust and generic way to convert between core Ruby types.
+
 ## Features
 
 * Simple and expressive API
@@ -159,7 +163,7 @@ The target parameters are:
 
 ### 2.4 can?
 
-To verify that a a given conversion can be handled by **Necormancer** call `can?` with the `source` and `target` of the desired conversion.
+To verify that a given conversion can be handled by **Necormancer** call `can?` with the `source` and `target` of the desired conversion.
 
 ```ruby
 converter = Necromancer.new
@@ -169,7 +173,7 @@ converter.can?(:unknown, :integer)  # => false
 
 ## 3. Converters
 
-**Necromancer** flexibility means you can register your own converters or use the already defined types.
+**Necromancer** flexibility means you can register your own converters or use the already defined converters for such types as 'Array', 'Boolean', 'Hash', 'Numeric', 'Range'.
 
 ### 3.1 Array
 
@@ -281,9 +285,9 @@ or to create a range of letters:
 converter.convert('a-z').to(:range)   # => 'a'..'z'
 ```
 
-### 3.5 Custom
+### 3.6 Custom
 
-#### 3.5.1 Using an Object
+#### 3.6.1 Using an Object
 
 Firstly, you need to create a converter that at minimum requires to specify `call` method that will be invoked during conversion:
 
@@ -314,7 +318,7 @@ Finally, by invoking `convert` method and specifying `:upcase` as the target for
 converter.convert('magic').to(:upcase)   # => 'MAGIC'
 ```
 
-#### 3.5.2 Using a Proc
+#### 3.6.2 Using a Proc
 
 Using a Proc object you can create and immediately register a converter. You need to pass `source` and `target` of the conversion that will be used later on to match the conversion. The `convert` allows you to specify the actual conversion in block form. For example:
 
