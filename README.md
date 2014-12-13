@@ -177,25 +177,26 @@ converter.can?(:unknown, :integer)  # => false
 
 ### 3.1 Array
 
-The **Necromancer** allows you to transform string into an array object:
+The **Necromancer** allows you to transform arbitrary object into array:
 
 ```ruby
-converter.call('a, b, c')  # => ['a', 'b', 'c']
+converter.convert(nil).to(:array)     # => []
+converter.convert({x: 1}).to(:array)  # => [[:x, 1]]
 ```
 
-If the string is a list of separated numbers, they will be converted to their respective numeric types:
+In addition, **Necromancer** excels at converting `,` or `-` delimited string into an array object:
 
 ```ruby
-converter.call('1 - 2 - 3')  # => [1, 2, 3]
+converter.convert('a, b, c').to(:array)  # => ['a', 'b', 'c']
+```
+
+If the string is a list of `-` or `,` separated numbers, they will be converted to their respective numeric types:
+
+```ruby
+converter.convert('1 - 2 - 3').to(:array)  # => [1, 2, 3]
 ```
 
 You can also convert array containing string objects to array containing numeric values:
-
-```ruby
-converter.convert(['1', '2.3', '3.0']).from(:array).to(:numeric)
-```
-
-or simply:
 
 ```ruby
 converter.convert(['1', '2.3', '3.0']).to(:numeric)
