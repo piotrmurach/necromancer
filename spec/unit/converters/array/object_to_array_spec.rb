@@ -18,16 +18,4 @@ RSpec.describe Necromancer::ArrayConverters::ObjectToArrayConverter, '.call' do
     custom = Custom.new
     expect(converter.call(custom)).to eq([:x, :y])
   end
-
-  it "fails to convert" do
-    Custom = Class.new do
-      def to_ary
-        raise ArgumentError
-      end
-    end
-    custom = Custom.new
-    expect {
-      converter.call(custom, strict: true)
-    }.to raise_error
-  end
 end
