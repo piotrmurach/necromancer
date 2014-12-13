@@ -8,12 +8,6 @@ module Necromancer
   class Conversions
     DELIMITER = '->'.freeze
 
-    # TODO: allow to register converters as just simple proc objects
-    #
-    # register "integer->string", { |value| value.to_s }
-    # if block present then take it as converter class
-    #
-
     # Creates a new conversions map
     #
     # @example
@@ -35,9 +29,30 @@ module Necromancer
       RangeConverters.load(self)
     end
 
+    # Retrieve converter for source and target
+    #
+    # @param [Object] source
+    #   the source of conversion
+    #
+    # @param [Object] target
+    #   the target of conversion
+    #
+    # @return [Converter]
+    #  the converter for the source and target
+    #
+    # @api public
     def [](source, target)
       key = "#{source}#{DELIMITER}#{target}"
-      converter_map[key] || fail(NoTypeConversionAvailableError)
+      converter_map[key] ||
+      converter_map["object->#{target}"] ||
+      fail_no_type_conversion_available(key)
+    end
+
+    # Fail with conversion error
+    #
+    # @api private
+    def fail_no_type_conversion_available(key)
+      fail NoTypeConversionAvailableError, "Conversion '#{key}' unavailable."
     end
 
     # @example with simple object
@@ -61,6 +76,7 @@ module Necromancer
 
     protected
 
+    # @api private
     def generate_key(converter)
       parts = []
       parts << (converter.source ? converter.source.to_s : 'none')
@@ -69,6 +85,8 @@ module Necromancer
     end
 
     # Map of type and conversion
+    #
+    # @return [Hash]
     #
     # @api private
     attr_reader :converter_map
