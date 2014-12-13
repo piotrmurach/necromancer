@@ -22,11 +22,7 @@ module Necromancer
         when /^((\w)(\s*(,|-)\s*)?)+$/
           value.to_s.split($4)
         else
-          if strict
-            fail_conversion_type(value)
-          else
-            Array(value)
-          end
+          strict ? fail_conversion_type(value) : Array(value)
         end
       end
     end
