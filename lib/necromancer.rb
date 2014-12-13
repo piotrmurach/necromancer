@@ -2,6 +2,7 @@
 
 require 'forwardable'
 require 'date'
+require 'set'
 
 require 'necromancer/conversions'
 require 'necromancer/context'
