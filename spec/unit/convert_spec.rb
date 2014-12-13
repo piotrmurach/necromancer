@@ -6,6 +6,30 @@ RSpec.describe Necromancer, '.convert' do
 
   subject(:converter) { described_class.new }
 
+  context 'when array' do
+    it "converts string to array" do
+      expect(converter.convert("1,2,3").to(:array)).to eq([1,2,3])
+    end
+
+    it "converts array to numeric " do
+      expect(converter.convert(['1','2.3','3.0']).to(:numeric)).to eq([1,2.3,3.0])
+    end
+
+    it "converts array to boolean" do
+      expect(converter.convert(['t', 'no']).to(:boolean)).to eq([true, false])
+    end
+
+    it "converts object to array" do
+      expect(converter.convert({x: 1}).to(:array)).to eq([[:x, 1]])
+    end
+
+    it "fails to convert in strict mode" do
+      expect {
+        converter.convert(['1', '2.3', false]).to(:numeric, strict: true)
+      }.to raise_error(Necromancer::ConversionTypeError)
+    end
+  end
+
   context 'when numeric' do
     it "converts string to integer" do
       expect(converter.convert('1').to(:integer)).to eq(1)
@@ -63,22 +87,6 @@ RSpec.describe Necromancer, '.convert' do
   context 'when range' do
     it "converts string to range" do
       expect(converter.convert('1-10').to(:range)).to eq(1..10)
-    end
-  end
-
-  context 'when array' do
-    it "converts string to array" do
-      expect(converter.convert("1,2,3").to(:array)).to eq([1,2,3])
-    end
-
-    it "converts array to numeric " do
-      expect(converter.convert(['1','2.3','3.0']).to(:numeric)).to eq([1,2.3,3.0])
-    end
-
-    it "fails to convert in strict mode" do
-      expect {
-        converter.convert(['1', '2.3', false]).to(:numeric, strict: true)
-      }.to raise_error(Necromancer::ConversionTypeError)
     end
   end
 
