@@ -163,7 +163,7 @@ The target parameters are:
 
 ### 2.4 can?
 
-To verify that a given conversion can be handled by **Necormancer** call `can?` with the `source` and `target` of the desired conversion.
+To verify that a given conversion can be handled by **Necromancer** call `can?` with the `source` and `target` of the desired conversion.
 
 ```ruby
 converter = Necromancer.new
