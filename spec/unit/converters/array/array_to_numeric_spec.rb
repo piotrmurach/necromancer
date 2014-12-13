@@ -4,7 +4,7 @@ require 'spec_helper'
 
 RSpec.describe Necromancer::ArrayConverters::ArrayToNumericConverter, '.call' do
 
-  subject(:converter) { described_class.new }
+  subject(:converter) { described_class.new(:array, :numeric) }
 
   it "converts `['1','2.3','3.0']` to numeric array" do
     expect(converter.call(['1', '2.3', '3.0'])).to eq([1, 2.3, 3.0])
