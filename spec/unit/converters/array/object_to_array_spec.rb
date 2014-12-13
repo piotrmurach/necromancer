@@ -21,8 +21,8 @@ RSpec.describe Necromancer::ArrayConverters::ObjectToArrayConverter, '.call' do
 
   it "fails to convert" do
     Custom = Class.new do
-      def to_a
-        raise
+      def to_ary
+        raise ArgumentError
       end
     end
     custom = Custom.new
