@@ -52,7 +52,7 @@ module Necromancer
         begin
           !value.zero?
         rescue
-          strict ?  fail_conversion_type(value) : value
+          strict ? fail_conversion_type(value) : value
         end
       end
     end
