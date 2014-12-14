@@ -9,12 +9,41 @@ module Necromancer
 
     def_delegators :"@conversions", :register
 
-    # Create a context
+    # Create a context.
     #
     # @api private
-    def initialize
-      @conversions = Conversions.new
+    def initialize(&block)
+      block.call(configuration) if block_given?
+      @conversions = Conversions.new(configuration)
       @conversions.load
+    end
+
+    # The configuration object.
+    #
+    # @example
+    #   converter = Necromancer.new
+    #   converter.configuration.strict = true
+    #
+    # @return [Necromancer::Configuration]
+    #
+    # @api public
+    def configuration
+      @configuration ||= Configuration.new
+    end
+
+    # Yields global configuration to a block.
+    #
+    # @yield [Necromancer::Configuration]
+    #
+    # @example
+    #   converter = Necromancer.new
+    #   converter.configure do |config|
+    #     config.strict true
+    #   end
+    #
+    # @api public
+    def configure
+      yield configuration if block_given?
     end
 
     # Converts the object
