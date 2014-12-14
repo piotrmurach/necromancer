@@ -5,6 +5,7 @@ require 'date'
 require 'set'
 
 require 'necromancer/conversions'
+require 'necromancer/configuration'
 require 'necromancer/context'
 require 'necromancer/converter'
 require 'necromancer/null_converter'
