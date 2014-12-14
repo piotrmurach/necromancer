@@ -5,9 +5,19 @@ module Necromancer
   #
   # @api private
   class Converter
+    # Create an abstract converter
+    #
+    # @param [Object] source
+    #   the source object type
+    #
+    # @param [Object] target
+    #   the target object type
+    #
+    # @api public
     def initialize(source = nil, target = nil)
       @source = source if source
       @target = target if target
+      @config ||= Configuration.new
     end
 
     # Run converter
@@ -44,5 +54,9 @@ module Necromancer
     attr_accessor :target
 
     attr_accessor :convert
+
+    protected
+
+    attr_reader :config
   end # Converter
 end # Necromancer
