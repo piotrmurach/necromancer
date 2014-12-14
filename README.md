@@ -23,6 +23,7 @@ Conversion between Ruby core types frequently comes up in projects but is solved
 * Ability to specify own converters
 * Ability to compose conversions out of simpler ones
 * Support conversion of custom defined types
+* Ability to specify strict conversion mode
 
 ## Installation
 
@@ -48,6 +49,7 @@ Or install it yourself as:
   * [2.2 from](#22-from)
   * [2.3 to](#23-to)
   * [2.4 can?](#24-can)
+  * [2.5 configure](#25-configure)
 * [3. Converters](#3-converters)
   * [3.1 Array](#31-array)
   * [3.2 Boolean](#32-boolean)
@@ -171,6 +173,30 @@ converter.can?(:string, :integer)   # => true
 converter.can?(:unknown, :integer)  # => false
 ```
 
+### 2.5 configure
+
+You may set global configuration options on **Necromancer** instance by calling `configure` method:
+
+```ruby
+Necromancer.new do |config|
+  config.strict true
+end
+```
+
+or passing a block like so:
+
+```ruby
+converter = Necromancer.new
+converter.configure do |config|
+  config.copy false
+end
+```
+
+Available configuration options are:
+
+* strict - ensures correct types for conversion, by default `false`
+* copy - ensures only copy is modified, by default `true`
+
 ## 3. Converters
 
 **Necromancer** flexibility means you can register your own converters or use the already defined converters for such types as 'Array', 'Boolean', 'Hash', 'Numeric', 'Range'.
@@ -288,17 +314,21 @@ converter.convert('a-z').to(:range)   # => 'a'..'z'
 
 ### 3.6 Custom
 
+In case where provided conversions do not match your needs you can create your own and `register` with **Necromancer** by using an `Object` or a `Proc`.
+
 #### 3.6.1 Using an Object
 
 Firstly, you need to create a converter that at minimum requires to specify `call` method that will be invoked during conversion:
 
 ```ruby
 UpcaseConverter = Struct.new(:source, :target) do
-  def call(value, options)
+  def call(value, options = {})
     value.upcase
   end
 end
 ```
+
+Inside the `UpcaseConverter` you have access to global configuration options by directly calling `config` method.
 
 Then you need to specify what type conversions this converter will support. For example, `UpcaseConverter` will allow a string object to be converted to a new string object with content upper cased. This can be done:
 
