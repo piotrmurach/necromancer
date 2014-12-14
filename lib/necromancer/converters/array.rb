@@ -15,7 +15,7 @@ module Necromancer
       #
       # @api public
       def call(value, options = {})
-        strict = options.fetch(:strict, false)
+        strict = options.fetch(:strict, config.strict)
         case value.to_s
         when /^\s*?((\d+)(\s*(,|-)\s*)?)+\s*?$/
           value.to_s.split($4).map(&:to_i)
@@ -72,7 +72,7 @@ module Necromancer
       #
       # @api public
       def call(value, options = {})
-        strict = options.fetch(:strict, false)
+        strict = options.fetch(:strict, config.strict)
         begin
           Array(value)
         rescue
@@ -93,7 +93,7 @@ module Necromancer
       #
       # @api public
       def call(value, options = {})
-        strict = options.fetch(:strict, false)
+        strict = options.fetch(:strict, config.strict)
         begin
           value.to_set
         rescue

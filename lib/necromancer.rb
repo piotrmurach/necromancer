@@ -32,8 +32,8 @@ module Necromancer
   # @return [Context]
   #
   # @api private
-  def new
-    Context.new
+  def new(&block)
+    Context.new(&block)
   end
 
   module_function :new
