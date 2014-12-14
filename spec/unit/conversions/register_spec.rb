@@ -3,7 +3,6 @@
 require 'spec_helper'
 
 RSpec.describe Necromancer::Conversions, '.register' do
-
   it "allows to register converter" do
     context = described_class.new
     converter = double(:converter, {source: :string, target: :numeric})

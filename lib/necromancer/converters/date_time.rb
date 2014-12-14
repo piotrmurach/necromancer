@@ -6,7 +6,7 @@ module Necromancer
     # An object that converts a String to a Date
     class StringToDateConverter < Converter
       def call(value, options = {})
-        strict = options.fetch(:strict, false)
+        strict = options.fetch(:strict, config.strict)
         Date.parse(value)
       rescue
         strict ? fail_conversion_type(value) : value
@@ -16,7 +16,7 @@ module Necromancer
     # An object that converts a String to a DateTime
     class StringToDateTimeConverter < Converter
       def call(value, options = {})
-        strict = options.fetch(:strict, false)
+        strict = options.fetch(:strict, config.strict)
         DateTime.parse(value)
       rescue
         strict ? fail_conversion_type(value) : value

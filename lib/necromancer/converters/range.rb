@@ -23,7 +23,7 @@ module Necromancer
       #
       # @api public
       def call(value, options = {})
-        strict = options.fetch(:strict, false)
+        strict = options.fetch(:strict, config.strict)
         case value
         when SINGLE_DIGIT_MATCHER
           ::Range.new($1.to_i, $1.to_i)
