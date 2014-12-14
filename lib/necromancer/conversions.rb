@@ -14,7 +14,8 @@ module Necromancer
     #   conversion = Necromancer::Conversions.new
     #
     # @api public
-    def initialize
+    def initialize(configuration = Configuration.new)
+      @configuration = configuration
       @converter_map = {}
     end
 
@@ -65,6 +66,7 @@ module Necromancer
     def register(converter = nil, &block)
       converter ||= Converter.create(&block)
       key = generate_key(converter)
+      converter = add_config(converter, @configuration)
       return false if converter_map.key?(key)
       converter_map[key] = converter
       true
@@ -82,6 +84,16 @@ module Necromancer
       parts << (converter.source ? converter.source.to_s : 'none')
       parts << (converter.target ? converter.target.to_s : 'none')
       parts.join(DELIMITER)
+    end
+
+    # Inject config into converter
+    #
+    # @api private
+    def add_config(converter, config)
+      converter.instance_exec(:"@config") do |var|
+        instance_variable_set(var, config)
+      end
+      converter
     end
 
     # Map of type and conversion
