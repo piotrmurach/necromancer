@@ -175,7 +175,7 @@ converter.can?(:unknown, :integer)  # => false
 
 ### 2.5 configure
 
-You may set global configuration options on **Necromancer** instance by calling `configure` method:
+You may set global configuration options on **Necromancer** instance by passing a block like so:
 
 ```ruby
 Necromancer.new do |config|
@@ -183,7 +183,7 @@ Necromancer.new do |config|
 end
 ```
 
-or passing a block like so:
+or calling `configure` method:
 
 ```ruby
 converter = Necromancer.new
