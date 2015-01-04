@@ -54,7 +54,7 @@ module Necromancer
     #
     # @api public
     def to(target, options = {})
-      conversion = conversions[source || detect(object), detect(target)]
+      conversion = conversions[source || detect(object, false), detect(target)]
       conversion.call(object, options)
     end
 
@@ -63,13 +63,16 @@ module Necromancer
     # Detect object type
     #
     # @api private
-    def detect(object)
+    def detect(object, symbol_as_object = true)
       case object
       when TrueClass, FalseClass then :boolean
       when Fixnum, Bignum then :integer
-      when Symbol then object
       else
-        object.class.name.downcase
+        if object.is_a?(Symbol) && symbol_as_object
+          object
+        else
+          object.class.name.downcase
+        end
       end
     end
 

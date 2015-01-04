@@ -9,7 +9,8 @@ RSpec.describe Necromancer, '.convert' do
   it "indicates inability to perform the requested conversion" do
     expect {
       converter.convert(:foo).to(:float)
-    }.to raise_error(Necromancer::NoTypeConversionAvailableError)
+    }.to raise_error(Necromancer::NoTypeConversionAvailableError,
+                     /Conversion 'symbol->float' unavailable/)
   end
 
   context 'when array' do
