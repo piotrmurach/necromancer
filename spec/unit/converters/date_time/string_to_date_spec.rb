@@ -6,6 +6,10 @@ RSpec.describe Necromancer::DateTimeConverters::StringToDateConverter, '.call' d
 
   subject(:converter) { described_class.new(:string, :date) }
 
+  it "converts '1-1-2015' to date value" do
+    expect(converter.call('1-1-2015')).to eq(Date.parse('2015/01/01'))
+  end
+
   it "converts '2014/12/07' to date value" do
     expect(converter.call('2014/12/07')).to eq(Date.parse('2014/12/07'))
   end

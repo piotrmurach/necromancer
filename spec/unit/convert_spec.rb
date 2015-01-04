@@ -6,6 +6,12 @@ RSpec.describe Necromancer, '.convert' do
 
   subject(:converter) { described_class.new }
 
+  it "indicates inability to perform the requested conversion" do
+    expect {
+      converter.convert(:foo).to(:float)
+    }.to raise_error(Necromancer::NoTypeConversionAvailableError)
+  end
+
   context 'when array' do
     it "converts string to array" do
       expect(converter.convert("1,2,3").to(:array)).to eq([1,2,3])
@@ -99,6 +105,11 @@ RSpec.describe Necromancer, '.convert' do
     it "converts string to datetime" do
       expect(converter.convert('2014-12-07 17:35:44').to(:datetime)).
         to eq(DateTime.parse('2014-12-07 17:35:44'))
+    end
+
+    it "converts string to time" do
+      expect(converter.convert('12:30').to(:time)).
+        to eq(Time.parse('12:30'))
     end
   end
 end

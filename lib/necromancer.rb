@@ -3,6 +3,7 @@
 require 'forwardable'
 require 'date'
 require 'set'
+require 'time'
 
 require 'necromancer/conversions'
 require 'necromancer/configuration'
