@@ -12,7 +12,6 @@ matrix:
     - rvm: jruby-19mode
     - rvm: jruby-20mode
     - rvm: jruby-21mode
-    - rvm: jruby-22mode
     - rvm: jruby-head
     - rvm: rbx-2
   allow_failures:
