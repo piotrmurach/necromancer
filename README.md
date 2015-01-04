@@ -53,24 +53,25 @@ Or install it yourself as:
 * [3. Converters](#3-converters)
   * [3.1 Array](#31-array)
   * [3.2 Boolean](#32-boolean)
-  * [3.3 Hash](#33-hash)
-  * [3.4 Numeric](#34-numeric)
-  * [3.5 Range](#35-range)
-  * [3.6 Custom](#36-custom)
-    * [3.6.1 Using an Object](#361-using-an-object)
-    * [3.6.2 Using a Proc](#362-using-a-proc)
+  * [3.3 DateTime](#33-datetime)
+  * [3.4 Hash](#34-hash)
+  * [3.5 Numeric](#35-numeric)
+  * [3.6 Range](#36-range)
+  * [3.7 Custom](#37-custom)
+    * [3.7.1 Using an Object](#371-using-an-object)
+    * [3.7.2 Using a Proc](#372-using-a-proc)
 
 ## 1. Usage
 
-**Necromancer** requires you to instatiate it:
+First, create **Necromancer** instance:
 
 ```ruby
 converter = Necromancer.new
 ```
 
-Once initialized **Necromancer** knows how to handle numerous conversions and also allows you to add your custom type [converters](#35-custom).
+**Necromancer** knows how to handle conversions of various types using the `convert` method. The `convert` method takes as an argument the value to convert to. After `convert` method call, the `to` method accepts the type for the returned value.
 
-For example, to convert a string to a [range](#34-range) type:
+For example, to convert a string to a [range](#36-range) type:
 
 ```ruby
 converter.convert('1-10').to(:range)  # => 1..10
@@ -82,22 +83,31 @@ In order to handle [boolean](#32-boolean) conversions:
 converter.convert('t').to(:boolean)   # => true
 ```
 
-To convert string to [numeric](#34-numeric) value:
+To convert string to [numeric](#35-numeric) value:
 
 ```ruby
 converter.convert('10e1').to(:numeric)  # => 100
 ```
 
-or get [array](#31-array) elements into numeric type:
+or convert [array](#31-array) of string values into numeric type:
 
 ```ruby
 converter.convert(['1', '2.3', '3.0']).to(:numeric)  # => [1, 2.3, 3.0]
 ```
 
-However, if you want to tell **Necromancer** about source type use `from`:
+If you want to tell **Necromancer** about source type use `from`:
 
 ```ruby
 converter.convert(['1', '2.3', '3.0']).from(:array).to(:numeric) # => [1, 2.3, 3.0]
+```
+
+**Necromancer** also allows you to add [custom](#37-custom) conversions.
+
+Conversion isn't always possible, in which case a `Necromancer::NoTypeConversionAvailableError` is thrown indicating that `convert` doesn't know how to perform the requested conversion:
+
+```ruby
+converter.convert(:foo).to(:float)
+# => Necromancer::NoTypeConversionAvailableError: Conversion 'foo->float' unavailable.
 ```
 
 ## 2. Interface
@@ -118,6 +128,13 @@ Alternatively, you can use block:
 converter.convert { '1,10' }.to(:range) # => 1..10
 ```
 
+Conversion isn't always possible, in which case a `Necromancer::NoTypeConversionAvailableError` is thrown indicating that `convert` doesn't know how to perform the requested conversion:
+
+```ruby
+converter.convert(:foo).to(:float)
+# => Necromancer::NoTypeConversionAvailableError: Conversion 'foo->float' unavailable.
+```
+
 ### 2.2 from
 
 To specify conversion source type use `from` method:
@@ -132,11 +149,14 @@ The source parameters are:
 
 * :array
 * :boolean
+* :date
+* :datetime
 * :float
 * :integer
 * :numeric
 * :range
 * :string
+* :time
 
 ### 2.3 to
 
@@ -157,11 +177,14 @@ The target parameters are:
 
 * :array
 * :boolean
+* :date
+* :datetime
 * :float
 * :integer
 * :numeric
 * :range
 * :string
+* :time
 
 ### 2.4 can?
 
@@ -263,14 +286,38 @@ converter.convert(1).to(:boolean)  # => true
 converter.convert(0).to(:boolean)  # => false
 ```
 
-### 3.3 Hash
+### 3.3 DateTime
+
+**Necromancer** knows how to convert string to `date` object:
+
+```ruby
+converter.convert('1-1-2015').to(:date)    # => "2015-01-01"
+converter.convert('01/01/2015').to(:date)  # => "2015-01-01"
+```
+
+You can also convert string to `datetime`:
+
+```ruby
+converter.convert("1-1-2015").to(:datetime)          # => "2015-01-01T00:00:00+00:00"
+converter.convert("1-1-2015 15:12:44").to(:datetime) # => "2015-01-01T15:12:44+00:00"
+```
+
+To convert a string to a time instance do:
+
+```ruby
+converter.convert("01-01-2015").to(:time)       # => 2015-01-01 00:00:00 +0100
+converter.convert("01-01-2015 08:35").to(:time) # => 2015-01-01 08:35:00 +0100
+converter.convert("12:35").to(:time)            # => 2015-01-04 12:35:00 +0100
+```
+
+### 3.4 Hash
 
 ```ruby
 converter.convert({ x: '27.5', y: '4', z: '11'}).to(:numeric)
 # => { x: 27.5, y: 4, z: 11}
 ```
 
-### 3.4 Numeric
+### 3.5 Numeric
 
 **Necromancer** comes ready to convert all the primitive numeric values.
 
@@ -298,7 +345,7 @@ However, if you want to convert string to an appropriate matching numeric type d
 converter.convert('1e1').to(:numeric)   # => 10
 ```
 
-### 3.5 Range
+### 3.6 Range
 
 **Necromancer** is no stranger to figuring out ranges from strings. You can pass `,`, `-`, `..`, `...` characters to denote ranges:
 
@@ -312,11 +359,11 @@ or to create a range of letters:
 converter.convert('a-z').to(:range)   # => 'a'..'z'
 ```
 
-### 3.6 Custom
+### 3.7 Custom
 
 In case where provided conversions do not match your needs you can create your own and `register` with **Necromancer** by using an `Object` or a `Proc`.
 
-#### 3.6.1 Using an Object
+#### 3.7.1 Using an Object
 
 Firstly, you need to create a converter that at minimum requires to specify `call` method that will be invoked during conversion:
 
@@ -349,7 +396,7 @@ Finally, by invoking `convert` method and specifying `:upcase` as the target for
 converter.convert('magic').to(:upcase)   # => 'MAGIC'
 ```
 
-#### 3.6.2 Using a Proc
+#### 3.7.2 Using a Proc
 
 Using a Proc object you can create and immediately register a converter. You need to pass `source` and `target` of the conversion that will be used later on to match the conversion. The `convert` allows you to specify the actual conversion in block form. For example:
 
