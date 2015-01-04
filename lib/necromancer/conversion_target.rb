@@ -58,6 +58,13 @@ module Necromancer
       conversion.call(object, options)
     end
 
+    # Inspect this conversion
+    #
+    # @api public
+    def inspect
+      %(#<#{self.class}@#{object_id} @object=#{object}, @source=#{detect(object)}>)
+    end
+
     protected
 
     # Detect object type

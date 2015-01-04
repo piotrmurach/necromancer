@@ -71,6 +71,13 @@ module Necromancer
       false
     end
 
+    # Inspect this context
+    #
+    # @api public
+    def inspect
+      %(#<#{self.class}@#{object_id} @config=#{configuration}>)
+    end
+
     protected
 
     attr_reader :conversions
