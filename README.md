@@ -1,17 +1,19 @@
 # Necromancer
-[![Gem Version](https://badge.fury.io/rb/necromancer.png)][gem]
-[![Build Status](https://secure.travis-ci.org/peter-murach/necromancer.png?branch=master)][travis]
-[![Code Climate](https://codeclimate.com/github/peter-murach/necromancer.png)][codeclimate]
-[![Coverage Status](https://coveralls.io/repos/peter-murach/necromancer/badge.png)][coverage]
+[![Gem Version](https://badge.fury.io/rb/necromancer.svg)][gem]
+[![Build Status](https://secure.travis-ci.org/piotrmurach/necromancer.svg?branch=master)][travis]
+[![Code Climate](https://codeclimate.com/github/piotrmurach/necromancer/badges/gpa.svg)][codeclimate]
+[![Coverage Status](https://coveralls.io/repos/piotrmurach/necromancer/badge.svg)][coverage]
+[![Inline docs](http://inch-ci.org/github/piotrmurach/necromancer.svg?branch=master)][inchpages]
 
 [gem]: http://badge.fury.io/rb/necromancer
-[travis]: http://travis-ci.org/peter-murach/necromancer
-[codeclimate]: https://codeclimate.com/github/peter-murach/necromancer
-[coverage]: https://coveralls.io/r/peter-murach/necromancer
+[travis]: http://travis-ci.org/piotrmurach/necromancer
+[codeclimate]: https://codeclimate.com/github/piotrmurach/necromancer
+[coverage]: https://coveralls.io/r/piotrmurach/necromancer
+[inchpages]: http://inch-ci.org/github/piotrmurach/necromancer
 
 > Conversion from one object type to another with a bit of black magic.
 
-**Necromancer** provides independent type conversion component for [TTY](https://github.com/peter-murach/tty) toolkit.
+**Necromancer** provides independent type conversion component for [TTY](https://github.com/piotrmurach/tty) toolkit.
 
 ## Motivation
 
@@ -418,7 +420,7 @@ converter.convert('magic').to(:upcase)   # => 'MAGIC'
 
 ## Contributing
 
-1. Fork it ( https://github.com/peter-murach/necromancer/fork )
+1. Fork it ( https://github.com/piotrmurach/necromancer/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
@@ -426,4 +428,4 @@ converter.convert('magic').to(:upcase)   # => 'MAGIC'
 
 ## Copyright
 
-Copyright (c) 2014 Piotr Murach. See LICENSE for further details.
+Copyright (c) 2014-2016 Piotr Murach. See LICENSE for further details.

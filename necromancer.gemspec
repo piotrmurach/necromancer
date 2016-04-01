@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ['']
   spec.summary       = %q{Conversion from one object type to another with a bit of black magic.}
   spec.description   = %q{Conversion from one object type to another with a bit of black magic.}
-  spec.homepage      = 'https://github.com/peter-murach/necromancer'
+  spec.homepage      = 'https://github.com/piotrmurach/necromancer'
   spec.license       = 'MIT'
 
   spec.files         = `git ls-files -z`.split("\x0")
