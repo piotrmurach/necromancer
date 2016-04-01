@@ -2,13 +2,13 @@
 [![Gem Version](https://badge.fury.io/rb/necromancer.svg)][gem]
 [![Build Status](https://secure.travis-ci.org/piotrmurach/necromancer.svg?branch=master)][travis]
 [![Code Climate](https://codeclimate.com/github/piotrmurach/necromancer/badges/gpa.svg)][codeclimate]
-[![Coverage Status](https://coveralls.io/repos/piotrmurach/necromancer/badge.svg)][coverage]
+[![Coverage Status](https://coveralls.io/repos/piotrmurach/necromancer/badge.svg?branch=master)][coverage]
 [![Inline docs](http://inch-ci.org/github/piotrmurach/necromancer.svg?branch=master)][inchpages]
 
 [gem]: http://badge.fury.io/rb/necromancer
 [travis]: http://travis-ci.org/piotrmurach/necromancer
 [codeclimate]: https://codeclimate.com/github/piotrmurach/necromancer
-[coverage]: https://coveralls.io/r/piotrmurach/necromancer
+[coverage]: https://coveralls.io/repos/github/piotrmurach/necromancer?branch=master
 [inchpages]: http://inch-ci.org/github/piotrmurach/necromancer
 
 > Conversion from one object type to another with a bit of black magic.
