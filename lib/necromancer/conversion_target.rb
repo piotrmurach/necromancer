@@ -73,7 +73,7 @@ module Necromancer
     def detect(object, symbol_as_object = true)
       case object
       when TrueClass, FalseClass then :boolean
-      when Fixnum, Bignum then :integer
+      when Integer then :integer
       else
         if object.is_a?(Symbol) && symbol_as_object
           object
