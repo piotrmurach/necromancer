@@ -11,4 +11,5 @@ group :metrics do
   gem 'coveralls', '~> 0.8.2'
   gem 'simplecov', '~> 0.10.0'
   gem 'yardstick', '~> 0.9.9'
+  gem 'term-ansicolor', '=1.3.2'
 end
