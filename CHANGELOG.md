@@ -5,6 +5,11 @@
 ### Added
 * Add :string -> :time conversion
 * Add inspection methods to Context and ConversionTarget
+* Add module level Necromancer#convert for convenience and more functional style
+
+### Changed
+* Change fail to raise in ConversionTarget#for
+* Change fail to raise in Conversions
 
 ### Fixed
 * Fix bug with type detection
