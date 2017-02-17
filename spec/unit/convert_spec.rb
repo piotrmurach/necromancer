@@ -23,6 +23,10 @@ RSpec.describe Necromancer, '.convert' do
     expect(converter.convert('1,2,3') >> []).to eq([1,2,3])
   end
 
+  it "allows to specify class as conversion target" do
+    expect(converter.convert('1,2,3') >> Array).to eq([1,2,3])
+  end
+
   context 'when array' do
     it "converts string to array" do
       expect(converter.convert("1,2,3").to(:array)).to eq([1,2,3])

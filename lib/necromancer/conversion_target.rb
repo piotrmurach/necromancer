@@ -80,6 +80,7 @@ module Necromancer
       case object
       when TrueClass, FalseClass then :boolean
       when Integer then :integer
+      when Class   then object.name.downcase
       else
         if object.is_a?(Symbol) && symbol_as_object
           object
