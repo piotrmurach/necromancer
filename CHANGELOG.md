@@ -1,15 +1,17 @@
 # Change log
 
-## [v0.4.0] - 2017-02-x
+## [v0.4.0] - 2017-02-18
 
 ### Added
 * Add :string -> :time conversion
 * Add inspection methods to Context and ConversionTarget
 * Add module level Necromancer#convert for convenience and more functional style
+* Add ConversionTarget#>> call for functional style converions
 
 ### Changed
 * Change fail to raise in ConversionTarget#for
 * Change fail to raise in Conversions
+* Change ConversionTarget#detect to handle Class type coercion
 
 ### Fixed
 * Fix bug with type detection
