@@ -22,4 +22,17 @@ module Necromancer
     Context.new(&block)
   end
   module_function :new
+
+  # Convenience to directly call conversion
+  #
+  # @example
+  #   Necromancer.convert('1').to(:integer)
+  #
+  # @return [ConversionTarget]
+  #
+  # @api public
+  def convert(*args, &block)
+    Context.new.convert(*args, &block)
+  end
+  module_function :convert
 end # Necromancer

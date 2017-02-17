@@ -1,6 +1,4 @@
-# coding: utf-8
-
-require 'spec_helper'
+# encoding: utf-8
 
 RSpec.describe Necromancer, '.convert' do
 
@@ -11,6 +9,10 @@ RSpec.describe Necromancer, '.convert' do
       converter.convert(:foo).to(:float)
     }.to raise_error(Necromancer::NoTypeConversionAvailableError,
                      /Conversion 'symbol->float' unavailable/)
+  end
+
+  it "allows for module level convert call" do
+    expect(Necromancer.convert('1,2,3').to(:array)).to eq([1,2,3])
   end
 
   context 'when array' do
