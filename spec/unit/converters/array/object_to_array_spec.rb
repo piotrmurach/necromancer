@@ -1,6 +1,4 @@
-# coding: utf-8
-
-require 'spec_helper'
+# encoding: utf-8
 
 RSpec.describe Necromancer::ArrayConverters::ObjectToArrayConverter, '.call' do
   subject(:converter) { described_class.new(:object, :array) }

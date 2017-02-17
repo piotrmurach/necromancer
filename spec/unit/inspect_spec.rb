@@ -1,6 +1,4 @@
-# coding: utf-8
-
-require 'spec_helper'
+# encoding: utf-8
 
 RSpec.describe Necromancer, '.inspect' do
   subject(:converter) { described_class.new }
