@@ -224,7 +224,7 @@ Available configuration options are:
 
 ## 3. Converters
 
-**Necromancer** flexibility means you can register your own converters or use the already defined converters for such types as 'Array', 'Boolean', 'Hash', 'Numeric', 'Range'.
+**Necromancer** flexibility means you can register your own converters or use the already defined converters for such types as `Array`, `Boolean`, `Hash`, `Numeric`, `Range`.
 
 ### 3.1 Array
 
@@ -428,4 +428,4 @@ converter.convert('magic').to(:upcase)   # => 'MAGIC'
 
 ## Copyright
 
-Copyright (c) 2014-2016 Piotr Murach. See LICENSE for further details.
+Copyright (c) 2014-2017 Piotr Murach. See LICENSE for further details.
