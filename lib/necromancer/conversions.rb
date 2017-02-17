@@ -53,22 +53,21 @@ module Necromancer
     def [](source, target)
       key = "#{source}#{DELIMITER}#{target}"
       converter_map[key] ||
-      converter_map["object->#{target}"] ||
-      fail_no_type_conversion_available(key)
+        converter_map["object#{DELIMITER}#{target}"] ||
+        raise_no_type_conversion_available(key)
     end
 
-    # Fail with conversion error
+    # Register a converter
     #
-    # @api private
-    def fail_no_type_conversion_available(key)
-      fail NoTypeConversionAvailableError, "Conversion '#{key}' unavailable."
-    end
-
     # @example with simple object
-    #
+    #   conversions.register NullConverter.new(:array, :array)
     #
     # @example with block
-    #
+    #   conversions.register do |c|
+    #     c.source = :array
+    #     c.target = :array
+    #     c.convert = -> { |val, options| val }
+    #   end
     #
     # @api public
     def register(converter = nil, &block)
@@ -80,11 +79,23 @@ module Necromancer
       true
     end
 
+    # Export all the conversions as hash
+    #
+    # @return [Hash[String, String]]
+    #
+    # @api public
     def to_hash
       converter_map.dup
     end
 
     protected
+
+    # Fail with conversion error
+    #
+    # @api private
+    def raise_no_type_conversion_available(key)
+      raise NoTypeConversionAvailableError, "Conversion '#{key}' unavailable."
+    end
 
     # @api private
     def generate_key(converter)
