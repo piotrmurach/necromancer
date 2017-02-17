@@ -49,6 +49,9 @@ module Necromancer
     # @example
     #   converter.convert('1').to(:numeric)  # => 1
     #
+    # @example
+    #   converter.convert('1') >> Integer # => 1
+    #
     # @return [Object]
     #   the converted target type
     #
@@ -57,6 +60,7 @@ module Necromancer
       conversion = conversions[source || detect(object, false), detect(target)]
       conversion.call(object, options)
     end
+    alias >> to
 
     # Inspect this conversion
     #
@@ -67,7 +71,9 @@ module Necromancer
 
     protected
 
-    # Detect object type
+    # Detect object type and coerce into known key type
+    #
+    # @param [Object] object
     #
     # @api private
     def detect(object, symbol_as_object = true)
