@@ -65,42 +65,39 @@ Or install it yourself as:
 
 ## 1. Usage
 
-First, create **Necromancer** instance:
-
-```ruby
-converter = Necromancer.new
-```
-
-**Necromancer** knows how to handle conversions of various types using the `convert` method. The `convert` method takes as an argument the value to convert to. After `convert` method call, the `to` method accepts the type for the returned value.
+**Necromancer** knows how to handle conversions between various types using the `convert` method. The `convert` method takes as an argument the value to convert from.  Then to perform actual coercion use the `to` or more functional style `>>` method that accepts the type for the returned value which can be `:symbol`, `object` or `ClassName`.
 
 For example, to convert a string to a [range](#36-range) type:
 
 ```ruby
-converter.convert('1-10').to(:range)  # => 1..10
+Necromancer.convert('1-10').to(:range)  # => 1..10
+Necromancer.convert('1-10') >> :range   # => 1..10
+Necromancer.convert('1-10') >> Range    # => 1..10
 ```
 
 In order to handle [boolean](#32-boolean) conversions:
 
 ```ruby
-converter.convert('t').to(:boolean)   # => true
+Necromancer.convert('t').to(:boolean)   # => true
+Necromancer.convert('t') >> true        # => true
 ```
 
 To convert string to [numeric](#35-numeric) value:
 
 ```ruby
-converter.convert('10e1').to(:numeric)  # => 100
+Necromancer.convert('10e1').to(:numeric)  # => 100
 ```
 
 or convert [array](#31-array) of string values into numeric type:
 
 ```ruby
-converter.convert(['1', '2.3', '3.0']).to(:numeric)  # => [1, 2.3, 3.0]
+Necromancer.convert(['1', '2.3', '3.0']).to(:numeric)  # => [1, 2.3, 3.0]
 ```
 
-If you want to tell **Necromancer** about source type use `from`:
+To provide extra information about the conversion value type you can use `from`.
 
 ```ruby
-converter.convert(['1', '2.3', '3.0']).from(:array).to(:numeric) # => [1, 2.3, 3.0]
+Necromancer.convert(['1', '2.3', '3.0']).from(:array).to(:numeric) # => [1, 2.3, 3.0]
 ```
 
 **Necromancer** also allows you to add [custom](#37-custom) conversions.
@@ -108,7 +105,7 @@ converter.convert(['1', '2.3', '3.0']).from(:array).to(:numeric) # => [1, 2.3, 3
 Conversion isn't always possible, in which case a `Necromancer::NoTypeConversionAvailableError` is thrown indicating that `convert` doesn't know how to perform the requested conversion:
 
 ```ruby
-converter.convert(:foo).to(:float)
+Necromancer.convert(:foo).to(:float)
 # => Necromancer::NoTypeConversionAvailableError: Conversion 'foo->float' unavailable.
 ```
 
@@ -121,19 +118,19 @@ converter.convert(:foo).to(:float)
 For the purpose of divination, **Necromancer** uses `convert` method to turn source type into target type. For example, in order to convert a string into a range type do:
 
 ```ruby
-converter.convert('1,10').to(:range)  #  => 1..10
+Necromancer.convert('1,10').to(:range)  #  => 1..10
 ```
 
 Alternatively, you can use block:
 
 ```ruby
-converter.convert { '1,10' }.to(:range) # => 1..10
+Necromancer.convert { '1,10' }.to(:range) # => 1..10
 ```
 
 Conversion isn't always possible, in which case a `Necromancer::NoTypeConversionAvailableError` is thrown indicating that `convert` doesn't know how to perform the requested conversion:
 
 ```ruby
-converter.convert(:foo).to(:float)
+Necromancer.convert(:foo).to(:float)
 # => Necromancer::NoTypeConversionAvailableError: Conversion 'foo->float' unavailable.
 ```
 
@@ -142,7 +139,7 @@ converter.convert(:foo).to(:float)
 To specify conversion source type use `from` method:
 
 ```ruby
-converter.convert('1.0').from(:string).to(:numeric)
+Necromancer.convert('1.0').from(:string).to(:numeric)
 ```
 
 In majority of cases you do not need to specify `from` as the type will be inferred from the `convert` method argument and then appropriate conversion will be applied to result in `target` type such as `:numeric`. However, if you do not control the input to `convert` and want to ensure consistent behaviour please use `from`.
@@ -162,16 +159,19 @@ The source parameters are:
 
 ### 2.3 to
 
-To convert objects between types, **Necromancer** provides several target types. The `to` method allows you to pass target as an argument to perform actual conversion:
+To convert objects between types, **Necromancer** provides several target types. The `to` or functional style `>>` method allows you to pass target as an argument to perform actual conversion. The target can be one of `:symbol`, `object` or `ClassName`:
 
 ```ruby
-converter.convert('yes').to(:boolean)   # => true
+Necromancer.convert('yes').to(:boolean)   # => true
+Necromancer.convert('yes') >> :boolean    # => true
+Necromancer.convert('yes') >> true        # => true
+Necromancer.convert('yes') >> TrueClass   # => true
 ```
 
 By default, when target conversion fails the orignal value is returned. However, you can pass `strict` as an additional argument to ensure failure when conversion cannot be performed:
 
 ```ruby
-converter.convert('1a').to(:integer, strict: true)
+Necromancer.convert('1a').to(:integer, strict: true)
 # => raises Necromancer::ConversionTypeError
 ```
 
@@ -231,39 +231,39 @@ Available configuration options are:
 The **Necromancer** allows you to transform arbitrary object into array:
 
 ```ruby
-converter.convert(nil).to(:array)     # => []
-converter.convert({x: 1}).to(:array)  # => [[:x, 1]]
+Necromancer.convert(nil).to(:array)     # => []
+Necromancer.convert({x: 1}).to(:array)  # => [[:x, 1]]
 ```
 
 In addition, **Necromancer** excels at converting `,` or `-` delimited string into an array object:
 
 ```ruby
-converter.convert('a, b, c').to(:array)  # => ['a', 'b', 'c']
+Necromancer.convert('a, b, c').to(:array)  # => ['a', 'b', 'c']
 ```
 
 If the string is a list of `-` or `,` separated numbers, they will be converted to their respective numeric types:
 
 ```ruby
-converter.convert('1 - 2 - 3').to(:array)  # => [1, 2, 3]
+Necromancer.convert('1 - 2 - 3').to(:array)  # => [1, 2, 3]
 ```
 
 You can also convert array containing string objects to array containing numeric values:
 
 ```ruby
-converter.convert(['1', '2.3', '3.0']).to(:numeric)
+Necromancer.convert(['1', '2.3', '3.0']).to(:numeric)
 ```
 
 When in `strict` mode the conversion will raise a `Necromancer::ConversionTypeError` error like so:
 
 ```ruby
-converter.convert(['1', '2.3', false]).to(:numeric, strict: true)
+Necromancer.convert(['1', '2.3', false]).to(:numeric, strict: true)
 # => Necromancer::ConversionTypeError: false cannot be converted from `array` to `numeric`
 ```
 
 However, in `non-strict` mode the value will be simply returned unchanged:
 
 ```ruby
-converter.convert(['1', '2.3', false]).to(:numeric, strict: false)
+Necromancer.convert(['1', '2.3', false]).to(:numeric, strict: false)
 # => [1, 2.3, false]
 ```
 
@@ -272,20 +272,20 @@ converter.convert(['1', '2.3', false]).to(:numeric, strict: false)
 The **Necromancer** allows you to convert a string object to boolean object. The `1`, `'1'`, `'t'`, `'T'`, `'true'`, `'TRUE'`, `'y'`, `'Y'`, `'yes'`, `'Yes'`, `'on'`, `'ON'` values are converted to `TrueClass`.
 
 ```ruby
-converter.convert('yes').to(:boolean)  # => true
+Necromancer.convert('yes').to(:boolean)  # => true
 ```
 
 Similarly, the `0`, `'0'`, `'f'`, `'F'`, `'false'`, `'FALSE'`, `'n'`, `'N'`, `'no'`, `'No'`, `'off'`, `'OFF'` values are converted to `FalseClass`.
 
 ```ruby
-converter.convert('no').to(:boolean) # => false
+Necromancer.convert('no').to(:boolean) # => false
 ```
 
 You can also convert an integer object to boolean:
 
 ```ruby
-converter.convert(1).to(:boolean)  # => true
-converter.convert(0).to(:boolean)  # => false
+Necromancer.convert(1).to(:boolean)  # => true
+Necromancer.convert(0).to(:boolean)  # => false
 ```
 
 ### 3.3 DateTime
@@ -293,29 +293,29 @@ converter.convert(0).to(:boolean)  # => false
 **Necromancer** knows how to convert string to `date` object:
 
 ```ruby
-converter.convert('1-1-2015').to(:date)    # => "2015-01-01"
-converter.convert('01/01/2015').to(:date)  # => "2015-01-01"
+Necromancer.convert('1-1-2015').to(:date)    # => "2015-01-01"
+Necromancer.convert('01/01/2015').to(:date)  # => "2015-01-01"
 ```
 
 You can also convert string to `datetime`:
 
 ```ruby
-converter.convert("1-1-2015").to(:datetime)          # => "2015-01-01T00:00:00+00:00"
-converter.convert("1-1-2015 15:12:44").to(:datetime) # => "2015-01-01T15:12:44+00:00"
+Necromancer.convert("1-1-2015").to(:datetime)          # => "2015-01-01T00:00:00+00:00"
+Necromancer.convert("1-1-2015 15:12:44").to(:datetime) # => "2015-01-01T15:12:44+00:00"
 ```
 
 To convert a string to a time instance do:
 
 ```ruby
-converter.convert("01-01-2015").to(:time)       # => 2015-01-01 00:00:00 +0100
-converter.convert("01-01-2015 08:35").to(:time) # => 2015-01-01 08:35:00 +0100
-converter.convert("12:35").to(:time)            # => 2015-01-04 12:35:00 +0100
+Necromancer.convert("01-01-2015").to(:time)       # => 2015-01-01 00:00:00 +0100
+Necromancer.convert("01-01-2015 08:35").to(:time) # => 2015-01-01 08:35:00 +0100
+Necromancer.convert("12:35").to(:time)            # => 2015-01-04 12:35:00 +0100
 ```
 
 ### 3.4 Hash
 
 ```ruby
-converter.convert({ x: '27.5', y: '4', z: '11'}).to(:numeric)
+Necromancer.convert({ x: '27.5', y: '4', z: '11'}).to(:numeric)
 # => { x: 27.5, y: 4, z: 11}
 ```
 
@@ -326,25 +326,25 @@ converter.convert({ x: '27.5', y: '4', z: '11'}).to(:numeric)
 To convert a string to a float do:
 
 ```ruby
-converter.convert('1.2a').to(:float)  #  => 1.2
+Necromancer.convert('1.2a').to(:float)  #  => 1.2
 ```
 
 Conversion to numeric in strict mode raises `Necromancer::ConversionTypeError`:
 
 ```ruby
-converter.convert('1.2a').to(:float, strict: true) # => raises error
+Necromancer.convert('1.2a').to(:float, strict: true) # => raises error
 ```
 
 To convert a string to an integer do:
 
 ```ruby
-converter.convert('1a').to(:integer)  #  => 1
+Necromancer.convert('1a').to(:integer)  #  => 1
 ```
 
 However, if you want to convert string to an appropriate matching numeric type do:
 
 ```ruby
-converter.convert('1e1').to(:numeric)   # => 10
+Necromancer.convert('1e1').to(:numeric)   # => 10
 ```
 
 ### 3.6 Range
@@ -352,13 +352,13 @@ converter.convert('1e1').to(:numeric)   # => 10
 **Necromancer** is no stranger to figuring out ranges from strings. You can pass `,`, `-`, `..`, `...` characters to denote ranges:
 
 ```ruby
-converter.convert('1,10').to(:range)  # => 1..10
+Necromancer.convert('1,10').to(:range)  # => 1..10
 ```
 
 or to create a range of letters:
 
 ```ruby
-converter.convert('a-z').to(:range)   # => 'a'..'z'
+Necromancer.convert('a-z').to(:range)   # => 'a'..'z'
 ```
 
 ### 3.7 Custom
@@ -420,11 +420,17 @@ converter.convert('magic').to(:upcase)   # => 'MAGIC'
 
 ## Contributing
 
+Bug reports and pull requests are welcome on GitHub at https://github.com/piotrmurach/necromancer. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+
 1. Fork it ( https://github.com/piotrmurach/necromancer/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create a new Pull Request
+
+## License
+
+The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
 
 ## Copyright
 
