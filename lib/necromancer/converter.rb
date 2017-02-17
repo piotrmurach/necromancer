@@ -1,4 +1,6 @@
-# coding: utf-8
+# encoding: utf-8
+
+require_relative 'configuration'
 
 module Necromancer
   # Abstract converter used internally as a base for other converters

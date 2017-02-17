@@ -1,4 +1,12 @@
-# coding: utf-8
+# encoding: utf-8
+
+require_relative 'configuration'
+require_relative 'converter'
+require_relative 'converters/array'
+require_relative 'converters/boolean'
+require_relative 'converters/date_time'
+require_relative 'converters/numeric'
+require_relative 'converters/range'
 
 module Necromancer
   # Represents the context used to configure various converters

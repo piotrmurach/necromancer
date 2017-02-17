@@ -1,4 +1,8 @@
-# coding: utf-8
+# encoding: utf-8
+
+require 'set'
+
+require_relative '../converter'
 
 module Necromancer
   # Container for Array converter classes

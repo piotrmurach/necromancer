@@ -1,4 +1,4 @@
-# coding: utf-8
+# encoding: utf-8
 
 module Necromancer
   VERSION = "0.3.0"

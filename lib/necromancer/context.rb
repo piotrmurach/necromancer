@@ -1,4 +1,10 @@
-# coding: utf-8
+# encoding: utf-8
+
+require 'forwardable'
+
+require_relative 'configuration'
+require_relative 'conversions'
+require_relative 'conversion_target'
 
 module Necromancer
   # A class used by Necromancer to provide user interace

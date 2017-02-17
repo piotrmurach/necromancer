@@ -1,4 +1,10 @@
-# coding: utf-8
+# encoding: utf-8
+
+require 'date'
+require 'time'
+
+require_relative '../converter'
+require_relative '../null_converter'
 
 module Necromancer
   # Container for Date converter classes
