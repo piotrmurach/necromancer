@@ -19,13 +19,13 @@ module Necromancer
     def self.for(context, value, block)
       if UndefinedValue.equal?(value)
         unless block
-          fail ArgumentError,
-               'You need to pass either argument or a block to `convert`.'
+          raise ArgumentError,
+                'You need to pass either argument or a block to `convert`.'
         end
         new(context, block.call)
       elsif block
-        fail ArgumentError,
-             'You cannot pass both an argument and a block to `convert`.'
+        raise ArgumentError,
+              'You cannot pass both an argument and a block to `convert`.'
       else
         new(context, value)
       end
