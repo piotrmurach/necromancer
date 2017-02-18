@@ -22,9 +22,9 @@ module Necromancer
     #   conversion = Necromancer::Conversions.new
     #
     # @api public
-    def initialize(configuration = Configuration.new)
+    def initialize(configuration = Configuration.new, map = {})
       @configuration = configuration
-      @converter_map = {}
+      @converter_map = map.dup
     end
 
     # Load converters
@@ -56,6 +56,7 @@ module Necromancer
         converter_map["object#{DELIMITER}#{target}"] ||
         raise_no_type_conversion_available(key)
     end
+    alias fetch []
 
     # Register a converter
     #
