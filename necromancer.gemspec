@@ -12,7 +12,9 @@ Gem::Specification.new do |spec|
   spec.homepage      = 'https://github.com/piotrmurach/necromancer'
   spec.license       = 'MIT'
 
-  spec.files         = `git ls-files -z`.split("\x0")
+  spec.files         = Dir['{lib,spec}/**/*.rb']
+  spec.files        += Dir['tasks/*', 'necromancer.gemspec']
+  spec.files        += Dir['README.md', 'CHANGELOG.md', 'LICENSE.txt', 'Rakefile']
   spec.test_files    = spec.files.grep(%r{^(spec)/})
   spec.require_paths = ["lib"]
 
