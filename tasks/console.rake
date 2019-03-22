@@ -1,10 +1,11 @@
-# encoding: utf-8
+# frozen_string_literal: true
 
 desc 'Load gem inside irb console'
 task :console do
   require 'irb'
   require 'irb/completion'
-  require File.join(__FILE__, '../../lib/necromancer')
+  require_relative '../lib/necromancer'
   ARGV.clear
   IRB.start
 end
+task :c => :console
