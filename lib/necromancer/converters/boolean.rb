@@ -1,4 +1,4 @@
-# encoding: utf-8
+# frozen_string_literal: true
 
 require_relative '../converter'
 require_relative '../null_converter'
@@ -34,7 +34,7 @@ module Necromancer
         case value.to_s
         when TRUE_MATCHER then true
         when FALSE_MATCHER then false
-        else strict ? fail_conversion_type(value) : value
+        else strict ? raise_conversion_type(value) : value
         end
       end
     end
@@ -55,7 +55,7 @@ module Necromancer
         begin
           !value.zero?
         rescue
-          strict ? fail_conversion_type(value) : value
+          strict ? raise_conversion_type(value) : value
         end
       end
     end
@@ -73,10 +73,10 @@ module Necromancer
       # @api public
       def call(value, options = {})
         strict = options.fetch(:strict, config.strict)
-        if ['TrueClass', 'FalseClass'].include?(value.class.name)
+        if %w[TrueClass FalseClass].include?(value.class.name)
           value ? 1 : 0
         else
-          strict ? fail_conversion_type(value) : value
+          strict ? raise_conversion_type(value) : value
         end
       end
     end

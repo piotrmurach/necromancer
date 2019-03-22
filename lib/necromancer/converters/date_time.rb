@@ -1,4 +1,4 @@
-# encoding: utf-8
+# frozen_string_literal: true
 
 require 'date'
 require 'time'
@@ -24,7 +24,7 @@ module Necromancer
         strict = options.fetch(:strict, config.strict)
         Date.parse(value)
       rescue
-        strict ? fail_conversion_type(value) : value
+        strict ? raise_conversion_type(value) : value
       end
     end
 
@@ -41,7 +41,7 @@ module Necromancer
         strict = options.fetch(:strict, config.strict)
         DateTime.parse(value)
       rescue
-        strict ? fail_conversion_type(value) : value
+        strict ? raise_conversion_type(value) : value
       end
     end
 
@@ -61,7 +61,7 @@ module Necromancer
         strict = options.fetch(:strict, config.strict)
         Time.parse(value)
       rescue
-        strict ? fail_conversion_type(value) : value
+        strict ? raise_conversion_type(value) : value
       end
     end
 

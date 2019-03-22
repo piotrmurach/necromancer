@@ -1,4 +1,4 @@
-# encoding: utf-8
+# frozen_string_literal: true
 
 require_relative '../converter'
 require_relative '../null_converter'
@@ -22,7 +22,7 @@ module Necromancer
         strict = options.fetch(:strict, config.strict)
         Integer(value)
       rescue
-        strict ? fail_conversion_type(value) : value.to_i
+        strict ? raise_conversion_type(value) : value.to_i
       end
     end
 
@@ -51,7 +51,7 @@ module Necromancer
         strict = options.fetch(:strict, config.strict)
         Float(value)
       rescue
-        strict ? fail_conversion_type(value) : value.to_f
+        strict ? raise_conversion_type(value) : value.to_f
       end
     end
 
@@ -74,7 +74,7 @@ module Necromancer
         when FLOAT_MATCHER
           StringToFloatConverter.new(:string, :float).call(value, options)
         else
-          strict ? fail_conversion_type(value) : value
+          strict ? raise_conversion_type(value) : value
         end
       end
     end

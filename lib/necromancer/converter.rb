@@ -1,4 +1,4 @@
-# encoding: utf-8
+# frozen_string_literal: true
 
 require_relative 'configuration'
 
@@ -26,7 +26,7 @@ module Necromancer
     #
     # @api private
     def call(*)
-      fail NotImplementedError
+      raise NotImplementedError
     end
 
     # Creates anonymous converter
@@ -46,8 +46,8 @@ module Necromancer
     #   the value that cannot be converted
     #
     # @api private
-    def fail_conversion_type(value)
-      fail ConversionTypeError, "'#{value}' could not be converted " \
+    def raise_conversion_type(value)
+      raise ConversionTypeError, "'#{value}' could not be converted " \
                                 "from `#{source}` into `#{target}` "
     end
 

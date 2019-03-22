@@ -1,4 +1,4 @@
-# encoding: utf-8
+# frozen_string_literal: true
 
 require 'set'
 
@@ -26,7 +26,7 @@ module Necromancer
         when /^((\w)(\s*(,|-)\s*)?)+$/
           value.to_s.split($4)
         else
-          strict ? fail_conversion_type(value) : Array(value)
+          strict ? raise_conversion_type(value) : Array(value)
         end
       end
     end
@@ -80,7 +80,7 @@ module Necromancer
         begin
           Array(value)
         rescue
-          strict ? fail_conversion_type(value) : value
+          strict ? raise_conversion_type(value) : value
         end
       end
     end
@@ -101,7 +101,7 @@ module Necromancer
         begin
           value.to_set
         rescue
-          strict ? fail_conversion_type(value) : value
+          strict ? raise_conversion_type(value) : value
         end
       end
     end
