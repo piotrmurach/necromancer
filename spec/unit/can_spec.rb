@@ -1,4 +1,4 @@
-# encoding: utf-8
+# frozen_string_literal: true
 
 RSpec.describe Necromancer, 'can?' do
   it "checks if conversion is possible" do

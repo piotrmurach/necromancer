@@ -1,4 +1,4 @@
-# encoding: utf-8
+# frozen_string_literal: true
 
 RSpec.describe Necromancer::Conversions, '#to_hash' do
   it 'exports default conversions to hash' do

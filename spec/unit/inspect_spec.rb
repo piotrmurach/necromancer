@@ -1,4 +1,4 @@
-# encoding: utf-8
+# frozen_string_literal: true
 
 RSpec.describe Necromancer, '.inspect' do
   subject(:converter) { described_class.new }

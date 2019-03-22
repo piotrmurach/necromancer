@@ -1,4 +1,4 @@
-# encoding: utf-8
+# frozen_string_literal: true
 
 RSpec.describe Necromancer::Conversions, '#fetch' do
   it "retrieves conversion given source & target" do
