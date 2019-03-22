@@ -1,11 +1,11 @@
-# encoding: utf-8
+# frozen_string_literal: true
 
 require_relative 'converter'
 
 module Necromancer
   # A pass through converter
   class NullConverter < Converter
-    def call(value, options = {})
+    def call(value, **options)
       value
     end
   end # NullConverter
