@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 gemspec
 
 group :development do
-  gem 'benchmark-ips', '~> 2.0.0'
+  gem 'benchmark-ips', '~> 2.7.2'
 end
 
 group :metrics do
