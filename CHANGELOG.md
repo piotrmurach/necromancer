@@ -1,5 +1,12 @@
 # Change log
 
+## [v0.5.0] - 2019-03-23
+
+### Changed
+* Change to use Ruby >= 2.0.0
+* Change to load files directly without git
+* Change to raise on error in place of fail
+
 ## [v0.4.0] - 2017-02-18
 
 ### Added
@@ -37,6 +44,7 @@
 
 * Initial implementation and release
 
+[v0.5.0]: https://github.com/piotrmurach/necromancer/compare/v0.4.0...v0.5.0
 [v0.4.0]: https://github.com/piotrmurach/necromancer/compare/v0.3.0...v0.4.0
 [v0.3.0]: https://github.com/piotrmurach/necromancer/compare/v0.2.0...v0.3.0
 [v0.2.0]: https://github.com/piotrmurach/necromancer/compare/v0.1.0...v0.2.0
