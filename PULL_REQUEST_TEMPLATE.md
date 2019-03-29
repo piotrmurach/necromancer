@@ -12,7 +12,8 @@ Possible drawbacks applying this change.
 
 ### Requirements
 Put an X between brackets on each line if you have done the item:
-[] Tests written & passing locally?
-[] Code style checked?
-[] Rebased with `master` branch?
-[] Documentation updated?
+
+- [ ] Tests written & passing locally?
+- [ ] Code style checked?
+- [ ] Rebased with `master` branch?
+- [ ] Documentation updated?
