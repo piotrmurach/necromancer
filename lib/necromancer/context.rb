@@ -53,7 +53,7 @@ module Necromancer
     end
 
     # Converts the object
-    # @param [Object] value
+    # @param [Object] object
     #   any object to be converted
     #
     # @api public
