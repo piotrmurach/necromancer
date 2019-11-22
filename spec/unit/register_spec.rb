@@ -4,7 +4,7 @@ RSpec.describe Necromancer, '.register' do
   it "allows ro register converter" do
     converter = described_class.new
     UpcaseConverter = Struct.new(:source, :target) do
-      def call(value, options)
+      def call(value, **options)
         value.to_s.upcase
       end
     end

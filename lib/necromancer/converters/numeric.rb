@@ -18,7 +18,7 @@ module Necromancer
       #   converter.call('1abc')  # => 1
       #
       # @api public
-      def call(value, options = {})
+      def call(value, **options)
         strict = options.fetch(:strict, config.strict)
         Integer(value)
       rescue
@@ -34,7 +34,7 @@ module Necromancer
       #   converter.call(1)  # => '1'
       #
       # @api public
-      def call(value, _)
+      def call(value, **_)
         value.to_s
       end
     end
@@ -47,7 +47,7 @@ module Necromancer
       #   converter.call('1.2') # => 1.2
       #
       # @api public
-      def call(value, options = {})
+      def call(value, **options)
         strict = options.fetch(:strict, config.strict)
         Float(value)
       rescue
@@ -66,13 +66,13 @@ module Necromancer
       #   converter.call('1')   # => 1
       #
       # @api public
-      def call(value, options = {})
+      def call(value, **options)
         strict = options.fetch(:strict, config.strict)
         case value
         when INTEGER_MATCHER
-          StringToIntegerConverter.new(:string, :integer).call(value, options)
+          StringToIntegerConverter.new(:string, :integer).call(value, **options)
         when FLOAT_MATCHER
-          StringToFloatConverter.new(:string, :float).call(value, options)
+          StringToFloatConverter.new(:string, :float).call(value, **options)
         else
           strict ? raise_conversion_type(value) : value
         end
