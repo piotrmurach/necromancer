@@ -45,7 +45,7 @@ module Necromancer
       def call(value, options = {})
         numeric_converter = NumericConverters::StringToNumericConverter.new(:string, :numeric)
         value.reduce([]) do |acc, el|
-          acc << numeric_converter.call(el, options)
+          acc << numeric_converter.call(el, **options)
         end
       end
     end

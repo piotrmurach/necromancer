@@ -58,7 +58,7 @@ module Necromancer
     # @api public
     def to(target, options = {})
       conversion = conversions[source || detect(object, false), detect(target)]
-      conversion.call(object, options)
+      conversion.call(object, **options)
     end
     alias >> to
 
