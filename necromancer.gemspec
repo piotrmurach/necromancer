@@ -12,6 +12,14 @@ Gem::Specification.new do |spec|
   spec.homepage      = 'https://github.com/piotrmurach/necromancer'
   spec.license       = 'MIT'
 
+  if spec.respond_to?(:metadata=)
+    spec.metadata["allowed_push_host"] = "https://rubygems.org"
+    spec.metadata["changelog_uri"] = "https://github.com/piotrmurach/necromancer/blob/master/CHANGELOG.md"
+    spec.metadata["documentation_uri"] = "https://www.rubydoc.info/gems/necromancer"
+    spec.metadata["homepage_uri"] = spec.homepage
+    spec.metadata["source_code_uri"] = "https://github.com/piotrmurach/necromancer"
+  end
+
   spec.files         = Dir['{lib,spec}/**/*.rb']
   spec.files        += Dir['tasks/*', 'necromancer.gemspec']
   spec.files        += Dir['README.md', 'CHANGELOG.md', 'LICENSE.txt', 'Rakefile']
