@@ -1,5 +1,13 @@
 # Change log
 
+## [v0.5.1] - 2019-11-24
+
+### Changed
+* Change gemspec to include metadata
+
+### Fixed
+* Fix Ruby 2.7 warnings by Ryan Davis(@zenspider)
+
 ## [v0.5.0] - 2019-03-23
 
 ### Changed
@@ -44,6 +52,7 @@
 
 * Initial implementation and release
 
+[v0.5.1]: https://github.com/piotrmurach/necromancer/compare/v0.5.0...v0.5.1
 [v0.5.0]: https://github.com/piotrmurach/necromancer/compare/v0.4.0...v0.5.0
 [v0.4.0]: https://github.com/piotrmurach/necromancer/compare/v0.3.0...v0.4.0
 [v0.3.0]: https://github.com/piotrmurach/necromancer/compare/v0.2.0...v0.3.0
