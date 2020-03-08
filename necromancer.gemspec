@@ -16,8 +16,8 @@ Gem::Specification.new do |spec|
     spec.metadata["homepage_uri"] = spec.homepage
     spec.metadata["source_code_uri"] = "https://github.com/piotrmurach/necromancer"
   end
-  spec.files         = Dir["lib/**/*", "README.md", "CHANGELOG.md", "LICENSE.txt"]
-  spec.extra_rdoc_files = ["README.md", "CHANGELOG.md"]
+  spec.files         = Dir["lib/**/*"]
+  spec.extra_rdoc_files = ["README.md", "CHANGELOG.md", "LICENSE.txt"]
   spec.require_paths = ["lib"]
   spec.required_ruby_version = ">= 2.0.0"
 
