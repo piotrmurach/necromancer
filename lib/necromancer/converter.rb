@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative 'configuration'
+require_relative "configuration"
 
 module Necromancer
   # Abstract converter used internally as a base for other converters

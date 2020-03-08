@@ -20,12 +20,12 @@ module Necromancer
       if UndefinedValue.equal?(value)
         unless block
           raise ArgumentError,
-                'You need to pass either argument or a block to `convert`.'
+                "You need to pass either argument or a block to `convert`."
         end
         new(context, block.call)
       elsif block
         raise ArgumentError,
-              'You cannot pass both an argument and a block to `convert`.'
+              "You cannot pass both an argument and a block to `convert`."
       else
         new(context, value)
       end
@@ -34,7 +34,7 @@ module Necromancer
     # Allows to specify conversion source type
     #
     # @example
-    #   converter.convert('1').from(:string).to(:numeric)  # => 1
+    #   converter.convert("1").from(:string).to(:numeric)  # => 1
     #
     # @return [ConversionType]
     #
@@ -47,10 +47,10 @@ module Necromancer
     # Runs a given conversion
     #
     # @example
-    #   converter.convert('1').to(:numeric)  # => 1
+    #   converter.convert("1").to(:numeric)  # => 1
     #
     # @example
-    #   converter.convert('1') >> Integer # => 1
+    #   converter.convert("1") >> Integer # => 1
     #
     # @return [Object]
     #   the converted target type

@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require 'date'
-require 'time'
+require "date"
+require "time"
 
-require_relative '../converter'
-require_relative '../null_converter'
+require_relative "../converter"
+require_relative "../null_converter"
 
 module Necromancer
   # Container for Date converter classes

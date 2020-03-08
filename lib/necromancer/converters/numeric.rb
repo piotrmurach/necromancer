@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative '../converter'
-require_relative '../null_converter'
+require_relative "../converter"
+require_relative "../null_converter"
 
 module Necromancer
   # Container for Numeric converter classes
@@ -15,7 +15,7 @@ module Necromancer
       # Convert string value to integer
       #
       # @example
-      #   converter.call('1abc')  # => 1
+      #   converter.call("1abc")  # => 1
       #
       # @api public
       def call(value, **options)
@@ -31,7 +31,7 @@ module Necromancer
       # Convert integer value to string
       #
       # @example
-      #   converter.call(1)  # => '1'
+      #   converter.call(1)  # => "1"
       #
       # @api public
       def call(value, **_)
@@ -44,7 +44,7 @@ module Necromancer
       # Convert string to float value
       #
       # @example
-      #   converter.call('1.2') # => 1.2
+      #   converter.call("1.2") # => 1.2
       #
       # @api public
       def call(value, **options)
@@ -60,10 +60,10 @@ module Necromancer
       # Convert string to numeric value
       #
       # @example
-      #   converter.call('1.0')  # => 1.0
+      #   converter.call("1.0")  # => 1.0
       #
       # @example
-      #   converter.call('1')   # => 1
+      #   converter.call("1")   # => 1
       #
       # @api public
       def call(value, **options)

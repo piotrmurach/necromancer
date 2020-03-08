@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-require_relative 'configuration'
-require_relative 'converter'
-require_relative 'converters/array'
-require_relative 'converters/boolean'
-require_relative 'converters/date_time'
-require_relative 'converters/numeric'
-require_relative 'converters/range'
+require_relative "configuration"
+require_relative "converter"
+require_relative "converters/array"
+require_relative "converters/boolean"
+require_relative "converters/date_time"
+require_relative "converters/numeric"
+require_relative "converters/range"
 
 module Necromancer
   # Represents the context used to configure various converters
@@ -14,7 +14,7 @@ module Necromancer
   #
   # @api public
   class Conversions
-    DELIMITER = '->'.freeze
+    DELIMITER = "->"
 
     # Creates a new conversions map
     #
@@ -101,8 +101,8 @@ module Necromancer
     # @api private
     def generate_key(converter)
       parts = []
-      parts << (converter.source ? converter.source.to_s : 'none')
-      parts << (converter.target ? converter.target.to_s : 'none')
+      parts << (converter.source ? converter.source.to_s : "none")
+      parts << (converter.target ? converter.target.to_s : "none")
       parts.join(DELIMITER)
     end
 

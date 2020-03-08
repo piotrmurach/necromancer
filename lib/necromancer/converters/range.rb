@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative '../converter'
-require_relative '../null_converter'
+require_relative "../converter"
+require_relative "../null_converter"
 
 module Necromancer
   # Container for Range converter classes
@@ -19,10 +19,10 @@ module Necromancer
       # @param [Object] value
       #
       # @example
-      #   converter.call('0,9')  # => (0..9)
+      #   converter.call("0,9")  # => (0..9)
       #
       # @example
-      #   converter.call('0-9')  # => (0..9)
+      #   converter.call("0-9")  # => (0..9)
       #
       # @api public
       def call(value, options = {})
@@ -31,9 +31,9 @@ module Necromancer
         when SINGLE_DIGIT_MATCHER
           ::Range.new($1.to_i, $1.to_i)
         when DIGIT_MATCHER
-          ::Range.new($1.to_i, $3.to_i, $2 == '...')
+          ::Range.new($1.to_i, $3.to_i, $2 == "...")
         when LETTER_MATCHER
-          ::Range.new($1.to_s, $3.to_s, $2 == '...')
+          ::Range.new($1.to_s, $3.to_s, $2 == "...")
         else
           strict ? raise_conversion_type(value) : value
         end

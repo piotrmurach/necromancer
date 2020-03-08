@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative '../converter'
-require_relative '../null_converter'
+require_relative "../converter"
+require_relative "../null_converter"
 
 module Necromancer
   # Container for Boolean converter classes

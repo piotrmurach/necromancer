@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require 'forwardable'
+require "forwardable"
 
-require_relative 'configuration'
-require_relative 'conversions'
-require_relative 'conversion_target'
+require_relative "configuration"
+require_relative "conversions"
+require_relative "conversion_target"
 
 module Necromancer
   # A class used by Necromancer to provide user interace

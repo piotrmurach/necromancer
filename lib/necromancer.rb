@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative 'necromancer/context'
-require_relative 'necromancer/version'
+require_relative "necromancer/context"
+require_relative "necromancer/version"
 
 module Necromancer
   # Raised when cannot conver to a given type
@@ -26,7 +26,8 @@ module Necromancer
   # Convenience to directly call conversion
   #
   # @example
-  #   Necromancer.convert('1').to(:integer)
+  #   Necromancer.convert("1").to(:integer)
+  #   # => 1
   #
   # @return [ConversionTarget]
   #

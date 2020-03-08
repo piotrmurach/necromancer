@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'set'
+require "set"
 
-require_relative '../converter'
+require_relative "../converter"
 
 module Necromancer
   # Container for Array converter classes
@@ -12,10 +12,10 @@ module Necromancer
       # Convert string value to array
       #
       # @example
-      #   converter.call('a, b, c')  # => ['a', 'b', 'c']
+      #   converter.call("a, b, c")  # => ["a", "b", "c"]
       #
       # @example
-      #   converter.call('1 - 2 - 3')  # => [1, 2, 3]
+      #   converter.call("1 - 2 - 3")  # => [1, 2, 3]
       #
       # @api public
       def call(value, options = {})
@@ -36,7 +36,7 @@ module Necromancer
       # Convert an array to an array of numeric values
       #
       # @example
-      #   converter.call(['1', '2.3', '3.0])  # => [1, 2.3, 3.0]
+      #   converter.call(["1", "2.3", "3.0])  # => [1, 2.3, 3.0]
       #
       # @param [Array] value
       #   the value to convert
@@ -53,7 +53,7 @@ module Necromancer
     # An object that converts an array to an array with boolean values
     class ArrayToBooleanConverter < Converter
       # @example
-      #   converter.call(['t', 'f', 'yes', 'no']) # => [true, false, true, false]
+      #   converter.call(["t", "f", "yes", "no"]) # => [true, false, true, false]
       #
       # @param [Array] value
       #   the array value to boolean
