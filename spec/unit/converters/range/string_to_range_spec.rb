@@ -15,16 +15,20 @@ RSpec.describe Necromancer::RangeConverters::StringToRangeConverter, '.call' do
   end
 
   {
-    '1'     => 1..1,
+    '1' => 1..1,
+    '1.0' => 1.0..1.0,
     '1..10' => 1..10,
+    '1.0..10.0' => 1.0..10.0,
     '1-10'  => 1..10,
-    '1,10'  => 1..10,
+    '1 , 10'  => 1..10,
     '1...10' => 1...10,
+    '1 . . 10' => 1..10,
     '-1..10' => -1..10,
     '1..-10' => 1..-10,
     'a..z' => 'a'..'z',
+    'a . . . z' => 'a'...'z',
     'a-z' => 'a'..'z',
-    'A-Z' => 'A'..'Z'
+    'A , Z' => 'A'..'Z'
   }.each do |actual, expected|
     it "converts '#{actual}' to range type" do
       expect(converter.call(actual)).to eql(expected)
