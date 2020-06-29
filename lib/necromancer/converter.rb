@@ -57,7 +57,7 @@ module Necromancer
 
     attr_accessor :convert
 
-    protected
+   # protected
 
     attr_reader :config
   end # Converter

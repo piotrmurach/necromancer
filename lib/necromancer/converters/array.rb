@@ -18,8 +18,7 @@ module Necromancer
       #   converter.call("1 - 2 - 3")  # => [1, 2, 3]
       #
       # @api public
-      def call(value, options = {})
-        strict = options.fetch(:strict, config.strict)
+      def call(value, strict: config.strict)
         case value.to_s
         when /^\s*?((\d+)(\s*(,|-)\s*)?)+\s*?$/
           value.to_s.split($4).map(&:to_i)
@@ -42,10 +41,10 @@ module Necromancer
       #   the value to convert
       #
       # @api public
-      def call(value, options = {})
+      def call(value, strict: config.strict)
         numeric_converter = NumericConverters::StringToNumericConverter.new(:string, :numeric)
         value.reduce([]) do |acc, el|
-          acc << numeric_converter.call(el, **options)
+          acc << numeric_converter.call(el, strict: strict)
         end
       end
     end
@@ -59,10 +58,10 @@ module Necromancer
       #   the array value to boolean
       #
       # @api public
-      def call(value, options = {})
+      def call(value, strict: config.strict)
         boolean_converter = BooleanConverters::StringToBooleanConverter.new(:string, :boolean)
         value.reduce([]) do |acc, el|
-          acc << boolean_converter.call(el, options)
+          acc << boolean_converter.call(el, strict: strict)
         end
       end
     end
@@ -75,8 +74,7 @@ module Necromancer
       #   converter.call({x: 1})   # => [[:x, 1]]
       #
       # @api public
-      def call(value, options = {})
-        strict = options.fetch(:strict, config.strict)
+      def call(value, strict: config.strict)
         begin
           Array(value)
         rescue
@@ -96,8 +94,7 @@ module Necromancer
       #   the array to convert
       #
       # @api public
-      def call(value, options = {})
-        strict = options.fetch(:strict, config.strict)
+      def call(value, strict: config.strict)
         begin
           value.to_set
         rescue

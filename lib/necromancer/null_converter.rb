@@ -5,7 +5,7 @@ require_relative "converter"
 module Necromancer
   # A pass through converter
   class NullConverter < Converter
-    def call(value, **options)
+    def call(value, strict: config.strict)
       value
     end
   end # NullConverter

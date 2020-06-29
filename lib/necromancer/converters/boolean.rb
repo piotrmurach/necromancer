@@ -29,8 +29,7 @@ module Necromancer
       #    0, f, F, FALSE, false, False, n, N, NO,  no,  No, off, OFF
       #
       # @api public
-      def call(value, options = {})
-        strict = options.fetch(:strict, config.strict)
+      def call(value, strict: config.strict)
         case value.to_s
         when TRUE_MATCHER then true
         when FALSE_MATCHER then false
@@ -50,8 +49,7 @@ module Necromancer
       #   converter.call(0)  # => false
       #
       # @api public
-      def call(value, options = {})
-        strict = options.fetch(:strict, config.strict)
+      def call(value, strict: config.strict)
         begin
           !value.zero?
         rescue
@@ -71,8 +69,7 @@ module Necromancer
       #   converter.call(false)  # => 0
       #
       # @api public
-      def call(value, options = {})
-        strict = options.fetch(:strict, config.strict)
+      def call(value, strict: config.strict)
         if %w[TrueClass FalseClass].include?(value.class.name)
           value ? 1 : 0
         else

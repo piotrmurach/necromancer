@@ -31,8 +31,7 @@ module Necromancer
       #   converter.call("0-9")  # => (0..9)
       #
       # @api public
-      def call(value, options = {})
-        strict = options.fetch(:strict, config.strict)
+      def call(value, strict: config.strict)
         if match = value.match(SINGLE_DIGIT_MATCHER)
           digit = cast_to_num(match[:digit])
           ::Range.new(digit, digit)

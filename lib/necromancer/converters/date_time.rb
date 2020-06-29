@@ -20,8 +20,7 @@ module Necromancer
       #   converter.call("12/11/2015")  # => "2015-11-12"
       #
       # @api public
-      def call(value, options = {})
-        strict = options.fetch(:strict, config.strict)
+      def call(value, strict: config.strict)
         Date.parse(value)
       rescue
         strict ? raise_conversion_type(value) : value
@@ -37,8 +36,7 @@ module Necromancer
       #  converer.call("1-1-2015 15:12:44")  # => "2015-01-01T15:12:44+00:00"
       #
       # @api public
-      def call(value, options = {})
-        strict = options.fetch(:strict, config.strict)
+      def call(value, strict: config.strict)
         DateTime.parse(value)
       rescue
         strict ? raise_conversion_type(value) : value
@@ -57,8 +55,7 @@ module Necromancer
       #   converter.call("12:35")            # => 2015-01-04 12:35:00 +0100
       #
       # @api public
-      def call(value, options = {})
-        strict = options.fetch(:strict, config.strict)
+      def call(value, strict: config.strict)
         Time.parse(value)
       rescue
         strict ? raise_conversion_type(value) : value
