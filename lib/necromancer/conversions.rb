@@ -5,6 +5,7 @@ require_relative "converter"
 require_relative "converters/array"
 require_relative "converters/boolean"
 require_relative "converters/date_time"
+require_relative "converters/hash"
 require_relative "converters/numeric"
 require_relative "converters/range"
 
@@ -34,6 +35,7 @@ module Necromancer
       ArrayConverters.load(self)
       BooleanConverters.load(self)
       DateTimeConverters.load(self)
+      HashConverters.load(self)
       NumericConverters.load(self)
       RangeConverters.load(self)
     end

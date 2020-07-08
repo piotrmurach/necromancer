@@ -51,6 +51,16 @@ RSpec.describe Necromancer, '.convert' do
     end
   end
 
+  context "when hash" do
+    it "converts string to hash" do
+      expect(converter.convert("a:1 b:2 c:3").to(:hash)).to eq({a: "1", b: "2", c: "3"})
+    end
+
+    it "converts hash to hash" do
+      expect(converter.convert({a: 1, b: 2, c: 3}).to(:hash)).to eq({a: 1, b:2, c: 3})
+    end
+  end
+
   context 'when numeric' do
     it "converts string to integer" do
       expect(converter.convert('1').to(:integer)).to eq(1)
