@@ -1,5 +1,14 @@
 # Change log
 
+## [v0.7.0] - 2020-07-xx
+
+### Added
+* Add HashConverters for transforming string, array into hash
+
+### Changed
+* Change :string -> :range to work with decimal numbers and spaces
+* Change :strict to be a keyword argument
+
 ## [v0.6.0] - 2020-03-08
 
 ### Changed
@@ -57,6 +66,7 @@
 
 * Initial implementation and release
 
+[v0.7.0]: https://github.com/piotrmurach/necromancer/compare/v0.6.0...v0.7.0
 [v0.6.0]: https://github.com/piotrmurach/necromancer/compare/v0.5.1...v0.6.0
 [v0.5.1]: https://github.com/piotrmurach/necromancer/compare/v0.5.0...v0.5.1
 [v0.5.0]: https://github.com/piotrmurach/necromancer/compare/v0.4.0...v0.5.0
