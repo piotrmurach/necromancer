@@ -25,6 +25,8 @@ RSpec.describe Necromancer::Conversions, '#to_hash' do
       'range->range',
       'string->array',
       'string->boolean',
+      'string->booleans',
+      'string->bools',
       'string->date',
       'string->datetime',
       'string->float',

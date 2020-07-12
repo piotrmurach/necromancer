@@ -32,6 +32,11 @@ RSpec.describe Necromancer, '.convert' do
       expect(converter.convert("1,2,3").to(:array)).to eq([1,2,3])
     end
 
+    it "converts string to array of booleans" do
+      expect(converter.convert("t,f,t").to(:booleans)).to eq([true,false,true])
+      expect(converter.convert("t,f,t").to(:bools)).to eq([true,false,true])
+    end
+
     it "converts array to numeric " do
       expect(converter.convert(['1','2.3','3.0']).to(:numeric)).to eq([1,2.3,3.0])
     end

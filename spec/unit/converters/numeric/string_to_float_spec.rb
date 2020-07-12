@@ -34,7 +34,7 @@ RSpec.describe Necromancer::NumericConverters::StringToFloatConverter, '.call' d
     end
   end
 
-  it "failse to convert '1.2a' in strict mode" do
+  it "fails to convert '1.2a' in strict mode" do
     expect {
       converter.call('1.2a', strict: true)
     }.to raise_error(Necromancer::ConversionTypeError)

@@ -3,6 +3,8 @@
 require "set"
 
 require_relative "../converter"
+require_relative "boolean"
+require_relative "numeric"
 
 module Necromancer
   # Container for Array converter classes
@@ -27,6 +29,15 @@ module Necromancer
         else
           strict ? raise_conversion_type(value) : Array(value)
         end
+      end
+    end
+
+    class StringToBoolArrayConverter < Converter
+      def call(value, strict: config.strict)
+        array_converter = StringToArrayConverter.new(:string, :array)
+        array = array_converter.(value, strict: strict)
+        bool_converter = BooleanConverters::StringToBooleanConverter.new(:string, :boolean)
+        array.map { |val| bool_converter.(val, strict: strict) }
       end
     end
 
@@ -106,6 +117,8 @@ module Necromancer
     def self.load(conversions)
       conversions.register NullConverter.new(:array, :array)
       conversions.register StringToArrayConverter.new(:string, :array)
+      conversions.register StringToBoolArrayConverter.new(:string, :bools)
+      conversions.register StringToBoolArrayConverter.new(:string, :booleans)
       conversions.register ArrayToNumericConverter.new(:array, :numeric)
       conversions.register ArrayToBooleanConverter.new(:array, :boolean)
       conversions.register ObjectToArrayConverter.new(:object, :array)
