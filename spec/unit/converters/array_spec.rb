@@ -14,9 +14,10 @@ RSpec.describe Necromancer::ArrayConverters, "#call" do
     end
 
     it "fails to convert in strict mode" do
-      expect { 
+      expect {
         converter.("yes,unknown", strict: true)
-      }.to raise_error(Necromancer::ConversionTypeError)
+      }.to raise_error(Necromancer::ConversionTypeError,
+                      "'unknown' could not be converted from `string` into `boolean`")
     end
   end
 end

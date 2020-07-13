@@ -48,7 +48,7 @@ module Necromancer
     # @api private
     def raise_conversion_type(value)
       raise ConversionTypeError, "'#{value}' could not be converted " \
-                                "from `#{source}` into `#{target}` "
+                                 "from `#{source}` into `#{target}`"
     end
 
     attr_accessor :source
