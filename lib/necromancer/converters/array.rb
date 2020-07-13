@@ -17,15 +17,14 @@ module Necromancer
       #   converter.call("a, b, c")  # => ["a", "b", "c"]
       #
       # @example
-      #   converter.call("1 - 2 - 3")  # => [1, 2, 3]
+      #   converter.call("1 - 2 - 3")  # => ["1", "2", "3"]
       #
       # @api public
       def call(value, strict: config.strict)
-        case value.to_s
-        when /^\s*?((\d+)(\s*(,|-)\s*)?)+\s*?$/
-          value.to_s.split($4).map(&:to_i)
-        when /^((\w)(\s*(,|-)\s*)?)+$/
-          value.to_s.split($4)
+        return [] if value.to_s.empty?
+
+        if match = value.to_s.match(/^(.+?(\s*(?<sep>(,|-))\s*))+/)
+          value.to_s.split(match[:sep])
         else
           strict ? raise_conversion_type(value) : Array(value)
         end

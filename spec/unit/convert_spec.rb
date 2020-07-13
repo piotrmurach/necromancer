@@ -12,24 +12,24 @@ RSpec.describe Necromancer, '.convert' do
   end
 
   it "allows for module level convert call" do
-    expect(Necromancer.convert('1,2,3').to(:array)).to eq([1,2,3])
+    expect(Necromancer.convert("1,2,3").to(:array)).to eq(%w[1 2 3])
   end
 
   it "allows replacing #to with #>> call" do
-    expect(converter.convert('1,2,3') >> :array).to eq([1,2,3])
+    expect(converter.convert("1,2,3") >> :array).to eq(%w[1 2 3])
   end
 
   it "allows to specify object as conversion target" do
-    expect(converter.convert('1,2,3') >> []).to eq([1,2,3])
+    expect(converter.convert("1,2,3") >> []).to eq(%w[1 2 3])
   end
 
   it "allows to specify class as conversion target" do
-    expect(converter.convert('1,2,3') >> Array).to eq([1,2,3])
+    expect(converter.convert("1,2,3") >> Array).to eq(%w[1 2 3])
   end
 
   context 'when array' do
     it "converts string to array" do
-      expect(converter.convert("1,2,3").to(:array)).to eq([1,2,3])
+      expect(converter.convert("1,2,3").to(:array)).to eq(%w[1 2 3])
     end
 
     it "converts string to array of booleans" do
