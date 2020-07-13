@@ -71,6 +71,17 @@ module Necromancer
       end
     end
 
+    class ArrayToFloatArrayConverter < Converter
+      # @example
+      #   converter.call(["1", "2", "3"]) # => [1.0, 2.0, 3.0]
+      #
+      # @api public
+      def call(array, strict: config.strict)
+        float_converter = NumericConverters::StringToFloatConverter.new(:string, :float)
+        array.map { |val| float_converter.(val, strict: strict) }
+      end
+    end
+
     # An object that converts an array to an array with numeric values
     class ArrayToNumericConverter < Converter
       # Convert an array to an array of numeric values
@@ -142,14 +153,20 @@ module Necromancer
 
     def self.load(conversions)
       conversions.register NullConverter.new(:array, :array)
+
       conversions.register StringToArrayConverter.new(:string, :array)
       conversions.register StringToBoolArrayConverter.new(:string, :bools)
       conversions.register StringToBoolArrayConverter.new(:string, :booleans)
       conversions.register StringToIntegerArrayConverter.new(:string, :integers)
       conversions.register StringToIntegerArrayConverter.new(:string, :ints)
+
       conversions.register ArrayToNumericConverter.new(:array, :numeric)
+      conversions.register ArrayToIntegerArrayConverter.new(:array, :integers)
+      conversions.register ArrayToIntegerArrayConverter.new(:array, :ints)
+      conversions.register ArrayToFloatArrayConverter.new(:array, :floats)
       conversions.register ArrayToBooleanConverter.new(:array, :booleans)
       conversions.register ArrayToBooleanConverter.new(:array, :bools)
+
       conversions.register ObjectToArrayConverter.new(:object, :array)
       conversions.register ObjectToArrayConverter.new(:hash, :array)
     end

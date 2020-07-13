@@ -102,6 +102,19 @@ RSpec.describe Necromancer::ArrayConverters, "#call" do
     end
   end
 
+  describe ":array -> :floats" do
+    subject(:converter) { described_class::ArrayToFloatArrayConverter.new }
+
+    {
+      %w[1 2 3] => [1.0, 2.0, 3.0],
+      %w[1.2 2.3 3.4] => [1.2, 2.3, 3.4]
+    }.each do |input, obj|
+      it "converts #{input.inspect} to #{obj.inspect}" do
+        expect(converter.(input)).to eq(obj)
+      end
+    end
+  end
+
   describe ":array -> :numeric" do
     subject(:converter) { described_class::ArrayToNumericConverter.new(:array, :numeric) }
 
