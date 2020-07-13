@@ -91,13 +91,22 @@ To convert string to [numeric](#35-numeric) value:
 Necromancer.convert("10e1").to(:numeric)  # => 100
 ```
 
-or convert [array](#31-array) of string values into numeric type:
+You can convert string to [array](#31-array) of values like `boolean`, `integer` or `float`:
 
 ```ruby
-Necromancer.convert(["1", "2.3", "3.0"]).to(:numeric)  # => [1, 2.3, 3.0]
+Necromancer.convert("t,f,t"]).to(:booleans)      # => [true, false, true]
+Necromancer.convert("1,2.3,3.0"]).to(:integers)  # => [1, 2, 3]
+Necromancer.convert("1,2.3,3.0"]).to(:floats)    # => [1.0, 2.3, 3.0]
 ```
 
-To provide extra information about the conversion value type you can use `from`.
+To convert string to [hash](#34-hash) value:
+
+```ruby
+Necromancer.convert("a:1 b:2 c:3").to(:hash) # => {a: "1", b: "2", c: "3"}
+Necromancer.convert("a=1 b=2 c=3").to(:hash) # => {a: "1", b: "2", c: "3"}
+````
+
+To provide extra information about the conversion value type use the `from`:
 
 ```ruby
 Necromancer.convert(["1", "2.3", "3.0"]).from(:array).to(:numeric) # => [1, 2.3, 3.0]
@@ -105,7 +114,7 @@ Necromancer.convert(["1", "2.3", "3.0"]).from(:array).to(:numeric) # => [1, 2.3,
 
 **Necromancer** also allows you to add [custom](#37-custom) conversions.
 
-Conversion isn't always possible, in which case a `Necromancer::NoTypeConversionAvailableError` is thrown indicating that `convert` doesn't know how to perform the requested conversion:
+When conversion isn't possible, a `Necromancer::NoTypeConversionAvailableError` is thrown indicating that `convert` doesn't know how to perform the requested conversion:
 
 ```ruby
 Necromancer.convert(:foo).to(:float)
