@@ -61,9 +61,7 @@ module Necromancer
       # @api public
       def call(value, strict: config.strict)
         numeric_converter = NumericConverters::StringToNumericConverter.new(:string, :numeric)
-        value.reduce([]) do |acc, el|
-          acc << numeric_converter.call(el, strict: strict)
-        end
+        value.map { |val| numeric_converter.(val, strict: strict) }
       end
     end
 
@@ -78,9 +76,7 @@ module Necromancer
       # @api public
       def call(value, strict: config.strict)
         boolean_converter = BooleanConverters::StringToBooleanConverter.new(:string, :boolean)
-        value.reduce([]) do |acc, el|
-          acc << boolean_converter.call(el, strict: strict)
-        end
+        value.map { |val| boolean_converter.(val, strict: strict) }
       end
     end
 
