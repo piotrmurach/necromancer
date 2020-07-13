@@ -33,11 +33,18 @@ module Necromancer
     end
 
     class StringToBoolArrayConverter < Converter
+      # @example
+      #   converter.call("t,f,yes,no") # => [true, false, true, false]
+      #
+      # @param [Array] value
+      #   the array value to boolean
+      #
+      # @api public
       def call(value, strict: config.strict)
         array_converter = StringToArrayConverter.new(:string, :array)
         array = array_converter.(value, strict: strict)
-        bool_converter = BooleanConverters::StringToBooleanConverter.new(:string, :boolean)
-        array.map { |val| bool_converter.(val, strict: strict) }
+        bool_converter = ArrayToBooleanConverter.new(:array, :boolean)
+        bool_converter.(array, strict: strict)
       end
     end
 
