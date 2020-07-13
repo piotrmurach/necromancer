@@ -148,7 +148,8 @@ module Necromancer
       conversions.register StringToIntegerArrayConverter.new(:string, :integers)
       conversions.register StringToIntegerArrayConverter.new(:string, :ints)
       conversions.register ArrayToNumericConverter.new(:array, :numeric)
-      conversions.register ArrayToBooleanConverter.new(:array, :boolean)
+      conversions.register ArrayToBooleanConverter.new(:array, :booleans)
+      conversions.register ArrayToBooleanConverter.new(:array, :bools)
       conversions.register ObjectToArrayConverter.new(:object, :array)
       conversions.register ObjectToArrayConverter.new(:hash, :array)
     end
