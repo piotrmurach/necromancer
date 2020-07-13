@@ -32,6 +32,8 @@ RSpec.describe Necromancer::Conversions, '#to_hash' do
       'string->float',
       'string->hash',
       'string->integer',
+      'string->integers',
+      'string->ints',
       'string->numeric',
       'string->range',
       'string->time',

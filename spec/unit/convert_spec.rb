@@ -16,7 +16,7 @@ RSpec.describe Necromancer, '.convert' do
   end
 
   it "allows replacing #to with #>> call" do
-    expect(converter.convert("1,2,3") >> :array).to eq(%w[1 2 3])
+    expect(converter.convert("1,2,3") >> :integers).to eq([1,2,3])
   end
 
   it "allows to specify object as conversion target" do
@@ -35,6 +35,11 @@ RSpec.describe Necromancer, '.convert' do
     it "converts string to array of booleans" do
       expect(converter.convert("t,f,t").to(:booleans)).to eq([true,false,true])
       expect(converter.convert("t,f,t").to(:bools)).to eq([true,false,true])
+    end
+
+    it "converts string to array of integers" do
+      expect(converter.convert("1,2,3").to(:integers)).to eq([1,2,3])
+      expect(converter.convert("1,2,3").to(:ints)).to eq([1,2,3])
     end
 
     it "converts array to numeric " do

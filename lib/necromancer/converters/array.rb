@@ -47,6 +47,30 @@ module Necromancer
       end
     end
 
+    class StringToIntegerArrayConverter < Converter
+      # @example
+      #   converter.call("1,2,3") # => [1, 2, 3]
+      #
+      # @api public
+      def call(string, strict: config.strict)
+        array_converter = StringToArrayConverter.new(:string, :array)
+        array = array_converter.(string, strict: strict)
+        int_converter = ArrayToIntegerArrayConverter.new(:array, :integers)
+        int_converter.(array, strict: strict)
+      end
+    end
+
+    class ArrayToIntegerArrayConverter < Converter
+      # @example
+      #   converter.call(["1", "2", "3"]) # => [1, 2, 3]
+      #
+      # @api public
+      def call(array, strict: config.strict)
+        int_converter = NumericConverters::StringToIntegerConverter.new(:string, :integer)
+        array.map { |val| int_converter.(val, strict: strict) }
+      end
+    end
+
     # An object that converts an array to an array with numeric values
     class ArrayToNumericConverter < Converter
       # Convert an array to an array of numeric values
@@ -121,6 +145,8 @@ module Necromancer
       conversions.register StringToArrayConverter.new(:string, :array)
       conversions.register StringToBoolArrayConverter.new(:string, :bools)
       conversions.register StringToBoolArrayConverter.new(:string, :booleans)
+      conversions.register StringToIntegerArrayConverter.new(:string, :integers)
+      conversions.register StringToIntegerArrayConverter.new(:string, :ints)
       conversions.register ArrayToNumericConverter.new(:array, :numeric)
       conversions.register ArrayToBooleanConverter.new(:array, :boolean)
       conversions.register ObjectToArrayConverter.new(:object, :array)
