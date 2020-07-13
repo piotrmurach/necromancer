@@ -60,6 +60,19 @@ module Necromancer
       end
     end
 
+    class StringToFloatArrayConverter < Converter
+      # @example
+      #   converter.call("1,2,3") # => [1.0, 2.0, 3.0]
+      #
+      # @api public
+      def call(string, strict: config.strict)
+        array_converter = StringToArrayConverter.new(:string, :array)
+        array = array_converter.(string, strict: strict)
+        float_converter = ArrayToFloatArrayConverter.new(:array, :floats)
+        float_converter.(array, strict: strict)
+      end
+    end
+
     class ArrayToIntegerArrayConverter < Converter
       # @example
       #   converter.call(["1", "2", "3"]) # => [1, 2, 3]
@@ -159,6 +172,7 @@ module Necromancer
       conversions.register StringToBoolArrayConverter.new(:string, :booleans)
       conversions.register StringToIntegerArrayConverter.new(:string, :integers)
       conversions.register StringToIntegerArrayConverter.new(:string, :ints)
+      conversions.register StringToFloatArrayConverter.new(:string, :floats)
 
       conversions.register ArrayToNumericConverter.new(:array, :numeric)
       conversions.register ArrayToIntegerArrayConverter.new(:array, :integers)
