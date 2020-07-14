@@ -15,7 +15,7 @@ module Necromancer
       #   # => {a: "1", b: "2", c: "3"}
       #
       # @api public
-      def call(value, string: config.strict)
+      def call(value, strict: config.strict)
         values = value.split(/\s*[& ]\s*/)
         values.each_with_object({}) do |pair, pairs|
           key, value = pair.split(/[=:]/, 2)
