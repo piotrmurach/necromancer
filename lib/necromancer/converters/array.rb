@@ -31,7 +31,7 @@ module Necromancer
       end
     end
 
-    class StringToBoolArrayConverter < Converter
+    class StringToBooleanArrayConverter < Converter
       # @example
       #   converter.call("t,f,yes,no") # => [true, false, true, false]
       #
@@ -42,7 +42,7 @@ module Necromancer
       def call(value, strict: config.strict)
         array_converter = StringToArrayConverter.new(:string, :array)
         array = array_converter.(value, strict: strict)
-        bool_converter = ArrayToBooleanConverter.new(:array, :boolean)
+        bool_converter = ArrayToBooleanArrayConverter.new(:array, :boolean)
         bool_converter.(array, strict: strict)
       end
     end
@@ -96,7 +96,7 @@ module Necromancer
     end
 
     # An object that converts an array to an array with numeric values
-    class ArrayToNumericConverter < Converter
+    class ArrayToNumericArrayConverter < Converter
       # Convert an array to an array of numeric values
       #
       # @example
@@ -113,7 +113,7 @@ module Necromancer
     end
 
     # An object that converts an array to an array with boolean values
-    class ArrayToBooleanConverter < Converter
+    class ArrayToBooleanArrayConverter < Converter
       # @example
       #   converter.call(["t", "f", "yes", "no"]) # => [true, false, true, false]
       #
@@ -168,18 +168,18 @@ module Necromancer
       conversions.register NullConverter.new(:array, :array)
 
       conversions.register StringToArrayConverter.new(:string, :array)
-      conversions.register StringToBoolArrayConverter.new(:string, :bools)
-      conversions.register StringToBoolArrayConverter.new(:string, :booleans)
+      conversions.register StringToBooleanArrayConverter.new(:string, :bools)
+      conversions.register StringToBooleanArrayConverter.new(:string, :booleans)
       conversions.register StringToIntegerArrayConverter.new(:string, :integers)
       conversions.register StringToIntegerArrayConverter.new(:string, :ints)
       conversions.register StringToFloatArrayConverter.new(:string, :floats)
 
-      conversions.register ArrayToNumericConverter.new(:array, :numeric)
+      conversions.register ArrayToNumericArrayConverter.new(:array, :numeric)
       conversions.register ArrayToIntegerArrayConverter.new(:array, :integers)
       conversions.register ArrayToIntegerArrayConverter.new(:array, :ints)
       conversions.register ArrayToFloatArrayConverter.new(:array, :floats)
-      conversions.register ArrayToBooleanConverter.new(:array, :booleans)
-      conversions.register ArrayToBooleanConverter.new(:array, :bools)
+      conversions.register ArrayToBooleanArrayConverter.new(:array, :booleans)
+      conversions.register ArrayToBooleanArrayConverter.new(:array, :bools)
 
       conversions.register ObjectToArrayConverter.new(:object, :array)
       conversions.register ObjectToArrayConverter.new(:hash, :array)

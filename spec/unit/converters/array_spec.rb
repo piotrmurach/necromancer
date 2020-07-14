@@ -30,7 +30,7 @@ RSpec.describe Necromancer::ArrayConverters, "#call" do
   end
 
   describe ":string -> :booleans" do
-    subject(:converter) { described_class::StringToBoolArrayConverter.new }
+    subject(:converter) { described_class::StringToBooleanArrayConverter.new }
 
     {
       "t,f,t" => [true, false, true],
@@ -90,7 +90,7 @@ RSpec.describe Necromancer::ArrayConverters, "#call" do
   end
 
   describe ":array -> :booleans" do
-    subject(:converter) { described_class::ArrayToBooleanConverter.new(:array, :boolean) }
+    subject(:converter) { described_class::ArrayToBooleanArrayConverter.new(:array, :boolean) }
 
     {
       %w[t f yes no] => [true, false, true, false],
@@ -136,7 +136,7 @@ RSpec.describe Necromancer::ArrayConverters, "#call" do
   end
 
   describe ":array -> :numeric" do
-    subject(:converter) { described_class::ArrayToNumericConverter.new(:array, :numeric) }
+    subject(:converter) { described_class::ArrayToNumericArrayConverter.new(:array, :numeric) }
 
     {
       %w[1 2.3 3.0] => [1, 2.3, 3.0],
