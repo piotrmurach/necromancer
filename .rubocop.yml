@@ -1,3 +1,12 @@
+AllCops:
+  NewCops: enable
+
+Layout/FirstArrayElementIndentation:
+  EnforcedStyle: consistent
+
+Layout/HashAlignment:
+  EnforcedHashRocketStyle: table
+
 Lint/AssignmentInCondition:
   Enabled: false
 
@@ -7,7 +16,7 @@ Metrics/AbcSize:
 Metrics/BlockLength:
   CountComments: true
   Max: 25
-  ExcludedMethods: []
+  IgnoredMethods: []
   Exclude:
     - "spec/**/*"
 
@@ -18,7 +27,7 @@ Metrics/CyclomaticComplexity:
   Enabled: false
 
 Metrics/LineLength:
-  Max: 80
+  Max: 82
 
 Metrics/MethodLength:
   Max: 20
@@ -26,13 +35,14 @@ Metrics/MethodLength:
 Naming/BinaryOperatorParameterName:
   Enabled: false
 
+Style/AccessorGrouping:
+  Enabled: false
+
 Style/AsciiComments:
   Enabled: false
 
 Style/LambdaCall:
-  SupportedStyles:
-  - call
-  - braces
+  EnforcedStyle: braces
 
 Style/StringLiterals:
   EnforcedStyle: double_quotes
