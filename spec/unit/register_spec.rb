@@ -1,15 +1,17 @@
 # frozen_string_literal: true
 
-RSpec.describe Necromancer, '.register' do
+RSpec.describe Necromancer, ".register" do
   it "allows ro register converter" do
     converter = described_class.new
-    UpcaseConverter = Struct.new(:source, :target) do
-      def call(value, **options)
+    stub_const("UpcaseConverter", Struct.new(:source, :target) do
+      def call(value, **_options)
         value.to_s.upcase
       end
-    end
+    end)
+
     upcase_converter = UpcaseConverter.new(:string, :upcase)
+
     expect(converter.register(upcase_converter)).to eq(true)
-    expect(converter.convert('magic').to(:upcase)).to eq('MAGIC')
+    expect(converter.convert("magic").to(:upcase)).to eq("MAGIC")
   end
 end

@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 if ENV["COVERAGE"] == "true"
-  require 'simplecov'
-  require 'coveralls'
+  require "simplecov"
+  require "coveralls"
 
   SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new([
     SimpleCov::Formatter::HTMLFormatter,
@@ -10,12 +10,12 @@ if ENV["COVERAGE"] == "true"
   ])
 
   SimpleCov.start do
-    command_name 'spec'
-    add_filter 'spec'
+    command_name "spec"
+    add_filter "spec"
   end
 end
 
-require 'necromancer'
+require "necromancer"
 
 RSpec.configure do |config|
   config.expect_with :rspec do |expectations|
@@ -35,7 +35,7 @@ RSpec.configure do |config|
   config.warnings = true
 
   if config.files_to_run.one?
-    config.default_formatter = 'doc'
+    config.default_formatter = "doc"
   end
 
   config.profile_examples = 2
@@ -45,7 +45,7 @@ RSpec.configure do |config|
   Kernel.srand config.seed
 
   config.before :each do
-    [:UpcaseConverter, :Custom].each do |class_name|
+    %i[UpcaseConverter Custom].each do |class_name|
       if Object.const_defined?(class_name)
         Object.send(:remove_const, class_name)
       end

@@ -2,15 +2,15 @@
 
 RSpec.describe Necromancer::HashConverters, "#call" do
   describe ":string -> :hash" do
-    subject(:converter) { Necromancer::HashConverters::StringToHashConverter.new }
+    subject(:converter) { described_class::StringToHashConverter.new }
 
     {
-      "a=1" => {a: "1"},
-      "a=1&b=2" => {a: "1", b: "2"},
-      "a= & b=2" => {a: "", b: "2"},
-      "a=1 & b=2 & a=3" => {a: ["1", "3"], b: "2"},
-      "a:1 b:2" => {a: "1", b: "2"},
-      "a:1 b:2 a:3" => {a: ["1", "3"], b: "2"},
+      "a=1"             => { a: "1" },
+      "a=1&b=2"         => { a: "1", b: "2" },
+      "a= & b=2"        => { a: "", b: "2" },
+      "a=1 & b=2 & a=3" => { a: %w[1 3], b: "2" },
+      "a:1 b:2"         => { a: "1", b: "2" },
+      "a:1 b:2 a:3"     => { a: %w[1 3], b: "2" }
     }.each do |input, obj|
       it "converts #{input.inspect} to #{obj.inspect}" do
         expect(converter.(input)).to eq(obj)

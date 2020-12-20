@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Necromancer, '#new' do
-
+RSpec.describe Necromancer, "#new" do
   subject(:converter) { described_class.new }
 
   it "creates context" do

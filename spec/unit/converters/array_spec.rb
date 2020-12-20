@@ -2,19 +2,21 @@
 
 RSpec.describe Necromancer::ArrayConverters, "#call" do
   describe ":string -> :array" do
-    subject(:converter) { described_class::StringToArrayConverter.new(:string, :array) }
+    subject(:converter) {
+      described_class::StringToArrayConverter.new(:string, :array)
+    }
 
     {
-      "" => [],
-      "123" => %w[123],
-      "1,2,3" => %w[1 2 3],
-      "1-2-3" => %w[1 2 3],
-      " 1  - 2 - 3 " => [" 1  ", " 2 ", " 3 "],
-      "1  ,  2  , 3" => ["1  ", "  2  ", " 3"],
-      "1.2,2.3,3.4" => %w[1.2 2.3 3.4],
-      "a,b,c" => %w[a b c],
-      "a-b-c" => %w[a b c],
-      "aa a,b bb,c c c" => %w[aa\ a b\ bb c\ c\ c],
+      ""                => [],
+      "123"             => %w[123],
+      "1,2,3"           => %w[1 2 3],
+      "1-2-3"           => %w[1 2 3],
+      " 1  - 2 - 3 "    => [" 1  ", " 2 ", " 3 "],
+      "1  ,  2  , 3"    => ["1  ", "  2  ", " 3"],
+      "1.2,2.3,3.4"     => %w[1.2 2.3 3.4],
+      "a,b,c"           => %w[a b c],
+      "a-b-c"           => %w[a b c],
+      "aa a,b bb,c c c" => %w[aa\ a b\ bb c\ c\ c]
     }.each do |input, obj|
       it "converts #{input.inspect} to #{obj.inspect}" do
         expect(converter.(input)).to eq(obj)
@@ -24,8 +26,10 @@ RSpec.describe Necromancer::ArrayConverters, "#call" do
     it "fails to convert empty string to array in strict mode" do
       expect {
         converter.("unknown", strict: true)
-      }.to raise_error(Necromancer::ConversionTypeError,
-                      "'unknown' could not be converted from `string` into `array`")
+      }.to raise_error(
+        Necromancer::ConversionTypeError,
+        "'unknown' could not be converted from `string` into `array`"
+      )
     end
   end
 
@@ -33,7 +37,7 @@ RSpec.describe Necromancer::ArrayConverters, "#call" do
     subject(:converter) { described_class::StringToBooleanArrayConverter.new }
 
     {
-      "t,f,t" => [true, false, true],
+      "t,f,t"    => [true, false, true],
       "yes,no,Y" => [true, false, true]
     }.each do |input, obj|
       it "converts #{input.inspect} to #{obj.inspect}" do
@@ -44,8 +48,10 @@ RSpec.describe Necromancer::ArrayConverters, "#call" do
     it "fails to convert in strict mode" do
       expect {
         converter.("yes,unknown", strict: true)
-      }.to raise_error(Necromancer::ConversionTypeError,
-                      "'unknown' could not be converted from `string` into `boolean`")
+      }.to raise_error(
+        Necromancer::ConversionTypeError,
+        "'unknown' could not be converted from `string` into `boolean`"
+      )
     end
   end
 
@@ -53,7 +59,7 @@ RSpec.describe Necromancer::ArrayConverters, "#call" do
     subject(:converter) { described_class::StringToIntegerArrayConverter.new }
 
     {
-      "1,2,3" => [1, 2, 3],
+      "1,2,3"         => [1, 2, 3],
       "1.2, 2.3, 3.4" => [1, 2, 3]
     }.each do |input, obj|
       it "converts #{input.inspect} to #{obj.inspect}" do
@@ -64,8 +70,10 @@ RSpec.describe Necromancer::ArrayConverters, "#call" do
     it "fails to convert in strict mode" do
       expect {
         converter.("1,unknown", strict: true)
-      }.to raise_error(Necromancer::ConversionTypeError,
-                      "'unknown' could not be converted from `string` into `integer`")
+      }.to raise_error(
+        Necromancer::ConversionTypeError,
+        "'unknown' could not be converted from `string` into `integer`"
+      )
     end
   end
 
@@ -73,7 +81,7 @@ RSpec.describe Necromancer::ArrayConverters, "#call" do
     subject(:converter) { described_class::StringToFloatArrayConverter.new }
 
     {
-      "1,2,3" => [1.0, 2.0, 3.0],
+      "1,2,3"         => [1.0, 2.0, 3.0],
       "1.2, 2.3, 3.4" => [1.2, 2.3, 3.4]
     }.each do |input, obj|
       it "converts #{input.inspect} to #{obj.inspect}" do
@@ -84,17 +92,21 @@ RSpec.describe Necromancer::ArrayConverters, "#call" do
     it "fails to convert in strict mode" do
       expect {
         converter.("1,unknown", strict: true)
-      }.to raise_error(Necromancer::ConversionTypeError,
-                      "'unknown' could not be converted from `string` into `float`")
+      }.to raise_error(
+        Necromancer::ConversionTypeError,
+        "'unknown' could not be converted from `string` into `float`"
+      )
     end
   end
 
   describe ":array -> :booleans" do
-    subject(:converter) { described_class::ArrayToBooleanArrayConverter.new(:array, :boolean) }
+    subject(:converter) {
+      described_class::ArrayToBooleanArrayConverter.new(:array, :boolean)
+    }
 
     {
       %w[t f yes no] => [true, false, true, false],
-      %w[t no 5] => [true, false, "5"],
+      %w[t no 5]     => [true, false, "5"]
     }.each do |input, obj|
       it "converts #{input.inspect} to #{obj.inspect}" do
         expect(converter.(input)).to eq(obj)
@@ -104,8 +116,10 @@ RSpec.describe Necromancer::ArrayConverters, "#call" do
     it "fails to convert `['t', 'no', 5]` to boolean array in strict mode" do
       expect {
         converter.(["t", "no", 5], strict: true)
-      }.to raise_error(Necromancer::ConversionTypeError,
-                      "'5' could not be converted from `string` into `boolean`")
+      }.to raise_error(
+        Necromancer::ConversionTypeError,
+        "'5' could not be converted from `string` into `boolean`"
+      )
     end
   end
 
@@ -113,7 +127,7 @@ RSpec.describe Necromancer::ArrayConverters, "#call" do
     subject(:converter) { described_class::ArrayToIntegerArrayConverter.new }
 
     {
-      %w[1 2 3] => [1, 2, 3],
+      %w[1 2 3]       => [1, 2, 3],
       %w[1.2 2.3 3.4] => [1, 2, 3]
     }.each do |input, obj|
       it "converts #{input.inspect} to #{obj.inspect}" do
@@ -126,7 +140,7 @@ RSpec.describe Necromancer::ArrayConverters, "#call" do
     subject(:converter) { described_class::ArrayToFloatArrayConverter.new }
 
     {
-      %w[1 2 3] => [1.0, 2.0, 3.0],
+      %w[1 2 3]       => [1.0, 2.0, 3.0],
       %w[1.2 2.3 3.4] => [1.2, 2.3, 3.4]
     }.each do |input, obj|
       it "converts #{input.inspect} to #{obj.inspect}" do
@@ -136,10 +150,12 @@ RSpec.describe Necromancer::ArrayConverters, "#call" do
   end
 
   describe ":array -> :numeric" do
-    subject(:converter) { described_class::ArrayToNumericArrayConverter.new(:array, :numeric) }
+    subject(:converter) {
+      described_class::ArrayToNumericArrayConverter.new(:array, :numeric)
+    }
 
     {
-      %w[1 2.3 3.0] => [1, 2.3, 3.0],
+      %w[1 2.3 3.0]   => [1, 2.3, 3.0],
       %w[1 2.3 false] => [1, 2.3, "false"]
     }.each do |input, obj|
       it "converts #{input.inspect} to #{obj.inspect}" do
@@ -155,10 +171,12 @@ RSpec.describe Necromancer::ArrayConverters, "#call" do
   end
 
   describe ":array -> :set" do
-    subject(:converter) { described_class::ArrayToSetConverter.new(:array, :set) }
+    subject(:converter) {
+      described_class::ArrayToSetConverter.new(:array, :set)
+    }
 
     it "converts `[:x,:y,:x,1,2,1]` to set" do
-      expect(converter.([:x,:y,:x,1,2,1])).to eql(Set[:x,:y,1,2])
+      expect(converter.([:x, :y, :x, 1, 2, 1])).to eql(Set[:x, :y, 1, 2])
     end
 
     it "fails to convert `1` to set" do
@@ -169,20 +187,22 @@ RSpec.describe Necromancer::ArrayConverters, "#call" do
   end
 
   describe ":object -> :array" do
-    subject(:converter) { described_class::ObjectToArrayConverter.new(:object, :array) }
+    subject(:converter) {
+      described_class::ObjectToArrayConverter.new(:object, :array)
+    }
 
     it "converts nil to array" do
       expect(converter.(nil)).to eq([])
     end
 
     it "converts custom object to array" do
-      Custom = Class.new do
+      stub_const("Custom", Class.new do
         def to_ary
-          [:x, :y]
+          %i[x y]
         end
-      end
+      end)
       custom = Custom.new
-      expect(converter.(custom)).to eq([:x, :y])
+      expect(converter.(custom)).to eq(%i[x y])
     end
   end
 end

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Necromancer, 'config' do
+RSpec.describe Necromancer, "config" do
   it "configures global settings per instance" do
     converter = described_class.new
 

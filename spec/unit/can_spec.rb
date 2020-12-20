@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Necromancer, 'can?' do
+RSpec.describe Necromancer, "can?" do
   it "checks if conversion is possible" do
     converter = described_class.new
     expect(converter.can?(:string, :integer)).to eq(true)

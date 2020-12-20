@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Necromancer::Configuration, '.new' do
-
+RSpec.describe Necromancer::Configuration, ".new" do
   subject(:config) { described_class.new }
 
   it { is_expected.to respond_to(:strict=) }

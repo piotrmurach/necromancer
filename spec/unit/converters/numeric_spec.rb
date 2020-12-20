@@ -2,7 +2,9 @@
 
 RSpec.describe Necromancer::NumericConverters, "#call" do
   describe ":string -> :float" do
-    subject(:converter) { described_class::StringToFloatConverter.new(:string, :float) }
+    subject(:converter) {
+      described_class::StringToFloatConverter.new(:string, :float)
+    }
 
     {
       ""        => 0.0,
@@ -39,13 +41,17 @@ RSpec.describe Necromancer::NumericConverters, "#call" do
     it "fails to convert '1.2a' in strict mode" do
       expect {
         converter.("1.2a", strict: true)
-      }.to raise_error(Necromancer::ConversionTypeError,
-                       "'1.2a' could not be converted from `string` into `float`")
+      }.to raise_error(
+        Necromancer::ConversionTypeError,
+        "'1.2a' could not be converted from `string` into `float`"
+      )
     end
   end
 
   describe ":string -> :integer" do
-    subject(:converter) { described_class::StringToIntegerConverter.new(:string, :integer) }
+    subject(:converter) {
+      described_class::StringToIntegerConverter.new(:string, :integer)
+    }
 
     {
       ""        => 0,
@@ -62,10 +68,10 @@ RSpec.describe Necromancer::NumericConverters, "#call" do
       "1.0e-1"  => 1,
       "-1.0e+1" => -1,
       "-1.0e-1" => -1,
-      ".1"     => 0,
+      ".1"      => 0,
       ".1e+1"   => 0,
       ".1e-1"   => 0,
-      "-.1e+1" => 0,
+      "-.1e+1"  => 0,
       "-.1e-1"  => 0
     }.each do |actual, expected|
       it "converts '#{actual}' to float value" do
@@ -93,7 +99,9 @@ RSpec.describe Necromancer::NumericConverters, "#call" do
   end
 
   describe ":string -> :numeric" do
-    subject(:converter) { described_class::StringToNumericConverter.new(:string, :numeric) }
+    subject(:converter) {
+      described_class::StringToNumericConverter.new(:string, :numeric)
+    }
 
     {
       "1"       => 1,

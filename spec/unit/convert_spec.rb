@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 RSpec.describe Necromancer, ".convert" do
-
   subject(:converter) { described_class.new }
 
   it "indicates inability to perform the requested conversion" do
@@ -16,7 +15,7 @@ RSpec.describe Necromancer, ".convert" do
   end
 
   it "allows replacing #to with #>> call" do
-    expect(converter.convert("1,2,3") >> :integers).to eq([1,2,3])
+    expect(converter.convert("1,2,3") >> :integers).to eq([1, 2, 3])
   end
 
   it "allows to specify object as conversion target" do
@@ -33,26 +32,27 @@ RSpec.describe Necromancer, ".convert" do
     end
 
     it "converts string to array of booleans" do
-      expect(converter.convert("t,f,t").to(:booleans)).to eq([true,false,true])
-      expect(converter.convert("t,f,t").to(:bools)).to eq([true,false,true])
+      expect(converter.convert("t,f,t").to(:booleans)).to eq([true, false, true])
+      expect(converter.convert("t,f,t").to(:bools)).to eq([true, false, true])
     end
 
     it "converts string to array of integers" do
-      expect(converter.convert("1,2,3").to(:integers)).to eq([1,2,3])
-      expect(converter.convert("1,2,3").to(:ints)).to eq([1,2,3])
+      expect(converter.convert("1,2,3").to(:integers)).to eq([1, 2, 3])
+      expect(converter.convert("1,2,3").to(:ints)).to eq([1, 2, 3])
     end
 
     it "converts array to numeric " do
-      expect(converter.convert(["1","2.3","3.0"]).to(:numeric)).to eq([1,2.3,3.0])
+      conversion = converter.convert(["1", "2.3", "3.0"]).to(:numeric)
+      expect(conversion).to eq([1, 2.3, 3.0])
     end
 
     it "converts array to array of booleans" do
-      expect(converter.convert(["t", "no"]).to(:booleans)).to eq([true, false])
-      expect(converter.convert(["t", "no"]).to(:bools)).to eq([true, false])
+      expect(converter.convert(%w[t no]).to(:booleans)).to eq([true, false])
+      expect(converter.convert(%w[t no]).to(:bools)).to eq([true, false])
     end
 
     it "converts object to array" do
-      expect(converter.convert({x: 1}).to(:array)).to eq([[:x, 1]])
+      expect(converter.convert({ x: 1 }).to(:array)).to eq([[:x, 1]])
     end
 
     it "fails to convert in strict mode" do
@@ -64,11 +64,13 @@ RSpec.describe Necromancer, ".convert" do
 
   context "when hash" do
     it "converts string to hash" do
-      expect(converter.convert("a:1 b:2 c:3").to(:hash)).to eq({a: "1", b: "2", c: "3"})
+      conversion = converter.convert("a:1 b:2 c:3").to(:hash)
+      expect(conversion).to eq({ a: "1", b: "2", c: "3" })
     end
 
     it "converts hash to hash" do
-      expect(converter.convert({a: 1, b: 2, c: 3}).to(:hash)).to eq({a: 1, b:2, c: 3})
+      conversion = converter.convert({ a: 1, b: 2, c: 3 }).to(:hash)
+      expect(conversion).to eq({ a: 1, b: 2, c: 3 })
     end
   end
 
@@ -134,18 +136,18 @@ RSpec.describe Necromancer, ".convert" do
 
   context "when datetime" do
     it "converts string to date" do
-      expect(converter.convert("2014-12-07").to(:date)).
-        to eq(Date.parse("2014-12-07"))
+      expect(converter.convert("2014-12-07").to(:date))
+        .to eq(Date.parse("2014-12-07"))
     end
 
     it "converts string to datetime" do
-      expect(converter.convert("2014-12-07 17:35:44").to(:datetime)).
-        to eq(DateTime.parse("2014-12-07 17:35:44"))
+      expect(converter.convert("2014-12-07 17:35:44").to(:datetime))
+        .to eq(DateTime.parse("2014-12-07 17:35:44"))
     end
 
     it "converts string to time" do
-      expect(converter.convert("12:30").to(:time)).
-        to eq(Time.parse("12:30"))
+      expect(converter.convert("12:30").to(:time))
+        .to eq(Time.parse("12:30"))
     end
   end
 end
