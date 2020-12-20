@@ -1,14 +1,14 @@
 # Necromancer
 
 [![Gem Version](https://badge.fury.io/rb/necromancer.svg)][gem]
-[![Build Status](https://secure.travis-ci.org/piotrmurach/necromancer.svg?branch=master)][travis]
+[![Actions CI](https://github.com/piotrmurach/tty-runner/workflows/CI/badge.svg?branch=master)][gh_actions_ci]
 [![Build status](https://ci.appveyor.com/api/projects/status/qj3xn5gbbfi4puet?svg=true)][appveyor]
 [![Code Climate](https://codeclimate.com/github/piotrmurach/necromancer/badges/gpa.svg)][codeclimate]
 [![Coverage Status](https://coveralls.io/repos/github/piotrmurach/necromancer/badge.svg?branch=master)][coverage]
 [![Inline docs](http://inch-ci.org/github/piotrmurach/necromancer.svg?branch=master)][inchpages]
 
 [gem]: http://badge.fury.io/rb/necromancer
-[travis]: http://travis-ci.org/piotrmurach/necromancer
+[gh_actions_ci]: https://github.com/piotrmurach/tty-runner/actions?query=workflow%3ACI
 [appveyor]: https://ci.appveyor.com/project/piotrmurach/necromancer
 [codeclimate]: https://codeclimate.com/github/piotrmurach/necromancer
 [coverage]: https://coveralls.io/github/piotrmurach/necromancer
