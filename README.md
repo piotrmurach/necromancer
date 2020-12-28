@@ -180,7 +180,7 @@ Necromancer.convert("yes") >> true        # => true
 Necromancer.convert("yes") >> TrueClass   # => true
 ```
 
-By default, when target conversion fails the orignal value is returned. However, you can pass `strict` as an additional argument to ensure failure when conversion cannot be performed:
+By default, when target conversion fails the original value is returned. However, you can pass `strict` as an additional argument to ensure failure when conversion cannot be performed:
 
 ```ruby
 Necromancer.convert("1a").to(:integer, strict: true)
@@ -220,7 +220,7 @@ Necromancer.new do |config|
 end
 ```
 
-or calling `configure` method:
+Or calling `configure` method:
 
 ```ruby
 converter = Necromancer.new
@@ -259,10 +259,23 @@ If the string is a list of `-` or `,` separated numbers, they will be converted 
 Necromancer.convert("1 - 2 - 3").to(:array)  # => [1, 2, 3]
 ```
 
+It handles conversion of string into an array of boolean values as well:
+
+```ruby
+Necromancer.convert("yes,no,t").to(:booleans)    # => [true, false, true]
+Necromancer.convert("1 - f - FALSE").to(:bools)  # => [true, false, false]
+```
+
 You can also convert array containing string objects to array containing numeric values:
 
 ```ruby
-Necromancer.convert(["1", "2.3", "3.0"]).to(:numeric)
+Necromancer.convert(["1", "2.3", "3.0"]).to(:numeric) # => [1, 2.3, 3.0]
+```
+
+Or you can be more specific by using `:integers` and `:floats` as the resulting type:
+
+```ruby
+Necromancer.convert(["1", "2.3", "3.0"]).to(:integers) # => [1, 2, 3]
 ```
 
 When in `strict` mode the conversion will raise a `Necromancer::ConversionTypeError` error like so:
@@ -334,25 +347,31 @@ Necromancer.convert("a=1 b=2 c=3").to(:hash)
 # => {a: "1", b: "2", c: "3"}
 ```
 
-The pairs can be delimited by `&` symbols and mix `=` and `:` delimiters:
+The pairs can be separated by `&` symbols and mix `=` and `:` pair delimiters:
 
 ```ruby
 Necromancer.convert("a:1 & b=2 & c:3").to(:hash)
 # => {a: "1", b: "2", c: "3"}
 ```
 
-You can also convert an array of pairs:
+You can also convert string to hash with integer values using `:int_hash` type:
 
 ```ruby
-Necromancer.convert(["a:1", "b:2", "c:3"]).to(:hash)
-# => {a: "1", b: "2", c: "3"}
+Necromancer.convert("a:1 b:2 c:3").to(:int_hash)     # => {a: 1, b: 2, c: 3}
+Necromancer.convert("a:1 b:2 c:3").to(:integer_hash) # => {a: 1, b: 2, c: 3}
 ```
 
-To cast all hash values to `Numeric` type do:
+Similarly you can convert string to hash with `float` or `numeric` values using `:float_hash` and `numeric_hash` types:
 
 ```ruby
-Necromancer.convert({ x: "27.5", y: "4", z: "11"}).to(:numeric)
-# => { x: 27.5, y: 4, z: 11}
+Necromancer.convert("a:1 b:2 c:3").to(:float_hash)    # => {a: 1.0, b: 2.0, c: 3.0}
+Necromancer.convert("a:1 b:2.0 c:3").to(:num_hash)    # => {a: 1, b:2.0, c: 3}
+```
+
+String can also be converted to hash with boolean values using `:boolean_hash` or `:bool_hash`:
+
+```ruby
+Necromancer.convert("a:yes b:no c:t").to(:bool_hash)  # => {a: true, b: false, c: true}
 ```
 
 ### 3.5 Numeric
@@ -391,7 +410,7 @@ Necromancer.convert("1e1").to(:numeric)   # => 10
 Necromancer.convert("1,10").to(:range)  # => 1..10
 ```
 
-or to create a range of letters:
+Or to create a range of letters:
 
 ```ruby
 Necromancer.convert("a-z").to(:range)   # => "a".."z"
