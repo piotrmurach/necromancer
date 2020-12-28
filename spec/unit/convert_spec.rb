@@ -63,14 +63,34 @@ RSpec.describe Necromancer, ".convert" do
   end
 
   context "when hash" do
+    it "converts hash to hash" do
+      conversion = converter.convert({ a: 1, b: 2, c: 3 }).to(:hash)
+      expect(conversion).to eq({ a: 1, b: 2, c: 3 })
+    end
+
     it "converts string to hash" do
       conversion = converter.convert("a:1 b:2 c:3").to(:hash)
       expect(conversion).to eq({ a: "1", b: "2", c: "3" })
     end
 
-    it "converts hash to hash" do
-      conversion = converter.convert({ a: 1, b: 2, c: 3 }).to(:hash)
+    it "converts string to integer hash" do
+      conversion = converter.convert("a:1 b:2 c:3").to(:int_hash)
       expect(conversion).to eq({ a: 1, b: 2, c: 3 })
+    end
+
+    it "converts string to float hash" do
+      conversion = converter.convert("a:1 b:2 c:3").to(:float_hash)
+      expect(conversion).to eq({ a: 1.0, b: 2.0, c: 3.0 })
+    end
+
+    it "converts string to boolean hash" do
+      conversion = converter.convert("a:t b:f c:t").to(:boolean_hash)
+      expect(conversion).to eq({ a: true, b: false, c: true })
+    end
+
+    it "converts string to bool hash" do
+      conversion = converter.convert("a:t b:f c:t").to(:bool_hash)
+      expect(conversion).to eq({ a: true, b: false, c: true })
     end
   end
 

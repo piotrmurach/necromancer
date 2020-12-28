@@ -37,8 +37,9 @@ RSpec.describe Necromancer::ArrayConverters, "#call" do
     subject(:converter) { described_class::StringToBooleanArrayConverter.new }
 
     {
-      "t,f,t"    => [true, false, true],
-      "yes,no,Y" => [true, false, true]
+      "t,f,t"     => [true, false, true],
+      "yes,no,Y"  => [true, false, true],
+      "1-0-FALSE" => [true, false, false]
     }.each do |input, obj|
       it "converts #{input.inspect} to #{obj.inspect}" do
         expect(converter.(input)).to eq(obj)
@@ -99,7 +100,7 @@ RSpec.describe Necromancer::ArrayConverters, "#call" do
     end
   end
 
-  describe ":array -> :booleans" do
+  describe ":array -> :booleans/:bools" do
     subject(:converter) {
       described_class::ArrayToBooleanArrayConverter.new(:array, :boolean)
     }
