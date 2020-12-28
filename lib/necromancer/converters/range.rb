@@ -60,8 +60,12 @@ module Necromancer
     end
 
     def self.load(conversions)
-      conversions.register StringToRangeConverter.new(:string, :range)
-      conversions.register NullConverter.new(:range, :range)
+      [
+        StringToRangeConverter.new(:string, :range),
+        NullConverter.new(:range, :range)
+      ].each do |converter|
+        conversions.register converter
+      end
     end
   end # RangeConverters
 end # Necromancer

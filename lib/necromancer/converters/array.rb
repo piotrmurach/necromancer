@@ -79,7 +79,8 @@ module Necromancer
       #
       # @api public
       def call(array, strict: config.strict)
-        int_converter = NumericConverters::StringToIntegerConverter.new(:string, :integer)
+        int_converter = NumericConverters::StringToIntegerConverter.new(:string,
+                                                                        :integer)
         array.map { |val| int_converter.(val, strict: strict) }
       end
     end
@@ -90,7 +91,8 @@ module Necromancer
       #
       # @api public
       def call(array, strict: config.strict)
-        float_converter = NumericConverters::StringToFloatConverter.new(:string, :float)
+        float_converter = NumericConverters::StringToFloatConverter.new(:string,
+                                                                        :float)
         array.map { |val| float_converter.(val, strict: strict) }
       end
     end
@@ -107,8 +109,9 @@ module Necromancer
       #
       # @api public
       def call(value, strict: config.strict)
-        numeric_converter = NumericConverters::StringToNumericConverter.new(:string, :numeric)
-        value.map { |val| numeric_converter.(val, strict: strict) }
+        num_converter = NumericConverters::StringToNumericConverter.new(:string,
+                                                                        :numeric)
+        value.map { |val| num_converter.(val, strict: strict) }
       end
     end
 
@@ -122,8 +125,9 @@ module Necromancer
       #
       # @api public
       def call(value, strict: config.strict)
-        boolean_converter = BooleanConverters::StringToBooleanConverter.new(:string, :boolean)
-        value.map { |val| boolean_converter.(val, strict: strict) }
+        bool_converter = BooleanConverters::StringToBooleanConverter.new(:string,
+                                                                         :boolean)
+        value.map { |val| bool_converter.(val, strict: strict) }
       end
     end
 
@@ -136,11 +140,9 @@ module Necromancer
       #
       # @api public
       def call(value, strict: config.strict)
-        begin
-          Array(value)
-        rescue
-          strict ? raise_conversion_type(value) : value
-        end
+        Array(value)
+      rescue
+        strict ? raise_conversion_type(value) : value
       end
     end
 
@@ -156,33 +158,35 @@ module Necromancer
       #
       # @api public
       def call(value, strict: config.strict)
-        begin
-          value.to_set
-        rescue
-          strict ? raise_conversion_type(value) : value
-        end
+        value.to_set
+      rescue
+        strict ? raise_conversion_type(value) : value
       end
     end
 
     def self.load(conversions)
-      conversions.register NullConverter.new(:array, :array)
+      [
+        NullConverter.new(:array, :array),
 
-      conversions.register StringToArrayConverter.new(:string, :array)
-      conversions.register StringToBooleanArrayConverter.new(:string, :bools)
-      conversions.register StringToBooleanArrayConverter.new(:string, :booleans)
-      conversions.register StringToIntegerArrayConverter.new(:string, :integers)
-      conversions.register StringToIntegerArrayConverter.new(:string, :ints)
-      conversions.register StringToFloatArrayConverter.new(:string, :floats)
+        StringToArrayConverter.new(:string, :array),
+        StringToBooleanArrayConverter.new(:string, :bools),
+        StringToBooleanArrayConverter.new(:string, :booleans),
+        StringToIntegerArrayConverter.new(:string, :integers),
+        StringToIntegerArrayConverter.new(:string, :ints),
+        StringToFloatArrayConverter.new(:string, :floats),
 
-      conversions.register ArrayToNumericArrayConverter.new(:array, :numeric)
-      conversions.register ArrayToIntegerArrayConverter.new(:array, :integers)
-      conversions.register ArrayToIntegerArrayConverter.new(:array, :ints)
-      conversions.register ArrayToFloatArrayConverter.new(:array, :floats)
-      conversions.register ArrayToBooleanArrayConverter.new(:array, :booleans)
-      conversions.register ArrayToBooleanArrayConverter.new(:array, :bools)
+        ArrayToNumericArrayConverter.new(:array, :numeric),
+        ArrayToIntegerArrayConverter.new(:array, :integers),
+        ArrayToIntegerArrayConverter.new(:array, :ints),
+        ArrayToFloatArrayConverter.new(:array, :floats),
+        ArrayToBooleanArrayConverter.new(:array, :booleans),
+        ArrayToBooleanArrayConverter.new(:array, :bools),
 
-      conversions.register ObjectToArrayConverter.new(:object, :array)
-      conversions.register ObjectToArrayConverter.new(:hash, :array)
+        ObjectToArrayConverter.new(:object, :array),
+        ObjectToArrayConverter.new(:hash, :array)
+      ].each do |converter|
+        conversions.register converter
+      end
     end
   end # ArrayConverters
 end # Necromancer

@@ -67,9 +67,9 @@ module Necromancer
       def call(value, strict: config.strict)
         case value
         when INTEGER_MATCHER
-          StringToIntegerConverter.new(:string, :integer).call(value, strict: strict)
+          StringToIntegerConverter.new(:string, :integer).(value, strict: strict)
         when FLOAT_MATCHER
-          StringToFloatConverter.new(:string, :float).call(value, strict: strict)
+          StringToFloatConverter.new(:string, :float).(value, strict: strict)
         else
           strict ? raise_conversion_type(value) : value
         end
@@ -77,12 +77,16 @@ module Necromancer
     end
 
     def self.load(conversions)
-      conversions.register StringToIntegerConverter.new(:string, :integer)
-      conversions.register IntegerToStringConverter.new(:integer, :string)
-      conversions.register NullConverter.new(:integer, :integer)
-      conversions.register StringToFloatConverter.new(:string, :float)
-      conversions.register NullConverter.new(:float, :float)
-      conversions.register StringToNumericConverter.new(:string, :numeric)
+      [
+        StringToIntegerConverter.new(:string, :integer),
+        IntegerToStringConverter.new(:integer, :string),
+        NullConverter.new(:integer, :integer),
+        StringToFloatConverter.new(:string, :float),
+        NullConverter.new(:float, :float),
+        StringToNumericConverter.new(:string, :numeric)
+      ].each do |converter|
+        conversions.register converter
+      end
     end
   end # Conversion
 end # Necromancer

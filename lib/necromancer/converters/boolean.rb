@@ -50,11 +50,9 @@ module Necromancer
       #
       # @api public
       def call(value, strict: config.strict)
-        begin
-          !value.zero?
-        rescue
-          strict ? raise_conversion_type(value) : value
-        end
+        !value.zero?
+      rescue
+        strict ? raise_conversion_type(value) : value
       end
     end
 
@@ -79,10 +77,14 @@ module Necromancer
     end
 
     def self.load(conversions)
-      conversions.register StringToBooleanConverter.new(:string, :boolean)
-      conversions.register IntegerToBooleanConverter.new(:integer, :boolean)
-      conversions.register BooleanToIntegerConverter.new(:boolean, :integer)
-      conversions.register NullConverter.new(:boolean, :boolean)
+      [
+        StringToBooleanConverter.new(:string, :boolean),
+        IntegerToBooleanConverter.new(:integer, :boolean),
+        BooleanToIntegerConverter.new(:boolean, :integer),
+        NullConverter.new(:boolean, :boolean)
+      ].each do |converter|
+        conversions.register converter
+      end
     end
   end # BooleanConverters
 end # Necromancer

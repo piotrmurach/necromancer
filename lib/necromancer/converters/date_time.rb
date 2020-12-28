@@ -63,12 +63,16 @@ module Necromancer
     end
 
     def self.load(conversions)
-      conversions.register StringToDateConverter.new(:string, :date)
-      conversions.register NullConverter.new(:date, :date)
-      conversions.register StringToDateTimeConverter.new(:string, :datetime)
-      conversions.register NullConverter.new(:datetime, :datetime)
-      conversions.register StringToTimeConverter.new(:string, :time)
-      conversions.register NullConverter.new(:time, :time)
+      [
+        StringToDateConverter.new(:string, :date),
+        NullConverter.new(:date, :date),
+        StringToDateTimeConverter.new(:string, :datetime),
+        NullConverter.new(:datetime, :datetime),
+        StringToTimeConverter.new(:string, :time),
+        NullConverter.new(:time, :time)
+      ].each do |converter|
+        conversions.register converter
+      end
     end
   end # DateTimeConverters
 end # Necromancer

@@ -78,6 +78,7 @@ module Necromancer
       key = generate_key(converter)
       converter = add_config(converter, @configuration)
       return false if converter_map.key?(key)
+
       converter_map[key] = converter
       true
     end
