@@ -68,6 +68,22 @@ module Necromancer
       end
     end
 
+    class StringToNumericHashConverter < Converter
+      # Convert string value to hash with numeric values
+      #
+      # @example
+      #   converter.call("a:1 b:2.0 c:3")
+      #   # => {a: 1, b: 2.0, c: 3}
+      #
+      # @api public
+      def call(value, strict: config.strict)
+        num_converter = NumericConverters::StringToNumericConverter.new(:string,
+                                                                        :numeric)
+        hash_converter = StringToHashConverter.new(:string, :hash)
+        hash_converter.(value, strict: strict, value_converter: num_converter)
+      end
+    end
+
     class StringToBooleanHashConverter < Converter
       # Convert string value to hash with boolean values
       #
@@ -91,6 +107,8 @@ module Necromancer
         StringToIntegerHashConverter.new(:string, :int_hash),
         StringToIntegerHashConverter.new(:string, :integer_hash),
         StringToFloatHashConverter.new(:string, :float_hash),
+        StringToNumericHashConverter.new(:string, :num_hash),
+        StringToNumericHashConverter.new(:string, :numeric_hash),
         StringToBooleanHashConverter.new(:string, :boolean_hash),
         StringToBooleanHashConverter.new(:string, :bool_hash)
       ].each do |converter|

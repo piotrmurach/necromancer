@@ -44,7 +44,9 @@ RSpec.describe Necromancer::Conversions, "#to_hash" do
       "string->integer_hash",
       "string->integers",
       "string->ints",
+      "string->num_hash",
       "string->numeric",
+      "string->numeric_hash",
       "string->range",
       "string->time",
       "time->time"

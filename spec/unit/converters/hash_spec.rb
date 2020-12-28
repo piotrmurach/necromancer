@@ -62,6 +62,28 @@ RSpec.describe Necromancer::HashConverters, "#call" do
     end
   end
 
+  describe ":string -> :numeric_hash" do
+    subject(:converter) { described_class::StringToNumericHashConverter.new }
+
+    {
+      "a=1 & b=2.0 & a=3.0" => { a: [1, 3.0], b: 2.0 },
+      "a:1 b:2.0 c:3.0"     => { a: 1, b: 2.0, c: 3.0 }
+    }.each do |input, obj|
+      it "converts #{input.inspect} to #{obj.inspect}" do
+        expect(converter.(input)).to eql(obj)
+      end
+    end
+
+    it "fails to convert '1.2o' value in strict mode" do
+      expect {
+        converter.("a=1.2o", strict: true)
+      }.to raise_error(
+        Necromancer::ConversionTypeError,
+        "'1.2o' could not be converted from `string` into `numeric`"
+      )
+    end
+  end
+
   describe ":string -> :bool_hash" do
     subject(:converter) { described_class::StringToBooleanHashConverter.new }
 

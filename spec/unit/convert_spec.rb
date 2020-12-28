@@ -83,6 +83,11 @@ RSpec.describe Necromancer, ".convert" do
       expect(conversion).to eq({ a: 1.0, b: 2.0, c: 3.0 })
     end
 
+    it "converts string to numeric hash" do
+      conversion = converter.convert("a:1 b:2.0 c:3").to(:numeric_hash)
+      expect(conversion).to eq({ a: 1, b: 2.0, c: 3 })
+    end
+
     it "converts string to boolean hash" do
       conversion = converter.convert("a:t b:f c:t").to(:boolean_hash)
       expect(conversion).to eq({ a: true, b: false, c: true })
