@@ -100,6 +100,28 @@ RSpec.describe Necromancer::ArrayConverters, "#call" do
     end
   end
 
+  describe ":string -> :numerics/:nums" do
+    subject(:converter) { described_class::StringToNumericArrayConverter.new }
+
+    {
+      "1,2.0,3"       => [1, 2.0, 3],
+      "1.2, 2.3, 3.4" => [1.2, 2.3, 3.4]
+    }.each do |input, obj|
+      it "converts #{input.inspect} to #{obj.inspect}" do
+        expect(converter.(input)).to eq(obj)
+      end
+    end
+
+    it "fails to convert in strict mode" do
+      expect {
+        converter.("1,unknown", strict: true)
+      }.to raise_error(
+        Necromancer::ConversionTypeError,
+        "'unknown' could not be converted from `string` into `numeric`"
+      )
+    end
+  end
+
   describe ":array -> :booleans/:bools" do
     subject(:converter) {
       described_class::ArrayToBooleanArrayConverter.new(:array, :boolean)

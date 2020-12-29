@@ -41,6 +41,11 @@ RSpec.describe Necromancer, ".convert" do
       expect(converter.convert("1,2,3").to(:ints)).to eq([1, 2, 3])
     end
 
+    it "converts string to array of numerics" do
+      expect(converter.convert("1,2.0,3").to(:numerics)).to eq([1, 2.0, 3])
+      expect(converter.convert("1,2.0,3").to(:nums)).to eq([1, 2.0, 3])
+    end
+
     it "converts array to numeric " do
       conversion = converter.convert(["1", "2.3", "3.0"]).to(:numeric)
       expect(conversion).to eq([1, 2.3, 3.0])

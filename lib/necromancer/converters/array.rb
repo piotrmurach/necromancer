@@ -9,6 +9,8 @@ require_relative "numeric"
 module Necromancer
   # Container for Array converter classes
   module ArrayConverters
+    ARRAY_MATCHER = /^(.+?(\s*(?<sep>(,|-))\s*))+/x.freeze
+
     # An object that converts a String to an Array
     class StringToArrayConverter < Converter
       # Convert string value to array
@@ -23,7 +25,7 @@ module Necromancer
       def call(value, strict: config.strict)
         return [] if value.to_s.empty?
 
-        if match = value.to_s.match(/^(.+?(\s*(?<sep>(,|-))\s*))+/)
+        if match = value.to_s.match(ARRAY_MATCHER)
           value.to_s.split(match[:sep])
         else
           strict ? raise_conversion_type(value) : Array(value)
@@ -70,6 +72,21 @@ module Necromancer
         array = array_converter.(string, strict: strict)
         float_converter = ArrayToFloatArrayConverter.new(:array, :floats)
         float_converter.(array, strict: strict)
+      end
+    end
+
+    class StringToNumericArrayConverter < Converter
+      # Convert string value to array with numeric values
+      #
+      # @example
+      #   converter.call("1,2.0,3") # => [1, 2.0, 3]
+      #
+      # @api public
+      def call(string, strict: config.strict)
+        array_converter = StringToArrayConverter.new(:string, :array)
+        array = array_converter.(string, strict: strict)
+        num_converter = ArrayToNumericArrayConverter.new(:array, :numeric)
+        num_converter.(array, strict: strict)
       end
     end
 
@@ -174,6 +191,8 @@ module Necromancer
         StringToIntegerArrayConverter.new(:string, :integers),
         StringToIntegerArrayConverter.new(:string, :ints),
         StringToFloatArrayConverter.new(:string, :floats),
+        StringToNumericArrayConverter.new(:string, :numerics),
+        StringToNumericArrayConverter.new(:string, :nums),
 
         ArrayToNumericArrayConverter.new(:array, :numeric),
         ArrayToIntegerArrayConverter.new(:array, :integers),
