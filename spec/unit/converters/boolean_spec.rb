@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe Necromancer::BooleanConverters, "#call" do
-  describe ":string -> :integer" do
+  describe ":string -> :boolean" do
     subject(:converter) {
       described_class::StringToBooleanConverter.new(:string, :boolean)
     }

@@ -28,7 +28,7 @@ RSpec.describe Necromancer::Conversions, ".register" do
     conversions.register do |c|
       c.source = :string
       c.target = :upcase
-      c.convert = proc { |value| value.to_s.upcase }
+      c.convert = ->(value) { value.to_s.upcase }
     end
     expect(conversions[:string, :upcase].("magic")).to eq("MAGIC")
   end
@@ -39,7 +39,7 @@ RSpec.describe Necromancer::Conversions, ".register" do
     conversions.register do |c|
       c.source = String
       c.target = Array
-      c.convert = proc { |value| Array(value) }
+      c.convert = ->(value) { Array(value) }
     end
     expect(conversions[String, Array].("magic")).to eq(["magic"])
   end
