@@ -1,13 +1,15 @@
 # Change log
 
-## [v0.7.0] - 2020-07-xx
+## [v0.7.0] - 2020-12-29
 
 ### Added
-* Add HashConverters for transforming string, array into hash
+* Add HashConverters for transforming string into hash of string, integer, float or boolean values
+* Add converters for transforming string to array of booleans, integers, floats and numeric
 
 ### Changed
-* Change :string -> :range to work with decimal numbers and spaces
+* Change StringToRange converter to work with decimal numbers and spaces
 * Change :strict to be a keyword argument
+* Change StringToNumeric converter to allow numbers with space characters
 
 ## [v0.6.0] - 2020-03-08
 
