@@ -6,7 +6,7 @@ require_relative "../null_converter"
 module Necromancer
   # Container for Range converter classes
   module RangeConverters
-    SINGLE_DIGIT_MATCHER = /^(?<digit>\-?\d+(\.\d+)?)$/.freeze
+    SINGLE_DIGIT_MATCHER = /^(?<digit>-?\d+(\.\d+)?)$/.freeze
 
     DIGIT_MATCHER = /^(?<open>-?\d+(\.\d+)?)
                       \s*(?<sep>(\.\s*){2,3}|-|,)\s*
