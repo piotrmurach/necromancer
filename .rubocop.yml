@@ -7,6 +7,9 @@ Layout/FirstArrayElementIndentation:
 Layout/HashAlignment:
   EnforcedHashRocketStyle: table
 
+Layout/LineLength:
+  Max: 82
+
 Lint/AssignmentInCondition:
   Enabled: false
 
@@ -25,9 +28,6 @@ Metrics/ClassLength:
 
 Metrics/CyclomaticComplexity:
   Enabled: false
-
-Metrics/LineLength:
-  Max: 82
 
 Metrics/MethodLength:
   Max: 20
