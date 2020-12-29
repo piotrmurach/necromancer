@@ -34,9 +34,9 @@ module Necromancer
     # @api private
     def self.create(&block)
       Class.new(self) do
-        define_method(:initialize) { |*a| block.call(self, *a) }
+        define_method(:initialize) { |*a| block.(self, *a) }
 
-        define_method(:call) { |value| convert.call(value) }
+        define_method(:call) { |value| convert.(value) }
       end.new
     end
 

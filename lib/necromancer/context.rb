@@ -19,7 +19,7 @@ module Necromancer
     #
     # @api private
     def initialize(&block)
-      block.call(configuration) if block_given?
+      block.(configuration) if block_given?
       @conversions = Conversions.new(configuration)
       @conversions.load
     end
