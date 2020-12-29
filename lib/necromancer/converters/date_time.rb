@@ -22,7 +22,7 @@ module Necromancer
       # @api public
       def call(value, strict: config.strict)
         Date.parse(value)
-      rescue
+      rescue StandardError
         strict ? raise_conversion_type(value) : value
       end
     end
@@ -38,7 +38,7 @@ module Necromancer
       # @api public
       def call(value, strict: config.strict)
         DateTime.parse(value)
-      rescue
+      rescue StandardError
         strict ? raise_conversion_type(value) : value
       end
     end
@@ -57,7 +57,7 @@ module Necromancer
       # @api public
       def call(value, strict: config.strict)
         Time.parse(value)
-      rescue
+      rescue StandardError
         strict ? raise_conversion_type(value) : value
       end
     end

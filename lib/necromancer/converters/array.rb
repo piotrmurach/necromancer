@@ -141,7 +141,7 @@ module Necromancer
       # @api public
       def call(value, strict: config.strict)
         Array(value)
-      rescue
+      rescue StandardError
         strict ? raise_conversion_type(value) : value
       end
     end
@@ -159,7 +159,7 @@ module Necromancer
       # @api public
       def call(value, strict: config.strict)
         value.to_set
-      rescue
+      rescue StandardError
         strict ? raise_conversion_type(value) : value
       end
     end

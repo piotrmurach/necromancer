@@ -51,7 +51,7 @@ module Necromancer
       # @api public
       def call(value, strict: config.strict)
         !value.zero?
-      rescue
+      rescue StandardError
         strict ? raise_conversion_type(value) : value
       end
     end

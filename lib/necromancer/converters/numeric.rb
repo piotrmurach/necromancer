@@ -20,7 +20,7 @@ module Necromancer
       # @api public
       def call(value, strict: config.strict)
         Integer(value)
-      rescue
+      rescue StandardError
         strict ? raise_conversion_type(value) : value.to_i
       end
     end
@@ -48,7 +48,7 @@ module Necromancer
       # @api public
       def call(value, strict: config.strict)
         Float(value)
-      rescue
+      rescue StandardError
         strict ? raise_conversion_type(value) : value.to_f
       end
     end
