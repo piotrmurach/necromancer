@@ -157,6 +157,15 @@ RSpec.describe Necromancer::ArrayConverters, "#call" do
         expect(converter.(input)).to eq(obj)
       end
     end
+
+    it "fails to convert `['1','2.3']` to integer array in strict mode" do
+      expect {
+        converter.(["1", "2.3"], strict: true)
+      }.to raise_error(
+        Necromancer::ConversionTypeError,
+        "'2.3' could not be converted from `string` into `integer`"
+      )
+    end
   end
 
   describe ":array -> :floats" do
@@ -170,11 +179,20 @@ RSpec.describe Necromancer::ArrayConverters, "#call" do
         expect(converter.(input)).to eq(obj)
       end
     end
+
+    it "fails to convert `['1','2.3',false]` to float array in strict mode" do
+      expect {
+        converter.(["1", "2.3", false], strict: true)
+      }.to raise_error(
+        Necromancer::ConversionTypeError,
+        "'false' could not be converted from `string` into `float`"
+      )
+    end
   end
 
-  describe ":array -> :numeric" do
+  describe ":array -> :numerics/:nums" do
     subject(:converter) {
-      described_class::ArrayToNumericArrayConverter.new(:array, :numeric)
+      described_class::ArrayToNumericArrayConverter.new(:array, :numerics)
     }
 
     {
@@ -189,7 +207,10 @@ RSpec.describe Necromancer::ArrayConverters, "#call" do
     it "fails to convert `['1','2.3',false]` to numeric array in strict mode" do
       expect {
         converter.(["1", "2.3", false], strict: true)
-      }.to raise_error(Necromancer::ConversionTypeError)
+      }.to raise_error(
+        Necromancer::ConversionTypeError,
+        "'false' could not be converted from `string` into `numeric`"
+      )
     end
   end
 

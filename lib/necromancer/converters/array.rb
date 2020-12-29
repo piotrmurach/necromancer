@@ -194,7 +194,8 @@ module Necromancer
         StringToNumericArrayConverter.new(:string, :numerics),
         StringToNumericArrayConverter.new(:string, :nums),
 
-        ArrayToNumericArrayConverter.new(:array, :numeric),
+        ArrayToNumericArrayConverter.new(:array, :numerics),
+        ArrayToNumericArrayConverter.new(:array, :nums),
         ArrayToIntegerArrayConverter.new(:array, :integers),
         ArrayToIntegerArrayConverter.new(:array, :ints),
         ArrayToFloatArrayConverter.new(:array, :floats),

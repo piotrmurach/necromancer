@@ -46,8 +46,10 @@ RSpec.describe Necromancer, ".convert" do
       expect(converter.convert("1,2.0,3").to(:nums)).to eq([1, 2.0, 3])
     end
 
-    it "converts array to numeric " do
-      conversion = converter.convert(["1", "2.3", "3.0"]).to(:numeric)
+    it "converts array to numerics " do
+      conversion = converter.convert(["1", "2.3", "3.0"]).to(:numerics)
+      expect(conversion).to eq([1, 2.3, 3.0])
+      conversion = converter.convert(["1", "2.3", "3.0"]).to(:nums)
       expect(conversion).to eq([1, 2.3, 3.0])
     end
 
@@ -62,7 +64,7 @@ RSpec.describe Necromancer, ".convert" do
 
     it "fails to convert in strict mode" do
       expect {
-        converter.convert(["1", "2.3", false]).to(:numeric, strict: true)
+        converter.convert(["1", "2.3", false]).to(:numerics, strict: true)
       }.to raise_error(Necromancer::ConversionTypeError)
     end
   end
