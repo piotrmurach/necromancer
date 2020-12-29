@@ -6,9 +6,9 @@ require_relative "../null_converter"
 module Necromancer
   # Container for Numeric converter classes
   module NumericConverters
-    INTEGER_MATCHER = /^[-+]?(\d+)$/.freeze
+    INTEGER_MATCHER = /^\s*[-+]?\s*(\d[\d\s]*)?$/.freeze
 
-    FLOAT_MATCHER = /^[-+]?(\d*)(\.\d+)?([eE]?[-+]?\d+)?$/.freeze
+    FLOAT_MATCHER = /^\s*[-+]?([\d\s]*)(\.[\d\s]+)?([eE]?[-+]?[\d\s]+)?$/.freeze
 
     # An object that converts a String to an Integer
     class StringToIntegerConverter < Converter

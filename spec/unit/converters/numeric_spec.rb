@@ -25,7 +25,12 @@ RSpec.describe Necromancer::NumericConverters, "#call" do
       ".1e+1"   => 1.0,
       ".1e-1"   => 0.01,
       "-.1e+1"  => -1.0,
-      "-.1e-1"  => -0.01
+      "-.1e-1"  => -0.01,
+      " 1. 10 " => 1.0,
+      "    1.0" => 1.0,
+      " .1    " => 0.1,
+      "  -1.1 " => -1.1,
+      " -1 . 1" => -1.0
     }.each do |actual, expected|
       it "converts '#{actual}' to float value" do
         expect(converter.(actual)).to eql(expected)
@@ -72,7 +77,10 @@ RSpec.describe Necromancer::NumericConverters, "#call" do
       ".1e+1"   => 0,
       ".1e-1"   => 0,
       "-.1e+1"  => 0,
-      "-.1e-1"  => 0
+      "-.1e-1"  => 0,
+      " 1 00"   => 1,
+      "  1  "   => 1,
+      "  -1 "   => -1
     }.each do |actual, expected|
       it "converts '#{actual}' to float value" do
         expect(converter.(actual)).to eql(expected)
@@ -104,6 +112,7 @@ RSpec.describe Necromancer::NumericConverters, "#call" do
     }
 
     {
+      ""        => 0,
       "1"       => 1,
       "+1"      => 1,
       "-1"      => -1,
@@ -120,7 +129,15 @@ RSpec.describe Necromancer::NumericConverters, "#call" do
       ".1e+1"   => 1.0,
       ".1e-1"   => 0.01,
       "-.1e+1"  => -1.0,
-      "-.1e-1"  => -0.01
+      "-.1e-1"  => -0.01,
+      " 1 00"   => 1,
+      "  1  "   => 1,
+      "  -1 "   => -1,
+      " 1. 10 " => 1.0,
+      "    1.0" => 1.0,
+      " .1    " => 0.1,
+      "  -1.1 " => -1.1,
+      " -1 . 1" => -1.0
     }.each do |actual, expected|
       it "converts '#{actual}' to '#{expected}'" do
         expect(converter.(actual)).to eql(expected)
