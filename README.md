@@ -158,16 +158,16 @@ In majority of cases you do not need to specify `from` as the type will be infer
 
 The source parameters are:
 
-* :array
-* :boolean
-* :date
-* :datetime
-* :float
-* :integer
-* :numeric
-* :range
-* :string
-* :time
+* `:array`
+* `:boolean`
+* `:date`
+* `:datetime`
+* `:float`
+* `:integer`
+* `:numeric`
+* `:range`
+* `:string`
+* `:time`
 
 ### 2.3 to
 
@@ -189,16 +189,16 @@ Necromancer.convert("1a").to(:integer, strict: true)
 
 The target parameters are:
 
-* :array
-* :boolean
-* :date
-* :datetime
-* :float
-* :integer
-* :numeric
-* :range
-* :string
-* :time
+* `:array`
+* `:boolean`, `:booleans`, `:bools`, `:boolean_hash`, `:bool_hash`
+* `:date`
+* `:datetime`,
+* `:float`, `:floats`, `:float_hash`
+* `:integer`, `:integers`, `:ints`, `:integer_hash`, `:int_hash`
+* `:numeric`, `:numerics`, `:nums`, `:numeric_hash`, `:num_hash`
+* `:range`
+* `:string`
+* `:time`
 
 ### 2.4 can?
 
@@ -231,12 +231,12 @@ end
 
 Available configuration options are:
 
-* strict - ensures correct types for conversion, by default `false`
-* copy - ensures only copy is modified, by default `true`
+* `strict` - ensures correct types for conversion, by default `false`
+* `copy` - ensures only copy is modified, by default `true`
 
 ## 3. Converters
 
-**Necromancer** flexibility means you can register your own converters or use the already defined converters for such types as `Array`, `Boolean`, `Hash`, `Numeric`, `Range`.
+**Necromancer** flexibility means you can register your own converters or use the already defined converters for such types as `Array`, `Boolean`, `Date`, `DateTime`, `Hash`, `Numeric`, `Range` and `Time`.
 
 ### 3.1 Array
 
@@ -269,7 +269,8 @@ Necromancer.convert("1 - f - FALSE").to(:bools)  # => [true, false, false]
 You can also convert array containing string objects to array containing numeric values:
 
 ```ruby
-Necromancer.convert(["1", "2.3", "3.0"]).to(:numeric) # => [1, 2.3, 3.0]
+Necromancer.convert(["1", "2.3", "3.0"]).to(:numerics) # => [1, 2.3, 3.0]
+Necromancer.convert(["1", "2.3", "3.0"]).to(:nums)     # => [1, 2.3, 3.0]
 ```
 
 Or you can be more specific by using `:integers` and `:floats` as the resulting type:
@@ -281,14 +282,14 @@ Necromancer.convert(["1", "2.3", "3.0"]).to(:integers) # => [1, 2, 3]
 When in `strict` mode the conversion will raise a `Necromancer::ConversionTypeError` error like so:
 
 ```ruby
-Necromancer.convert(["1", "2.3", false]).to(:numeric, strict: true)
-# => Necromancer::ConversionTypeError: false cannot be converted from `array` to `numeric`
+Necromancer.convert(["1", "2.3", false]).to(:numerics, strict: true)
+# => Necromancer::ConversionTypeError: false cannot be converted from `array` to `numerics`
 ```
 
 However, in `non-strict` mode the value will be simply returned unchanged:
 
 ```ruby
-Necromancer.convert(["1", "2.3", false]).to(:numeric, strict: false)
+Necromancer.convert(["1", "2.3", false]).to(:numerics, strict: false)
 # => [1, 2.3, false]
 ```
 
@@ -415,6 +416,13 @@ Or to create a range of letters:
 ```ruby
 Necromancer.convert("a-z").to(:range)   # => "a".."z"
 ```
+
+It will handle space characters:
+
+```ruby
+Necromancer.convert("1 . . 10") >> :range   # => 1..10
+Necromancer.convert("a . . . z") >> :range  # =>  "a"..."z"
+````
 
 ### 3.7 Custom
 
