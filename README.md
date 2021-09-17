@@ -5,14 +5,14 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/qj3xn5gbbfi4puet?svg=true)][appveyor]
 [![Code Climate](https://codeclimate.com/github/piotrmurach/necromancer/badges/gpa.svg)][codeclimate]
 [![Coverage Status](https://coveralls.io/repos/github/piotrmurach/necromancer/badge.svg?branch=master)][coverage]
-[![Inline docs](http://inch-ci.org/github/piotrmurach/necromancer.svg?branch=master)][inchpages]
+[![Inline docs](https://inch-ci.org/github/piotrmurach/necromancer.svg?branch=master)][inchpages]
 
-[gem]: http://badge.fury.io/rb/necromancer
+[gem]: https://badge.fury.io/rb/necromancer
 [gh_actions_ci]: https://github.com/piotrmurach/necromancer/actions?query=workflow%3ACI
 [appveyor]: https://ci.appveyor.com/project/piotrmurach/necromancer
 [codeclimate]: https://codeclimate.com/github/piotrmurach/necromancer
 [coverage]: https://coveralls.io/github/piotrmurach/necromancer
-[inchpages]: http://inch-ci.org/github/piotrmurach/necromancer
+[inchpages]: https://inch-ci.org/github/piotrmurach/necromancer
 
 > Conversion from one object type to another with a bit of black magic.
 
@@ -483,7 +483,7 @@ converter.convert("magic").to(:upcase)   # => "MAGIC"
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/piotrmurach/necromancer. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/piotrmurach/necromancer. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/piotrmurach/necromancer/blob/master/CODE_OF_CONDUCT.md).
 
 1. Fork it ( https://github.com/piotrmurach/necromancer/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
